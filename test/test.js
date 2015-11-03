@@ -7,7 +7,7 @@ var test = [{
     b: 'b',
     c: ['c', 'd'],
     d: {
-        e: 'e',
+        e: 123,
         f: {
             g: ['h']
         }
@@ -20,7 +20,7 @@ describe('filter', function () {
         assert({keywords: ['a'], predicate: 'OR'}, 1);
         assert({keywords: ['c'], predicate: 'OR'}, 1);
         assert({keywords: ['d'], predicate: 'OR'}, 1);
-        assert({keywords: ['e'], predicate: 'OR'}, 1);
+        assert({keywords: ['23'], predicate: 'OR'}, 1);
         assert({keywords: ['h'], predicate: 'OR'}, 1);
         assert({keywords: ['z'], predicate: 'OR'}, 0);
     });
@@ -29,7 +29,7 @@ describe('filter', function () {
         assert({keywords: ['a'], predicate: 'AND'}, 1);
         assert({keywords: ['c'], predicate: 'AND'}, 1);
         assert({keywords: ['d'], predicate: 'AND'}, 1);
-        assert({keywords: ['e'], predicate: 'AND'}, 1);
+        assert({keywords: ['12'], predicate: 'AND'}, 1);
         assert({keywords: ['h'], predicate: 'AND'}, 1);
         assert({keywords: ['z'], predicate: 'AND'}, 0);
     });
@@ -37,17 +37,17 @@ describe('filter', function () {
     it('2 keywords, OR', function () {
         assert({keywords: ['a', 'b']}, 1);
         assert({keywords: ['a', 'b'], predicate: 'OR'}, 1);
-        assert({keywords: ['c', 'e'], predicate: 'OR'}, 1);
+        assert({keywords: ['c', '23'], predicate: 'OR'}, 1);
         assert({keywords: ['d', 'x'], predicate: 'OR'}, 1);
-        assert({keywords: ['x', 'e'], predicate: 'OR'}, 1);
+        assert({keywords: ['x', '1'], predicate: 'OR'}, 1);
         assert({keywords: ['x', 'y'], predicate: 'OR'}, 0);
     });
 
     it('2 keywords, AND', function () {
         assert({keywords: ['a', 'b'], predicate: 'AND'}, 1);
-        assert({keywords: ['c', 'e'], predicate: 'AND'}, 1);
+        assert({keywords: ['c', '2'], predicate: 'AND'}, 1);
         assert({keywords: ['d', 'x'], predicate: 'AND'}, 0);
-        assert({keywords: ['x', 'e'], predicate: 'AND'}, 0);
+        assert({keywords: ['x', '3'], predicate: 'AND'}, 0);
         assert({keywords: ['x', 'y'], predicate: 'AND'}, 0);
     });
 });
