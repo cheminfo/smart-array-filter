@@ -62,8 +62,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	function filter(array, options) {
 	    options = options || {};
 	    var result = [];
+
+	    var insensitive = options.caseSensitive ? '' : 'i';
+	    var keywords = options.keywords;
+	    if (typeof keywords === 'string') {
+	        keywords = keywords.split(/[ ;,\t\r\n]+/);
+	    }
+	    keywords = keywords.map(function (keyword) {
+	        return new RegExp(keyword, insensitive);
+	    });
 	    for (var i = 0; i < array.length; i++) {
-	        if (match(array[i], options.keywords, options.predicate || 'OR')) {
+	        if (match(array[i], keywords, options.predicate || 'AND')) {
 	            result.push(array[i]);
 	        }
 	    }
@@ -103,9 +112,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    } else if (typeof element === 'string') {
-	        return element.includes(keyword);
+	        return keyword.test(element);
 	    } else if (typeof element === 'number') {
-	        return String(element).includes(keyword);
+	        return keyword.test(String(element));
 	    }
 	    return false;
 	}
