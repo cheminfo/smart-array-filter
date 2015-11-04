@@ -2,25 +2,37 @@
 
 var filter = require('..');
 
-var test = [{
-    a: 'a',
-    b: 'b',
-    c: ['pppcpp', 'D'],
-    d: {
-        e: 123,
-        f: {
-            g: ['h']
+var test = [
+    {
+        a: 'a',
+        b: 'b',
+        c: ['pppcpp', 'D'],
+        d: {
+            e: 123,
+            f: {
+                g: ['h']
+            }
+        }
+    },
+    {
+        h: 'h',
+        i: ['jkl'],
+        m: {
+            n: {
+                O: 'OoO'
+            }
         }
     }
-}];
+];
 
 describe('filter', function () {
     it('1 keyword, OR', function () {
         assert({keywords: ['a'], predicate: 'OR'}, 1);
         assert({keywords: ['C'], predicate: 'OR'}, 1);
         assert({keywords: ['d'], predicate: 'OR'}, 1);
+        assert({keywords: ['oo'], predicate: 'OR'}, 1);
         assert({keywords: ['23'], predicate: 'OR'}, 1);
-        assert({keywords: ['h'], predicate: 'OR'}, 1);
+        assert({keywords: ['h'], predicate: 'OR'}, 2);
         assert({keywords: ['z'], predicate: 'OR'}, 0);
     });
 
@@ -30,7 +42,7 @@ describe('filter', function () {
         assert({keywords: ['c'], predicate: 'AND'}, 1);
         assert({keywords: ['d'], predicate: 'AND'}, 1);
         assert({keywords: ['12'], predicate: 'AND'}, 1);
-        assert({keywords: ['h'], predicate: 'AND'}, 1);
+        assert({keywords: ['h'], predicate: 'AND'}, 2);
         assert({keywords: ['z'], predicate: 'AND'}, 0);
     });
 
@@ -49,6 +61,11 @@ describe('filter', function () {
         assert({keywords: ['d', 'x'], predicate: 'AND'}, 0);
         assert({keywords: ['x', '3'], predicate: 'AND'}, 0);
         assert({keywords: ['x', 'y'], predicate: 'AND'}, 0);
+    });
+
+    it('case sensitive', function () {
+        assert({keywords: ['kl', 'oO'], caseSensitive: true}, 1);
+        assert({keywords: ['kl', 'oo'], caseSensitive: true}, 0);
     });
 });
 
