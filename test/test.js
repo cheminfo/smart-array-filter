@@ -67,6 +67,26 @@ describe('filter', function () {
         assert({keywords: ['kl', 'oO'], caseSensitive: true}, 1);
         assert({keywords: ['kl', 'oo'], caseSensitive: true}, 0);
     });
+
+    it('exclusion', function () {
+        assert({keywords: ['-a']}, 1);
+        assert({keywords: ['-h']}, 0);
+        assert({keywords: ['-oo']}, 1);
+        assert({keywords: ['-xzfe']}, 2);
+    });
+
+    it('with property name', function () {
+        assert({keywords: ['a:a']}, 1);
+        assert({keywords: ['A:a']}, 0);
+        assert({keywords: ['a:A']}, 1);
+        assert({keywords: ['a:b']}, 0);
+        assert({keywords: ['e:23']}, 1);
+    });
+
+    it('complex', function () {
+        assert({keywords: 'a:a -x:aoe, e:12;  -o:bae   '}, 1);
+        assert({keywords: ['a:a', '-x:aoe', 'e:12', '-o:bae']}, 1);
+    });
 });
 
 function assert(options, length) {
