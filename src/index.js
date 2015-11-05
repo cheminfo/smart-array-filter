@@ -91,5 +91,7 @@ function nativeMatch(element, keyword) {
         return keyword.valueReg.test(element);
     } else if (typeof element === 'number') {
         return keyword.valueReg.test(String(element));
+    } else {
+        return false;
     }
 }
