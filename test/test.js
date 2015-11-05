@@ -12,7 +12,8 @@ var test = [
             f: {
                 g: ['h']
             }
-        }
+        },
+        bool: true
     },
     {
         h: 'h',
@@ -20,7 +21,8 @@ var test = [
         m: {
             n: {
                 O: 'OoO'
-            }
+            },
+            bool: true
         }
     }
 ];
@@ -91,6 +93,12 @@ describe('filter', function () {
     it('array of primitives', function () {
         assert({keywords: ['pcp']}, 1);
         assert({keywords: ['c:D']}, 1);
+    });
+
+    it('is', function () {
+        assert({keywords: ['is:bool']}, 2);
+        assert({keywords: ['is:other']}, 0);
+        assert({keywords: ['is:a']}, 1);
     });
 });
 

@@ -13,30 +13,33 @@ function filter(array, options) {
         keywords = keywords.split(/[ ;,\t\r\n]+/);
     }
     keywords = keywords.map(function (keyword) {
-        var negate;
+        var criterion = {
+            is: false,
+            key: false,
+            negate: false,
+            valueReg: undefined
+        };
+
         if (keyword.charAt(0) === '-') {
-            negate = true;
+            criterion.negate = true;
             keyword = keyword.substring(1);
-        } else {
-            negate = false;
         }
         var colon = keyword.indexOf(':');
-        var key = false;
-        var valueReg;
         if (colon > -1) {
+            var value = keyword.substring(colon + 1);
             if (colon > 0) {
-                key = keyword.substring(0, colon);
+                var key = keyword.substring(0, colon);
+                if (key === 'is') {
+                    criterion.is = new RegExp('^' + value + '$', insensitive);
+                }
+                criterion.key = key;
             }
-            valueReg = new RegExp(keyword.substring(colon + 1), insensitive);
+            criterion.valueReg = new RegExp(value, insensitive);
         } else {
-            valueReg = new RegExp(keyword, insensitive);
+            criterion.valueReg = new RegExp(keyword, insensitive);
         }
 
-        return {
-            negate: negate,
-            key: key,
-            valueReg: valueReg
-        };
+        return criterion;
     });
     for (var i = 0; i < array.length; i++) {
         if (match(array[i], keywords, options.predicate || 'AND')) {
@@ -65,6 +68,9 @@ function match(element, keywords, predicate) {
 }
 
 function recursiveMatch(element, keyword, key) {
+    if (key && keyword.is && keyword.is.test(key)) {
+        return !!element;
+    }
     if (typeof element === 'object') {
         if (Array.isArray(element)) {
             for (var i = 0; i < element.length; i++) {
@@ -79,7 +85,7 @@ function recursiveMatch(element, keyword, key) {
                 }
             }
         }
-    } else {
+    } else if (!keyword.is) {
         if (key && keyword.key && key !== keyword.key) return false;
         return nativeMatch(element, keyword);
     }
