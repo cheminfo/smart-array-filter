@@ -81,11 +81,15 @@ function recursiveMatch(element, keyword, key) {
         }
     } else {
         if (key && keyword.key && key !== keyword.key) return false;
-        if (typeof element === 'string') {
-            return keyword.valueReg.test(element);
-        } else if (typeof element === 'number') {
-            return keyword.valueReg.test(String(element));
-        }
+        return nativeMatch(element, keyword);
     }
     return false;
+}
+
+function nativeMatch(element, keyword) {
+    if (typeof element === 'string') {
+        return keyword.valueReg.test(element);
+    } else if (typeof element === 'number') {
+        return keyword.valueReg.test(String(element));
+    }
 }

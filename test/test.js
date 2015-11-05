@@ -87,6 +87,11 @@ describe('filter', function () {
         assert({keywords: 'a:a -x:aoe, e:12;  -o:bae   '}, 1);
         assert({keywords: ['a:a', '-x:aoe', 'e:12', '-o:bae']}, 1);
     });
+
+    it('array of primitives', function () {
+        assert({keywords: ['pcp']}, 1);
+        assert({keywords: ['c:D']}, 1);
+    });
 });
 
 function assert(options, length) {
