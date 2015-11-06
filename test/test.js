@@ -101,6 +101,43 @@ describe('filter', function () {
         assert({keywords: ['is:a']}, 1);
         assert({keywords: ['is:c']}, 0);
     });
+
+    it('math operators', function () {
+        assert({keywords: ['e:123']}, 1);
+        assert({keywords: ['e:125']}, 0);
+        assert({keywords: ['e:=123']}, 1);
+        assert({keywords: ['e:=125']}, 0);
+
+        assert({keywords: ['e:<123']}, 0);
+        assert({keywords: ['e:<200']}, 1);
+        assert({keywords: ['e:<100']}, 0);
+
+        assert({keywords: ['e:<=123']}, 1);
+        assert({keywords: ['e:<=200']}, 1);
+        assert({keywords: ['e:<=100']}, 0);
+
+        assert({keywords: ['e:>125']}, 0);
+        assert({keywords: ['e:>123']}, 0);
+        assert({keywords: ['e:>120']}, 1);
+
+        assert({keywords: ['e:>=123']}, 1);
+        assert({keywords: ['e:>=120']}, 1);
+        assert({keywords: ['e:>=125']}, 0);
+
+        assert({keywords: ['e:..100']}, 0);
+        assert({keywords: ['e:..123']}, 1);
+        assert({keywords: ['e:..200']}, 1);
+
+        assert({keywords: ['e:200..']}, 0);
+        assert({keywords: ['e:123..']}, 1);
+        assert({keywords: ['e:100..']}, 1);
+
+        assert({keywords: ['e:100..150']}, 1);
+        assert({keywords: ['e:150..200']}, 0);
+        assert({keywords: ['e:10..20']}, 0);
+        assert({keywords: ['e:20..10']}, 0);
+        assert({keywords: ['e:150..100']}, 0);
+    });
 });
 
 function assert(options, length) {

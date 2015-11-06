@@ -3,6 +3,8 @@
 module.exports = filter;
 module.exports.match = match;
 
+var operators = require('./operators');
+
 function filter(array, options) {
     options = options || {};
     var result = [];
@@ -52,11 +54,31 @@ function filter(array, options) {
 function fillCriterion(criterion, keyword, insensitive) {
     var reg = new RegExp(keyword, insensitive);
     criterion.checkString = function (str) { return reg.test(str) };
-    var num = +keyword;
-    criterion.checkNumber = function (number) {
-        if (isNaN(num)) return false;
-        return number === num;
+
+    var match = /(<|<=|=|>=|>|\.\.)?(\d+)(?:(\.\.)(\d*))?/.exec(keyword);
+    var checkNumber = returnFalse;
+    if (match) {
+        var operator = match[1];
+        var mainNumber = parseFloat(match[2]);
+        var dots = match[3];
+        var otherNumber = match[4];
+        if (operator) {
+            checkNumber = operators[operator](mainNumber);
+        } else if (dots) {
+            if (otherNumber !== '') {
+                otherNumber = parseFloat(otherNumber);
+                checkNumber = function (other) {
+                    return mainNumber <= other && other <= otherNumber;
+                };
+            } else {
+                checkNumber = operators['>='](mainNumber);
+            }
+        } else {
+            checkNumber = operators['='](mainNumber);
+        }
     }
+
+    criterion.checkNumber = checkNumber;
 }
 
 function match(element, keywords, predicate) {
@@ -109,4 +131,8 @@ function nativeMatch(element, keyword) {
     } else {
         return false;
     }
+}
+
+function returnFalse() {
+    return false;
 }
