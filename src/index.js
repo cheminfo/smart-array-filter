@@ -68,9 +68,6 @@ function match(element, keywords, predicate) {
 }
 
 function recursiveMatch(element, keyword, key) {
-    if (key && keyword.is && keyword.is.test(key)) {
-        return !!element;
-    }
     if (typeof element === 'object') {
         if (Array.isArray(element)) {
             for (var i = 0; i < element.length; i++) {
@@ -85,6 +82,8 @@ function recursiveMatch(element, keyword, key) {
                 }
             }
         }
+    } else if (key && keyword.is && keyword.is.test(key)) {
+        return !!element;
     } else if (!keyword.is) {
         if (key && keyword.key && key !== keyword.key) return false;
         return nativeMatch(element, keyword);

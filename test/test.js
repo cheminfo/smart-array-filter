@@ -99,6 +99,7 @@ describe('filter', function () {
         assert({keywords: ['is:bool']}, 2);
         assert({keywords: ['is:other']}, 0);
         assert({keywords: ['is:a']}, 1);
+        assert({keywords: ['is:c']}, 0);
     });
 });
 
