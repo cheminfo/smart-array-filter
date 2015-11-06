@@ -1,0 +1,30 @@
+{
+  "name": "smart-array-filter",
+  "version": "0.2.0",
+  "description": "Filter an array of objects",
+  "keywords": [
+    "smart",
+    "array",
+    "filter",
+    "search"
+  ],
+  "main": [
+    "dist/smart-array-filter.js",
+    "dist/smart-array-filter.min.js",
+    "dist/smart-array-filter.min.js.map"
+  ],
+  "license": "MIT",
+  "authors": [
+    "Michaël Zasso"
+  ],
+  "homepage": "https://github.com/cheminfo-js/smart-array-filter",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "/*",
+    "!dist/*"
+  ]
+}
