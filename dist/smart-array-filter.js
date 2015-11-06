@@ -52,12 +52,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = filter;
 	module.exports.match = match;
+
+	var operators = __webpack_require__(1);
 
 	function filter(array, options) {
 	    options = options || {};
@@ -69,30 +71,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	        keywords = keywords.split(/[ ;,\t\r\n]+/);
 	    }
 	    keywords = keywords.map(function (keyword) {
-	        var negate;
+	        var criterion = {
+	            is: false,
+	            key: false,
+	            negate: false,
+	            valueReg: undefined
+	        };
+
 	        if (keyword.charAt(0) === '-') {
-	            negate = true;
+	            criterion.negate = true;
 	            keyword = keyword.substring(1);
-	        } else {
-	            negate = false;
 	        }
 	        var colon = keyword.indexOf(':');
-	        var key = false;
-	        var valueReg;
 	        if (colon > -1) {
+	            var value = keyword.substring(colon + 1);
 	            if (colon > 0) {
-	                key = keyword.substring(0, colon);
+	                var key = keyword.substring(0, colon);
+	                if (key === 'is') {
+	                    criterion.is = new RegExp('^' + value + '$', insensitive);
+	                }
+	                criterion.key = key;
 	            }
-	            valueReg = new RegExp(keyword.substring(colon + 1), insensitive);
+	            fillCriterion(criterion, value, insensitive);
 	        } else {
-	            valueReg = new RegExp(keyword, insensitive);
+	            fillCriterion(criterion, keyword, insensitive);
 	        }
 
-	        return {
-	            negate: negate,
-	            key: key,
-	            valueReg: valueReg
-	        };
+	        return criterion;
 	    });
 	    for (var i = 0; i < array.length; i++) {
 	        if (match(array[i], keywords, options.predicate || 'AND')) {
@@ -100,6 +105,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	    return result;
+	}
+
+	function fillCriterion(criterion, keyword, insensitive) {
+	    var reg = new RegExp(keyword, insensitive);
+	    criterion.checkString = function (str) { return reg.test(str) };
+
+	    var match = /(<|<=|=|>=|>|\.\.)?(\d+)(?:(\.\.)(\d*))?/.exec(keyword);
+	    var checkNumber = returnFalse;
+	    if (match) {
+	        var operator = match[1];
+	        var mainNumber = parseFloat(match[2]);
+	        var dots = match[3];
+	        var otherNumber = match[4];
+	        if (operator) {
+	            checkNumber = operators[operator](mainNumber);
+	        } else if (dots) {
+	            if (otherNumber !== '') {
+	                otherNumber = parseFloat(otherNumber);
+	                checkNumber = function (other) {
+	                    return mainNumber <= other && other <= otherNumber;
+	                };
+	            } else {
+	                checkNumber = operators['>='](mainNumber);
+	            }
+	        } else {
+	            checkNumber = operators['='](mainNumber);
+	        }
+	    }
+
+	    criterion.checkNumber = checkNumber;
 	}
 
 	function match(element, keywords, predicate) {
@@ -135,16 +170,67 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	        }
-	    } else {
+	    } else if (key && keyword.is && keyword.is.test(key)) {
+	        return !!element;
+	    } else if (!keyword.is) {
 	        if (key && keyword.key && key !== keyword.key) return false;
-	        if (typeof element === 'string') {
-	            return keyword.valueReg.test(element);
-	        } else if (typeof element === 'number') {
-	            return keyword.valueReg.test(String(element));
-	        }
+	        return nativeMatch(element, keyword);
 	    }
 	    return false;
 	}
+
+	function nativeMatch(element, keyword) {
+	    if (typeof element === 'string') {
+	        return keyword.checkString(element);
+	    } else if (typeof element === 'number') {
+	        return keyword.checkNumber(element);
+	    } else {
+	        return false;
+	    }
+	}
+
+	function returnFalse() {
+	    return false;
+	}
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var operators = {
+	    '<': function (value) {
+	        return function (other) {
+	            return other < value;
+	        }
+	    },
+	    '<=': function (value) {
+	        return function (other) {
+	            return other <= value;
+	        }
+	    },
+	    '=': function (value) {
+	        return function (other) {
+	            return other === value;
+	        }
+	    },
+	    '>=': function (value) {
+	        return function (other) {
+	            return other >= value;
+	        }
+	    },
+	    '>': function (value) {
+	        return function (other) {
+	            return other > value;
+	        }
+	    }
+	};
+
+	operators['..'] = operators['<='];
+
+	module.exports = operators;
 
 
 /***/ }
