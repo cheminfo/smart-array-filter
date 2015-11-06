@@ -34,9 +34,9 @@ function filter(array, options) {
                 }
                 criterion.key = key;
             }
-            criterion.valueReg = new RegExp(value, insensitive);
+            fillCriterion(criterion, value, insensitive);
         } else {
-            criterion.valueReg = new RegExp(keyword, insensitive);
+            fillCriterion(criterion, keyword, insensitive);
         }
 
         return criterion;
@@ -47,6 +47,16 @@ function filter(array, options) {
         }
     }
     return result;
+}
+
+function fillCriterion(criterion, keyword, insensitive) {
+    var reg = new RegExp(keyword, insensitive);
+    criterion.checkString = function (str) { return reg.test(str) };
+    var num = +keyword;
+    criterion.checkNumber = function (number) {
+        if (isNaN(num)) return false;
+        return number === num;
+    }
 }
 
 function match(element, keywords, predicate) {
@@ -93,9 +103,9 @@ function recursiveMatch(element, keyword, key) {
 
 function nativeMatch(element, keyword) {
     if (typeof element === 'string') {
-        return keyword.valueReg.test(element);
+        return keyword.checkString(element);
     } else if (typeof element === 'number') {
-        return keyword.valueReg.test(String(element));
+        return keyword.checkNumber(element);
     } else {
         return false;
     }

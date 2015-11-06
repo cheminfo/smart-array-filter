@@ -33,7 +33,7 @@ describe('filter', function () {
         assert({keywords: ['C'], predicate: 'OR'}, 1);
         assert({keywords: ['d'], predicate: 'OR'}, 1);
         assert({keywords: ['oo'], predicate: 'OR'}, 1);
-        assert({keywords: ['23'], predicate: 'OR'}, 1);
+        assert({keywords: ['123'], predicate: 'OR'}, 1);
         assert({keywords: ['h'], predicate: 'OR'}, 2);
         assert({keywords: ['z'], predicate: 'OR'}, 0);
     });
@@ -43,25 +43,25 @@ describe('filter', function () {
         assert({keywords: ['a'], predicate: 'AND'}, 1);
         assert({keywords: ['c'], predicate: 'AND'}, 1);
         assert({keywords: ['d'], predicate: 'AND'}, 1);
-        assert({keywords: ['12'], predicate: 'AND'}, 1);
+        assert({keywords: ['123'], predicate: 'AND'}, 1);
         assert({keywords: ['h'], predicate: 'AND'}, 2);
         assert({keywords: ['z'], predicate: 'AND'}, 0);
     });
 
     it('2 keywords, OR', function () {
         assert({keywords: ['a', 'b'], predicate: 'OR'}, 1);
-        assert({keywords: ['c', '23'], predicate: 'OR'}, 1);
+        assert({keywords: ['c', '123'], predicate: 'OR'}, 1);
         assert({keywords: ['d', 'x'], predicate: 'OR'}, 1);
-        assert({keywords: ['x', '1'], predicate: 'OR'}, 1);
+        assert({keywords: ['x', '123'], predicate: 'OR'}, 1);
         assert({keywords: ['x', 'y'], predicate: 'OR'}, 0);
     });
 
     it('2 keywords, AND', function () {
         assert({keywords: ['a', 'b']}, 1);
         assert({keywords: ['a', 'b'], predicate: 'AND'}, 1);
-        assert({keywords: ['c', '2'], predicate: 'AND'}, 1);
+        assert({keywords: ['c', '123'], predicate: 'AND'}, 1);
         assert({keywords: ['d', 'x'], predicate: 'AND'}, 0);
-        assert({keywords: ['x', '3'], predicate: 'AND'}, 0);
+        assert({keywords: ['x', '123'], predicate: 'AND'}, 0);
         assert({keywords: ['x', 'y'], predicate: 'AND'}, 0);
     });
 
@@ -82,12 +82,12 @@ describe('filter', function () {
         assert({keywords: ['A:a']}, 0);
         assert({keywords: ['a:A']}, 1);
         assert({keywords: ['a:b']}, 0);
-        assert({keywords: ['e:23']}, 1);
+        assert({keywords: ['e:123']}, 1);
     });
 
     it('complex', function () {
-        assert({keywords: 'a:a -x:aoe, e:12;  -o:bae   '}, 1);
-        assert({keywords: ['a:a', '-x:aoe', 'e:12', '-o:bae']}, 1);
+        assert({keywords: 'a:a -x:aoe, e:123;  -o:bae   '}, 1);
+        assert({keywords: ['a:a', '-x:aoe', 'e:123', '-o:bae']}, 1);
     });
 
     it('array of primitives', function () {
