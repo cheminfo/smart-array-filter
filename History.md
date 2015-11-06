@@ -3,6 +3,7 @@
 
 * add support for "is" operator
 * compare numbers strictly
+* add support for number comparators
 
 0.1.0 / 2015-11-05
 ==================
