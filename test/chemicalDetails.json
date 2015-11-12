@@ -1,0 +1,588 @@
+[
+  {
+    "_entryID": 2924408,
+    "supplierName": "reference",
+    "iupac": [
+      {
+        "value": "Cinnamaldehyde",
+        "language": "en"
+      }
+    ],
+    "mf": [
+      {
+        "value": {
+          "type": "mf",
+          "value": "C9H8O"
+        },
+        "mw": 132.16192,
+        "exactMass": 132.057515
+      }
+    ],
+    "mol": [
+      {
+        "value": {
+          "type": "mol2d",
+          "value": "\r\nMolDraw\r\n\r\n 10 10  0  0  0  0  0  0  0  0999 V2000\r\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.3700    0.2100    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.7400    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.1100    0.2100    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.4800    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.4800   -0.4300    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.8500    0.2100    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.8500   -0.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -2.2200    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -2.2200   -0.4300    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n  1  2  2  0  0  0  0\r\n  2  3  1  0  0  0  0\r\n  3  4  2  0  0  0  0\r\n  4  5  1  0  0  0  0\r\n  5  6  2  0  0  0  0\r\n  5  7  1  0  0  0  0\r\n  6  8  1  0  0  0  0\r\n  7  9  2  0  0  0  0\r\n  8 10  2  0  0  0  0\r\n  9 10  1  0  0  0  0\r\nM  END\r\n"
+        },
+        "gif": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/search/colorgif/mol/3012910.gif"
+        }
+      }
+    ],
+    "catalog": [
+      {
+        "description": "",
+        "purity": "",
+        "catalogLine": [
+          {
+            "price": 225,
+            "quantity": "1kg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377212202
+          },
+          {
+            "price": 10.1,
+            "quantity": "1g",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377212203
+          },
+          {
+            "price": 3.56,
+            "quantity": "1mg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377212204
+          },
+          {
+            "price": 1.34,
+            "quantity": "1mmol",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377212205
+          }
+        ]
+      }
+    ],
+    "rn": [
+      {
+        "value": {
+          "type": "rn",
+          "value": 104552
+        }
+      }
+    ],
+    "mdlNumber": [
+      {
+        "value": {
+          "type": "mdlNumber",
+          "value": "0"
+        }
+      }
+    ],
+    "risk": {
+      "value": "36/37/38",
+      "description": "Irritating to eyes, respiratory system and skin."
+    },
+    "hazard": [
+      {
+        "value": "XI",
+        "pictogram": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/images/hazard/xi.gif"
+        },
+        "description": "Irritant"
+      }
+    ],
+    "mol3d": [
+      {
+        "type": "molfile3D",
+        "value": "C(=CC=1(C=CC=CC=1))C=O\n\n\n 18 18  0  0  0  0  0  0  0  0999 V2000\n    2.3647   -0.4479    0.2028 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.1679    0.1869    0.2132 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.7055   -0.2936    0.1539 O   0  0  0  0  0  0  0  0  0  0  0  0\n    3.6171    0.2834    0.1602 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1361   -0.4773    0.2577 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.2961    0.3099    0.2847 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.2729   -1.8758    0.2758 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.5555   -0.2784    0.3263 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5346   -2.4615    0.3167 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.6782   -1.6658    0.3405 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.6377   -2.1137    0.3689 H   0  0  0  0  0  0\n   -1.6273   -3.5165    0.3302 H   0  0  0  0  0  0\n   -3.4228    0.3292    0.3466 H   0  0  0  0  0  0\n    0.5829   -2.4982    0.2578 H   0  0  0  0  0  0\n   -1.2101    1.3657    0.2742 H   0  0  0  0  0  0\n    3.6002    1.3435    0.1335 H   0  0  0  0  0  0\n    1.1467    1.2456    0.1897 H   0  0  0  0  0  0\n    2.4308   -1.5041    0.2270 H   0  0  0  0  0  0\n  2  1  2  0  0  0  0\n  3  4  2  0  0  0  0\n  4  1  1  0  0  0  0\n  2  5  1  4  0  0  0\n  6  5  1  0  0  0  0\n  7  5  2  0  0  0  0\n  8  6  2  0  0  0  0\n  9  7  1  0  0  0  0\n 10  9  2  0  0  0  0\n  8 10  1  0  0  0  0\n 10 11  1  0  0  0\n  9 12  1  0  0  0\n  8 13  1  0  0  0\n  7 14  1  0  0  0\n  6 15  1  0  0  0\n  4 16  1  0  0  0\n  2 17  1  0  0  0\n  1 18  1  0  0  0\nM  END\n"
+      }
+    ],
+    "_dateCreated": "2007-08-10 23:32:21.0",
+    "_dateLastModified": "2015-09-24 00:41:01.0",
+    "batchID": "",
+    "catalogID": "104552"
+  },
+  {
+    "_entryID": 3146981,
+    "supplierName": "reference",
+    "iupac": [
+      {
+        "value": "1,1,3,3,5,5,7,7-Octamethyltetrasiloxane",
+        "language": "en"
+      }
+    ],
+    "mf": [
+      {
+        "value": {
+          "type": "mf",
+          "value": "C8H24O3Si4"
+        },
+        "mw": 280.61876,
+        "exactMass": 280.080253
+      }
+    ],
+    "mol": [
+      {
+        "value": {
+          "type": "mol2d",
+          "value": "\r\nMolDraw\r\n\r\n 15 14  0  0  0  0  0  0  0  0999 V2000\r\n    0.0000    0.0000    0.0000 Si  0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.3700   -0.2200    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.0000    0.4300    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.4300    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.2100   -0.3700    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.7400   -0.0100    0.0000 Si  0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.3700    0.6500    0.0000 Si  0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.1100   -0.2300    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.5200    0.3600    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.9500    0.3600    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.3700    1.0800    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.7400    0.4400    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.4800   -0.0200    0.0000 Si  0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.4800    0.4100    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.8500   -0.2400    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n  1  2  1  0  0  0  0\r\n  1  3  1  0  0  0  0\r\n  1  4  1  0  0  0  0\r\n  1  5  1  0  0  0  0\r\n  2  6  1  0  0  0  0\r\n  3  7  1  0  0  0  0\r\n  6  8  1  0  0  0  0\r\n  6  9  1  0  0  0  0\r\n  6 10  1  0  0  0  0\r\n  7 11  1  0  0  0  0\r\n  7 12  1  0  0  0  0\r\n  8 13  1  0  0  0  0\r\n 13 14  1  0  0  0  0\r\n 13 15  1  0  0  0  0\r\nM  END\r\n"
+        },
+        "gif": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/search/colorgif/mol/11964159.gif"
+        }
+      }
+    ],
+    "catalog": [
+      {
+        "description": "",
+        "purity": "",
+        "catalogLine": [
+          {
+            "price": 9570,
+            "quantity": "1kg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753491
+          },
+          {
+            "price": 11.3,
+            "quantity": "1g",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753492
+          },
+          {
+            "price": 11.3,
+            "quantity": "1mg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753493
+          },
+          {
+            "price": 3.18,
+            "quantity": "1mmol",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753494
+          }
+        ]
+      }
+    ],
+    "bp": [
+      {
+        "sign": "",
+        "pressure": 760,
+        "high": "",
+        "low": 169
+      }
+    ],
+    "rn": [
+      {
+        "value": {
+          "type": "rn",
+          "value": 1000051
+        }
+      }
+    ],
+    "density": [
+      {
+        "high": "",
+        "low": 0.863,
+        "temperature": ""
+      }
+    ],
+    "mol3d": [
+      {
+        "type": "molfile3D",
+        "value": "1000051\nMolDraw\n\n 41 40  0  0  0  0  0  0  0  0999 V2000\n    0.8928   -0.6306    0.1298 Si  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.4231    0.2521    0.9197 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.0067    0.5188   -0.6186 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.1976   -1.7751   -1.1848 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.8085   -1.6493    1.4110 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5640    0.9941   -0.2121 Si  0  0  0  0  0  0  0  0  0  0  0  0\n    2.8578    1.4718    0.6018 Si  0  0  0  0  0  0  0  0  0  0  0  0\n   -2.5370   -0.2667   -0.9777 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6284    1.9487   -1.5283 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.6836    2.1734    0.7228 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.1643    3.1984   -0.0598 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4978    0.6547    1.0003 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.5878   -1.0667    0.1958 Si  0  0  0  0  0  0  0  0  0  0  0  0\n   -5.2711   -0.2412    0.1884 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.7744   -2.8736   -0.2675 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4159   -3.3647    0.4504 H   0  0  0  0  0  0\n   -4.2121   -2.9486   -1.2528 H   0  0  0  0  0  0\n   -2.8026   -3.3473   -0.2676 H   0  0  0  0  0  0\n   -5.9115   -0.7222    0.9141 H   0  0  0  0  0  0\n   -5.1628    0.8046    0.4388 H   0  0  0  0  0  0\n   -5.7094   -0.3316   -0.7957 H   0  0  0  0  0  0\n   -3.0132   -0.9676    1.4964 H   0  0  0  0  0  0\n    5.0164    1.2357    1.7497 H   0  0  0  0  0  0\n    4.3238   -0.3444    1.3739 H   0  0  0  0  0  0\n    5.0990    0.6040    0.1034 H   0  0  0  0  0  0\n    3.6871    3.7812    0.6854 H   0  0  0  0  0  0\n    3.7641    3.1376   -0.9568 H   0  0  0  0  0  0\n    2.2184    3.6686   -0.2892 H   0  0  0  0  0  0\n   -3.4113    2.5930    0.0427 H   0  0  0  0  0  0\n   -3.1937    1.6397    1.5123 H   0  0  0  0  0  0\n   -2.0891    2.9678    1.1515 H   0  0  0  0  0  0\n   -1.3320    2.4674   -2.1639 H   0  0  0  0  0  0\n    0.0272    2.6652   -1.0535 H   0  0  0  0  0  0\n   -0.0434    1.2638   -2.1255 H   0  0  0  0  0  0\n    2.0647    1.5507    1.7836 H   0  0  0  0  0  0\n    2.6383   -2.1572    0.9399 H   0  0  0  0  0  0\n    2.1792   -1.0000    2.1916 H   0  0  0  0  0  0\n    1.1340   -2.3772    1.8390 H   0  0  0  0  0  0\n    0.9982   -2.3665   -1.6061 H   0  0  0  0  0  0\n   -0.5390   -2.4288   -0.7391 H   0  0  0  0  0  0\n   -0.2654   -1.1908   -1.9673 H   0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  1  3  1  0  0  0  0\n  1  4  1  0  0  0  0\n  1  5  1  0  0  0  0\n  2  6  1  0  0  0  0\n  3  7  1  0  0  0  0\n  6  8  1  0  0  0  0\n  6  9  1  0  0  0  0\n  6 10  1  0  0  0  0\n  7 11  1  0  0  0  0\n  7 12  1  0  0  0  0\n  8 13  1  0  0  0  0\n 13 14  1  0  0  0  0\n 13 15  1  0  0  0  0\n 15 16  1  0  0  0\n 15 17  1  0  0  0\n 15 18  1  0  0  0\n 14 19  1  0  0  0\n 14 20  1  0  0  0\n 14 21  1  0  0  0\n 13 22  1  0  0  0\n 12 23  1  0  0  0\n 12 24  1  0  0  0\n 12 25  1  0  0  0\n 11 26  1  0  0  0\n 11 27  1  0  0  0\n 11 28  1  0  0  0\n 10 29  1  0  0  0\n 10 30  1  0  0  0\n 10 31  1  0  0  0\n  9 32  1  0  0  0\n  9 33  1  0  0  0\n  9 34  1  0  0  0\n  7 35  1  0  0  0\n  5 36  1  0  0  0\n  5 37  1  0  0  0\n  5 38  1  0  0  0\n  4 39  1  0  0  0\n  4 40  1  0  0  0\n  4 41  1  0  0  0\nM  END\n"
+      }
+    ],
+    "_dateCreated": "2007-10-21 20:19:08.0",
+    "_dateLastModified": "2015-09-30 00:41:02.0",
+    "batchID": "",
+    "catalogID": "1000051"
+  },
+  {
+    "_entryID": 2904944,
+    "supplierName": "reference",
+    "iupac": [
+      {
+        "value": "Diphenyl phosphite",
+        "language": "en"
+      },
+      {
+        "value": "Phosphorigsurediphenylester",
+        "language": "de"
+      },
+      {
+        "value": "Diphenylphosphit",
+        "language": "de"
+      }
+    ],
+    "mf": [
+      {
+        "value": {
+          "type": "mf",
+          "value": "C12H11O3P"
+        },
+        "mw": 234.1913,
+        "exactMass": 234.044582
+      }
+    ],
+    "mol": [
+      {
+        "value": {
+          "type": "mol2d",
+          "value": "P(OC=1(C=CC=CC=1))(OC=2(C=CC=CC=2))=O\r\n\r\n\r\n 16 17  0  0  0  0  0  0  0  0999 V2000\r\n    1.7320   -0.5000    0.0000 P   0  0  0  0  0  0  0  0  0  0  0  0\r\n    2.5980    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.8660    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n    1.7320   -1.5000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\n    3.4641   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.0000   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    3.4641   -1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    4.3301    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.8660    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    0.0000   -1.4999    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    5.1961   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    4.3301   -2.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.7320   -0.4999    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -0.8660   -1.9999    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n    5.1961   -1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n   -1.7320   -1.4999    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\r\n  2  1  1  0  0  0  0\r\n  3  1  1  0  0  0  0\r\n  4  1  2  0  0  0  0\r\n  5  2  1  0  0  0  0\r\n  6  3  1  0  0  0  0\r\n  7  5  1  0  0  0  0\r\n  8  5  2  0  0  0  0\r\n  9  6  1  0  0  0  0\r\n 10  6  2  0  0  0  0\r\n 11  8  1  0  0  0  0\r\n 12  7  2  0  0  0  0\r\n 13  9  2  0  0  0  0\r\n 14 10  1  0  0  0  0\r\n 15 11  2  0  0  0  0\r\n 16 14  2  0  0  0  0\r\n 12 15  1  0  0  0  0\r\n 13 16  1  0  0  0  0\r\nM  END\r\n"
+        },
+        "gif": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/search/colorgif/mol/3013679.gif"
+        }
+      }
+    ],
+    "catalog": [
+      {
+        "description": "",
+        "purity": "",
+        "catalogLine": [
+          {
+            "price": 115,
+            "quantity": "1kg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753543
+          },
+          {
+            "price": 58.2,
+            "quantity": "1g",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753544
+          },
+          {
+            "price": 1.57,
+            "quantity": "1mg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753545
+          },
+          {
+            "price": 13.6,
+            "quantity": "1mmol",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753546
+          }
+        ]
+      }
+    ],
+    "bp": [
+      {
+        "sign": "",
+        "pressure": 26,
+        "high": 219,
+        "low": 218
+      }
+    ],
+    "mp": [
+      {
+        "sign": "",
+        "high": "",
+        "low": 12
+      }
+    ],
+    "nd": [
+      {
+        "pressure": "",
+        "high": 1.5585,
+        "low": 1.5565,
+        "temperature": ""
+      }
+    ],
+    "rn": [
+      {
+        "value": {
+          "type": "rn",
+          "value": 4712554
+        }
+      }
+    ],
+    "mdlNumber": [
+      {
+        "value": {
+          "type": "mdlNumber",
+          "value": "MFCD00044497"
+        }
+      }
+    ],
+    "density": [
+      {
+        "high": "",
+        "low": 1.217,
+        "temperature": ""
+      }
+    ],
+    "risk": {
+      "value": "34",
+      "description": "Causes burns."
+    },
+    "safety": [
+      {
+        "value": "26",
+        "description": "In case of contact with eyes, rinse immediately with plenty of water and seek medical advice."
+      },
+      {
+        "value": "36/37/39",
+        "description": "Wear suitable protective clothing, gloves and eye/face protection."
+      },
+      {
+        "value": "45",
+        "description": "In case of accident or if you feel unwell, seek medical advice immediately (show the label where possible)."
+      }
+    ],
+    "hazard": [
+      {
+        "value": "C",
+        "pictogram": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/images/hazard/c.gif"
+        },
+        "description": "Corrosive"
+      }
+    ],
+    "mol3d": [
+      {
+        "type": "molfile3D",
+        "value": "P(OC=1(C=CC=CC=1))(OC=2(C=CC=CC=2))=O\n\n\n 26 27  0  0  0  0  0  0  0  0999 V2000\n    1.8907    0.0221   -1.8460 P   0  0  0  0  0  0  0  0  0  0  0  0\n    3.3604    0.5141   -1.1004 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.3925    0.6336   -1.2643 O   0  0  0  0  0  0  0  0  0  0  0  0\n    1.9260   -0.8616   -3.1364 O   0  0  0  0  0  0  0  0  0  0  0  0\n    3.9610   -0.3585   -0.1651 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.4064   -0.2053   -0.4552 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.5510   -1.6895   -0.0396 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.9868    0.1564    0.6275 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4683    0.3864    0.2287 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1519   -1.5760   -0.3458 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6088   -0.6695    1.5598 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1778   -2.5046    0.8992 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2840   -0.4017    1.0358 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.9720   -2.3531    0.4681 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.2039   -1.9973    1.6964 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.0351   -1.7688    1.1568 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.6566   -2.3655    1.7729 H   0  0  0  0  0  0\n    5.6782   -2.6229    2.4072 H   0  0  0  0  0  0\n   -0.7900   -3.3921    0.5640 H   0  0  0  0  0  0\n   -3.0944    0.0364    1.5585 H   0  0  0  0  0  0\n    3.8762   -3.5140    1.0079 H   0  0  0  0  0  0\n    6.3900   -0.2902    2.1660 H   0  0  0  0  0  0\n    0.6438   -2.0331   -0.8723 H   0  0  0  0  0  0\n   -1.6512    1.4255    0.1346 H   0  0  0  0  0  0\n    5.2886    1.1663    0.5211 H   0  0  0  0  0  0\n    2.7818   -2.0891   -0.6459 H   0  0  0  0  0  0\n  2  1  1  0  0  0  0\n  3  1  1  0  0  0  0\n  4  1  2  0  0  0  0\n  5  2  1  0  0  0  0\n  6  3  1  0  0  0  0\n  7  5  1  0  0  0  0\n  8  5  2  0  0  0  0\n  9  6  1  0  0  0  0\n 10  6  2  0  0  0  0\n 11  8  1  0  0  0  0\n 12  7  2  0  0  0  0\n 13  9  2  0  0  0  0\n 14 10  1  0  0  0  0\n 15 11  2  0  0  0  0\n 16 14  2  0  0  0  0\n 12 15  1  0  0  0  0\n 13 16  1  0  0  0  0\n 16 17  1  0  0  0\n 15 18  1  0  0  0\n 14 19  1  0  0  0\n 13 20  1  0  0  0\n 12 21  1  0  0  0\n 11 22  1  0  0  0\n 10 23  1  0  0  0\n  9 24  1  0  0  0\n  8 25  1  0  0  0\n  7 26  1  0  0  0\nM  END\n"
+      }
+    ],
+    "_dateCreated": "2007-08-10 21:50:14.0",
+    "_dateLastModified": "2015-10-01 00:41:02.0",
+    "batchID": "",
+    "catalogID": "4712554"
+  },
+  {
+    "_entryID": 2904968,
+    "supplierName": "reference",
+    "iupac": [
+      {
+        "value": "Sodium hydroxide",
+        "language": "en"
+      },
+      {
+        "value": "Natriumhydroxid",
+        "language": "de"
+      },
+      {
+        "value": "Caustic soda",
+        "language": "en"
+      },
+      {
+        "value": "Soude caustique",
+        "language": "fr"
+      }
+    ],
+    "mf": [
+      {
+        "value": {
+          "type": "mf",
+          "value": "HNaO"
+        },
+        "mw": 39.99711,
+        "exactMass": 39.992507
+      }
+    ],
+    "mol": [
+      {
+        "value": {
+          "type": "mol2d",
+          "value": "\r\nMolDraw\r\n\r\n  2  0  0  0  0  0  0  0  0  0999 V2000\r\n    0.0000    0.0000    0.0000 Na  0  0  0  0  0  0  0  0  0  0  0  0\r\n    3.4400    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\r\nM  CHG  2   1   1   2  -1\r\nM  END\r\n"
+        },
+        "gif": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/search/colorgif/mol/3018095.gif"
+        }
+      }
+    ],
+    "catalog": [
+      {
+        "description": "",
+        "purity": "",
+        "catalogLine": [
+          {
+            "price": 46.8,
+            "quantity": "1kg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753559
+          },
+          {
+            "price": 5.77,
+            "quantity": "1g",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753560
+          },
+          {
+            "price": 1.84,
+            "quantity": "1mg",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753561
+          },
+          {
+            "price": 0.231,
+            "quantity": "1mmol",
+            "reference": "",
+            "currency": "USD",
+            "_catalogLineID": 377753562
+          }
+        ]
+      }
+    ],
+    "bp": [
+      {
+        "sign": "",
+        "pressure": 760,
+        "high": "",
+        "low": 1390
+      }
+    ],
+    "mp": [
+      {
+        "sign": "",
+        "high": "",
+        "low": 318
+      }
+    ],
+    "rn": [
+      {
+        "value": {
+          "type": "rn",
+          "value": 1310732
+        }
+      }
+    ],
+    "mdlNumber": [
+      {
+        "value": {
+          "type": "mdlNumber",
+          "value": "MFCD00003548"
+        }
+      }
+    ],
+    "risk": [
+      {
+        "value": "11",
+        "description": "Highly flammable."
+      },
+      {
+        "value": "23/24/25",
+        "description": "Toxic by inhalation, in contact with skin and if swallowed."
+      },
+      {
+        "value": "34",
+        "description": "Causes burns."
+      },
+      {
+        "value": "35",
+        "description": "Causes severe burns."
+      },
+      {
+        "value": "36/37/38",
+        "description": "Irritating to eyes, respiratory system and skin."
+      },
+      {
+        "value": "36/38",
+        "description": "Irritating to eyes and skin."
+      },
+      {
+        "value": "39/23/24/25",
+        "description": "Toxic : danger of very serious irreversible effects through inhalation, in contact with skin and if swallowed."
+      }
+    ],
+    "safety": [
+      {
+        "value": "20",
+        "description": "When using do not eat or drink."
+      },
+      {
+        "value": "23",
+        "description": "Do not breathe gas/fumes/vapour/spray."
+      },
+      {
+        "value": "24/25",
+        "description": "Avoid contact with skin and eyes."
+      },
+      {
+        "value": "26",
+        "description": "In case of contact with eyes, rinse immediately with plenty of water and seek medical advice."
+      },
+      {
+        "value": "36",
+        "description": "Wear suitable protective clothing."
+      },
+      {
+        "value": "36/37/39",
+        "description": "Wear suitable protective clothing, gloves and eye/face protection."
+      },
+      {
+        "value": "37/39",
+        "description": "Wear suitable gloves and eye/face protection."
+      },
+      {
+        "value": "45",
+        "description": "In case of accident or if you feel unwell, seek medical advice immediately (show the label where possible)."
+      },
+      {
+        "value": "60",
+        "description": "This material and its container must be disposed of as hazardous waste."
+      }
+    ],
+    "hazard": [
+      {
+        "value": "C",
+        "pictogram": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/images/hazard/c.gif"
+        },
+        "description": "Corrosive"
+      },
+      {
+        "value": "F",
+        "pictogram": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/images/hazard/f.gif"
+        },
+        "description": "Highly flammable"
+      },
+      {
+        "value": "T",
+        "pictogram": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/images/hazard/t.gif"
+        },
+        "description": "Toxic"
+      },
+      {
+        "value": "XI",
+        "pictogram": {
+          "type": "gif",
+          "value": "http://www.chemexper.com/images/hazard/xi.gif"
+        },
+        "description": "Irritant"
+      }
+    ],
+    "_dateCreated": "2007-08-10 21:50:26.0",
+    "_dateLastModified": "2015-10-01 00:41:04.0",
+    "batchID": "",
+    "catalogID": "1310732"
+  }
+]

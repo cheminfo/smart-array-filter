@@ -3,7 +3,7 @@
 var chemicals = require('./chemicals.json');
 var filter = require('..');
 
-describe.only('chemicals tests', function () {
+describe('chemicals tests', function () {
     it('string matching', function () {
         assert('', 200);
         assert('brand:FisherSci', 29);
