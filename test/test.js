@@ -85,6 +85,14 @@ describe('filter', function () {
         assert({keywords: ['e:123']}, 1);
     });
 
+    it('exact word', function () {
+        assert({keywords: 'oo'}, 1);
+        assert({keywords: '=oo'}, 0);
+        assert({keywords: 'a:=a'}, 1);
+        assert({keywords: 'a:=b'}, 0);
+        assert({keywords: '=b'}, 1);
+    });
+
     it('complex', function () {
         assert({keywords: 'a:a -x:aoe, e:123;  -o:bae   '}, 1);
         assert({keywords: ['a:a', '-x:aoe', 'e:123', '-o:bae']}, 1);

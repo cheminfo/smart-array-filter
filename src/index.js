@@ -52,7 +52,12 @@ function filter(array, options) {
 }
 
 function fillCriterion(criterion, keyword, insensitive) {
-    var reg = new RegExp(keyword, insensitive);
+
+    var strKey = keyword;
+    if (keyword.charAt(0) === '=') {
+        strKey = '^' + keyword.substring(1) + '$';
+    }
+    var reg = new RegExp(strKey, insensitive);
     criterion.checkString = function (str) { return reg.test(str) };
 
     var match = /(<|<=|=|>=|>|\.\.)?(\d+)(?:(\.\.)(\d*))?/.exec(keyword);

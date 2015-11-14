@@ -8,6 +8,7 @@ describe('chemicals tests', function () {
         assert('', 200);
         assert('brand:FisherSci', 29);
         assert('Cetrimonium', 3);
+        assert('=Formaldehyde', 7)
     });
 
     it('numbers', function () {
