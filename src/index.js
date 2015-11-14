@@ -4,6 +4,7 @@ module.exports = filter;
 module.exports.match = match;
 
 var operators = require('./operators');
+var parseKeywords = require('./parseKeywords');
 
 function filter(array, options) {
     options = options || {};
@@ -12,7 +13,7 @@ function filter(array, options) {
     var insensitive = options.caseSensitive ? '' : 'i';
     var keywords = options.keywords;
     if (typeof keywords === 'string') {
-        keywords = keywords.split(/[ ;,\t\r\n]+/);
+        keywords = parseKeywords(keywords);
     }
     keywords = keywords.map(function (keyword) {
         var criterion = {

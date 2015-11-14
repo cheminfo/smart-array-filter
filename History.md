@@ -1,7 +1,8 @@
-0.3.0 / 2015-11-14
+0.3.0 / 2015-11-16
 ==================
 
 * add support for exact word with =word
+* add support for quoted keywords
 
 0.2.0 / 2015-11-06
 ==================
