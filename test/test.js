@@ -106,6 +106,11 @@ describe('filter', function () {
     it('array of primitives', function () {
         assert({keywords: ['pcp']}, 1);
         assert({keywords: ['c:D']}, 1);
+        filter([1, 2, 3], {keywords: ['1']}).should.eql([1]);
+        filter([1, 2, 3], {keywords: ['>1']}).should.eql([2, 3]);
+        filter(['test', 'Hello'], {keywords: ['es']}).should.eql(['test']);
+        filter(['test', 'Hello'], {keywords: ['hell']}).should.eql(['Hello']);
+        filter(['test', 'Hello'], {keywords: ['hell'], caseSensitive: true}).should.eql([]);
     });
 
     it('is', function () {
