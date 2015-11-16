@@ -11,7 +11,7 @@ function filter(array, options) {
     var result = [];
 
     var insensitive = options.caseSensitive ? '' : 'i';
-    var keywords = options.keywords;
+    var keywords = options.keywords || [];
     if (typeof keywords === 'string') {
         keywords = parseKeywords(keywords);
     }
@@ -88,8 +88,8 @@ function fillCriterion(criterion, keyword, insensitive) {
 }
 
 function match(element, keywords, predicate) {
-    var found = false;
-    if (keywords) {
+    if (keywords.length) {
+        var found = false;
         for (var i = 0; i < keywords.length; i++) {
             // match XOR negate
             if (recursiveMatch(element, keywords[i]) ? !keywords[i].negate : keywords[i].negate) {
@@ -101,8 +101,9 @@ function match(element, keywords, predicate) {
                 return false;
             }
         }
+        return found;
     }
-    return found;
+    return true;
 }
 
 function recursiveMatch(element, keyword, key) {

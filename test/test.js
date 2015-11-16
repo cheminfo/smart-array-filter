@@ -28,6 +28,11 @@ var test = [
 ];
 
 describe('filter', function () {
+    it('no keywords: filter nothing', function () {
+        assert(null, 2);
+        assert({keywords: null}, 2);
+    });
+
     it('1 keyword, OR', function () {
         assert({keywords: ['a'], predicate: 'OR'}, 1);
         assert({keywords: ['C'], predicate: 'OR'}, 1);
