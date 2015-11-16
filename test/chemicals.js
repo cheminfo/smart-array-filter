@@ -12,10 +12,13 @@ describe('chemicals tests', function () {
     });
 
     it('numbers', function () {
-        assert('mp:230', 6);
+        assert('mp:=230', 3);
         assert('price1:<0', 0);
         assert('price1:<50', 85);
         assert('price1:>=50', 99);
+        assert('mp:230..230', 3);
+        assert('mw:30..31', 7);
+        assert('idontexist:', 0);
     });
 });
 
