@@ -60,15 +60,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports.match = match;
 
 	var operators = __webpack_require__(1);
+	var parseKeywords = __webpack_require__(2);
 
 	function filter(array, options) {
 	    options = options || {};
 	    var result = [];
 
 	    var insensitive = options.caseSensitive ? '' : 'i';
-	    var keywords = options.keywords;
+	    var keywords = options.keywords || [];
 	    if (typeof keywords === 'string') {
-	        keywords = keywords.split(/[ ;,\t\r\n]+/);
+	        keywords = parseKeywords(keywords);
 	    }
 	    keywords = keywords.map(function (keyword) {
 	        var criterion = {
@@ -108,7 +109,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function fillCriterion(criterion, keyword, insensitive) {
-	    var reg = new RegExp(keyword, insensitive);
+
+	    var strKey = keyword;
+	    if (keyword.charAt(0) === '=') {
+	        strKey = '^' + keyword.substring(1) + '$';
+	    }
+	    var reg = new RegExp(strKey, insensitive);
 	    criterion.checkString = function (str) { return reg.test(str) };
 
 	    var match = /(<|<=|=|>=|>|\.\.)?(\d+)(?:(\.\.)(\d*))?/.exec(keyword);
@@ -138,8 +144,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function match(element, keywords, predicate) {
-	    var found = false;
-	    if (keywords) {
+	    if (keywords.length) {
+	        var found = false;
 	        for (var i = 0; i < keywords.length; i++) {
 	            // match XOR negate
 	            if (recursiveMatch(element, keywords[i]) ? !keywords[i].negate : keywords[i].negate) {
@@ -151,8 +157,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return false;
 	            }
 	        }
+	        return found;
 	    }
-	    return found;
+	    return true;
 	}
 
 	function recursiveMatch(element, keyword, key) {
@@ -231,6 +238,73 @@ return /******/ (function(modules) { // webpackBootstrap
 	operators['..'] = operators['<='];
 
 	module.exports = operators;
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var separators = /[ ;,\t\r\n]/;
+
+	module.exports = parseKeywords;
+
+	function parseKeywords(keywords) {
+	    var result = [];
+	    var inQuotes = false;
+	    var inSeparator = true;
+	    var currentWord = [];
+	    var previous = '';
+	    for (var i = 0; i < keywords.length; i++) {
+	        var current = keywords.charAt(i);
+	        if (inQuotes) {
+	            if (previous === '"') {
+	                // escaped quote
+	                if (current === '"') {
+	                    previous = '';
+	                    continue;
+	                }
+	                // end of quoted part
+	                currentWord.pop(); // remove last quote that was added
+	                inQuotes = false;
+	                i--;
+	                continue;
+	            }
+	            currentWord.push(current);
+	            previous = current;
+	            continue;
+	        }
+	        if (inSeparator) {
+	            // still in separator ?
+	            if (separators.test(current)) {
+	                previous = current;
+	                continue;
+	            }
+	            inSeparator = false;
+	        }
+	        // start of quoted part
+	        if (current === '"') {
+	            inQuotes = true;
+	            previous = '';
+	            continue;
+	        }
+	        // start of separator part
+	        if (separators.test(current)) {
+	            if (currentWord.length) result.push(currentWord.join(''));
+	            currentWord = [];
+	            inSeparator = true;
+	            continue;
+	        }
+	        currentWord.push(current);
+	        previous = '';
+	    }
+
+	    if (previous === '"') currentWord.pop();
+	    if (currentWord.length) result.push(currentWord.join(''));
+
+	    return result;
+	}
 
 
 /***/ }
