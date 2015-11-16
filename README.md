@@ -7,6 +7,16 @@
 
 Filter an array of objects
 
+## Installation
+
+`npm install smart-array-filter`
+
+## Documentation
+
+### filter(array[, options])
+
+todo
+
 ## License
 
   [MIT](./LICENSE)
