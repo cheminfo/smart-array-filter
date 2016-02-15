@@ -3,6 +3,7 @@
 module.exports = filter;
 module.exports.match = match;
 
+var escapeRegExp = require('lodash.escaperegexp');
 var operators = require('./operators');
 var parseKeywords = require('./parseKeywords');
 
@@ -33,7 +34,7 @@ function filter(array, options) {
             if (colon > 0) {
                 var key = keyword.substring(0, colon);
                 if (key === 'is') {
-                    criterion.is = new RegExp('^' + value + '$', insensitive);
+                    criterion.is = new RegExp('^' + escapeRegExp(value) + '$', insensitive);
                 }
                 criterion.key = key;
             }
@@ -54,9 +55,11 @@ function filter(array, options) {
 
 function fillCriterion(criterion, keyword, insensitive) {
 
-    var strKey = keyword;
+    var strKey;
     if (keyword.charAt(0) === '=') {
-        strKey = '^' + keyword.substring(1) + '$';
+        strKey = '^' + escapeRegExp(keyword.substring(1)) + '$';
+    } else {
+        strKey = escapeRegExp(keyword);
     }
     var reg = new RegExp(strKey, insensitive);
     criterion.checkString = function (str) { return reg.test(str) };

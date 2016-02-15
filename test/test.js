@@ -13,6 +13,7 @@ var test = [
                 g: ['h']
             }
         },
+        spec: '[]',
         bool: true
     },
     {
@@ -155,6 +156,11 @@ describe('filter', function () {
         assert({keywords: ['e:10..20']}, 0);
         assert({keywords: ['e:20..10']}, 0);
         assert({keywords: ['e:150..100']}, 0);
+    });
+
+    it('special characters', function () {
+        assert({keywords: ['.']}, 0);
+        assert({keywords: ['[]']}, 1);
     });
 });
 
