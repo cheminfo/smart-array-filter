@@ -21,6 +21,12 @@ describe('chemicalDetails tests', function () {
         assert('quantity:1g', 4);
     });
 
+    it('decimal numbers', function () {
+        assert('mw:132.16192', 1);
+        assert('price:>200.5', 2);
+        assert('mw:39.9..40.0', 1);
+    });
+
 });
 
 function assert(keywords, length) {
