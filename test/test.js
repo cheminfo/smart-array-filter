@@ -13,6 +13,7 @@ var test = [
                 g: ['h']
             }
         },
+        neg: -3.5,
         spec: '[]',
         bool: true
     },
@@ -161,6 +162,13 @@ describe('filter', function () {
     it('special characters', function () {
         assert({keywords: ['.']}, 0);
         assert({keywords: ['[]']}, 1);
+    });
+
+    it('numbers', function () {
+        assert({keywords: ['(-3.5)']}, 1);
+        assert({keywords: ['4']}, 0);
+        assert({keywords: ['54.6']}, 0);
+        assert({keywords: ['(-54.6)']}, 0);
     });
 });
 
