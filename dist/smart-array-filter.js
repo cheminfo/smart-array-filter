@@ -101,9 +101,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return criterion;
 	    });
+	    
+	    var index = !!options.index;
 	    for (var i = 0; i < array.length; i++) {
 	        if (match(array[i], keywords, options.predicate || 'AND')) {
-	            result.push(array[i]);
+	            result.push(index ? i : array[i]);
 	        }
 	    }
 	    return result;
