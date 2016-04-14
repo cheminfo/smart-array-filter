@@ -170,6 +170,17 @@ describe('filter', function () {
         assert({keywords: ['54.6']}, 0);
         assert({keywords: ['(-54.6)']}, 0);
     });
+    
+    it('index', function () {
+        var result = filter(test, {keywords: ['a:a'], index: true});
+        result.should.have.lengthOf(1);
+        result[0].should.equal(0);
+
+        result = filter(test, {keywords: ['is:bool'], index: true});
+        result.should.have.lengthOf(2);
+        result[0].should.equal(0);
+        result[1].should.equal(1);
+    });
 });
 
 function assert(options, length) {

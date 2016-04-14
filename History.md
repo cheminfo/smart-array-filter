@@ -1,3 +1,8 @@
+0.4.0 / 2016-04-14
+==================
+
+* add index option to the filter function. If set to true, an array of indexes is returned instead of objects.
+
 0.3.0 / 2015-11-16
 ==================
 
