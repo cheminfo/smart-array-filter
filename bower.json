@@ -9,9 +9,7 @@
     "search"
   ],
   "main": [
-    "dist/smart-array-filter.js",
-    "dist/smart-array-filter.min.js",
-    "dist/smart-array-filter.min.js.map"
+    "dist/smart-array-filter.js"
   ],
   "license": "MIT",
   "authors": [
