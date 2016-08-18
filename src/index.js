@@ -66,7 +66,7 @@ function fillCriterion(criterion, keyword, insensitive) {
     var reg = new RegExp(strKey, insensitive);
     criterion.checkString = function (str) { return reg.test(str) };
 
-    var match = /(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?/.exec(keyword);
+    var match = /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(keyword);
     var checkNumber = returnFalse;
     if (match) {
         var operator = match[1];

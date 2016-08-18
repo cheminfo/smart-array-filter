@@ -181,6 +181,13 @@ describe('filter', function () {
         result[0].should.equal(0);
         result[1].should.equal(1);
     });
+
+    it('strict number parser', function () {
+        assert({keywords: ['123']}, 1);
+        assert({keywords: ['a123']}, 0);
+        assert({keywords: ['a123b']}, 0);
+        assert({keywords: ['123b']}, 0);
+    });
 });
 
 function assert(options, length) {
