@@ -8,6 +8,9 @@
     "filter",
     "search"
   ],
+  "files": [
+    "src"
+  ],
   "author": "Michaël Zasso",
   "repository": "cheminfo-js/smart-array-filter",
   "bugs": {
