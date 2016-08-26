@@ -14,7 +14,10 @@ describe('chemicals tests', function () {
     it('numbers', function () {
         assert('mp:=230', 3);
         assert('price1:<0', 0);
+        assert('price1:<0', 0, {limit: 100});
         assert('price1:<50', 85);
+        assert('price1:<50', 50, {limit: 50});
+        assert('price1:<50', 85, {limit: 100});
         assert('price1:>=50', 99);
         assert('mp:230..230', 3);
         assert('mw:30..31', 7);
@@ -22,6 +25,7 @@ describe('chemicals tests', function () {
     });
 });
 
-function assert(keywords, length) {
-    filter(chemicals, {keywords: keywords}).should.have.lengthOf(length);
+function assert(keywords, length, options) {
+    options = Object.assign({keywords: keywords}, options);
+    filter(chemicals, options).should.have.lengthOf(length);
 }
