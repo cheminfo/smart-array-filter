@@ -67,6 +67,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    options = options || {};
 	    var result = [];
 
+	    var limit = options.limit || Infinity;
 	    var insensitive = options.caseSensitive ? '' : 'i';
 	    var keywords = options.keywords || [];
 	    if (typeof keywords === 'string') {
@@ -103,9 +104,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	    
 	    var index = !!options.index;
-	    for (var i = 0; i < array.length; i++) {
+	    var matched = 0;
+	    for (var i = 0; i < array.length && matched < limit; i++) {
 	        if (match(array[i], keywords, options.predicate || 'AND')) {
-	            result.push(index ? i : array[i]);
+	            matched = result.push(index ? i : array[i]);
 	        }
 	    }
 	    return result;
