@@ -13,7 +13,16 @@ Filter an array of objects
 
 ## Documentation
 
-### filter(array[, options])
+### Example
+
+```js
+const array = [{id: 'A', pet: 'dog'}, {id: 'B', pet: 'cat}];
+const filteredData = filter(array, {
+  limit: 1,
+  keywords: 'Do', // search for any field that contains the 'do' string
+  caseSensitive: true
+});
+```
 
 todo
 
