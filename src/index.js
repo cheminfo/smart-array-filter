@@ -1,38 +1,36 @@
-import escapeRegExp from "lodash.escaperegexp";
-import { operators } from "./operators";
-import parseKeywords from "./parseKeywords";
+import escapeRegExp from 'lodash.escaperegexp';
+
+import { operators } from './operators';
+import parseKeywords from './parseKeywords';
 
 export function filter(array, options = {}) {
-  var result = [];
+  let result = [];
 
-  var limit = options.limit || Infinity;
-  var insensitive = options.caseSensitive ? "" : "i";
-  var keywords = options.keywords || [];
-  if (typeof keywords === "string") {
+  let limit = options.limit || Infinity;
+  let insensitive = options.caseSensitive ? '' : 'i';
+  let keywords = options.keywords || [];
+  if (typeof keywords === 'string') {
     keywords = parseKeywords(keywords);
   }
   keywords = keywords.map(function (keyword) {
-    var criterion = {
+    let criterion = {
       is: false,
       key: false,
       negate: false,
       valueReg: undefined,
     };
 
-    if (keyword.charAt(0) === "-") {
+    if (keyword.charAt(0) === '-') {
       criterion.negate = true;
       keyword = keyword.substring(1);
     }
-    var colon = keyword.indexOf(":");
+    let colon = keyword.indexOf(':');
     if (colon > -1) {
-      var value = keyword.substring(colon + 1);
+      let value = keyword.substring(colon + 1);
       if (colon > 0) {
-        var key = keyword.substring(0, colon);
-        if (key === "is") {
-          criterion.is = new RegExp(
-            "^" + escapeRegExp(value) + "$",
-            insensitive
-          );
+        let key = keyword.substring(0, colon);
+        if (key === 'is') {
+          criterion.is = new RegExp(`^${escapeRegExp(value)}$`, insensitive);
         }
         criterion.key = key;
       }
@@ -44,10 +42,10 @@ export function filter(array, options = {}) {
     return criterion;
   });
 
-  var index = !!options.index;
-  var matched = 0;
-  for (var i = 0; i < array.length && matched < limit; i++) {
-    if (match(array[i], keywords, options.predicate || "AND")) {
+  let index = !!options.index;
+  let matched = 0;
+  for (let i = 0; i < array.length && matched < limit; i++) {
+    if (match(array[i], keywords, options.predicate || 'AND')) {
       matched = result.push(index ? i : array[i]);
     }
   }
@@ -55,39 +53,39 @@ export function filter(array, options = {}) {
 }
 
 function fillCriterion(criterion, keyword, insensitive) {
-  var strKey;
-  if (keyword.charAt(0) === "=") {
-    strKey = "^" + escapeRegExp(keyword.substring(1)) + "$";
+  let strKey;
+  if (keyword.charAt(0) === '=') {
+    strKey = `^${escapeRegExp(keyword.substring(1))}$`;
   } else {
     strKey = escapeRegExp(keyword);
   }
-  var reg = new RegExp(strKey, insensitive);
+  let reg = new RegExp(strKey, insensitive);
   criterion.checkString = function (str) {
     return reg.test(str);
   };
 
-  var match = /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(
-    keyword
+  let match = /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(
+    keyword,
   );
-  var checkNumber = returnFalse;
+  let checkNumber = returnFalse;
   if (match) {
-    var operator = match[1];
-    var mainNumber = parseFloat(match[2]);
-    var dots = match[3];
-    var otherNumber = match[4];
+    let operator = match[1];
+    let mainNumber = parseFloat(match[2]);
+    let dots = match[3];
+    let otherNumber = match[4];
     if (operator) {
       checkNumber = operators[operator](mainNumber);
     } else if (dots) {
-      if (otherNumber !== "") {
+      if (otherNumber !== '') {
         otherNumber = parseFloat(otherNumber);
         checkNumber = function (other) {
           return mainNumber <= other && other <= otherNumber;
         };
       } else {
-        checkNumber = operators[">="](mainNumber);
+        checkNumber = operators['>='](mainNumber);
       }
     } else {
-      checkNumber = operators["="](mainNumber);
+      checkNumber = operators['='](mainNumber);
     }
   }
 
@@ -96,19 +94,19 @@ function fillCriterion(criterion, keyword, insensitive) {
 
 export function match(element, keywords, predicate) {
   if (keywords.length) {
-    var found = false;
-    for (var i = 0; i < keywords.length; i++) {
+    let found = false;
+    for (let i = 0; i < keywords.length; i++) {
       // match XOR negate
       if (
         recursiveMatch(element, keywords[i])
           ? !keywords[i].negate
           : keywords[i].negate
       ) {
-        if (predicate === "OR") {
+        if (predicate === 'OR') {
           return true;
         }
         found = true;
-      } else if (predicate === "AND") {
+      } else if (predicate === 'AND') {
         return false;
       }
     }
@@ -118,15 +116,15 @@ export function match(element, keywords, predicate) {
 }
 
 function recursiveMatch(element, keyword, key) {
-  if (typeof element === "object") {
+  if (typeof element === 'object') {
     if (Array.isArray(element)) {
-      for (var i = 0; i < element.length; i++) {
+      for (let i = 0; i < element.length; i++) {
         if (recursiveMatch(element[i], keyword)) {
           return true;
         }
       }
     } else {
-      for (var i in element) {
+      for (let i in element) {
         if (recursiveMatch(element[i], keyword, i)) {
           return true;
         }
@@ -142,9 +140,9 @@ function recursiveMatch(element, keyword, key) {
 }
 
 function nativeMatch(element, keyword) {
-  if (typeof element === "string") {
+  if (typeof element === 'string') {
     return keyword.checkString(element);
-  } else if (typeof element === "number") {
+  } else if (typeof element === 'number') {
     return keyword.checkNumber(element);
   } else {
     return false;

@@ -1,29 +1,29 @@
 export const operators = {
-  "<": (value) => {
+  '<': (value) => {
     return function (other) {
       return other < value;
     };
   },
-  "<=": (value) => {
+  '<=': (value) => {
     return function (other) {
       return other <= value;
     };
   },
-  "=": (value) => {
+  '=': (value) => {
     return function (other) {
       return other === value;
     };
   },
-  ">=": (value) => {
+  '>=': (value) => {
     return function (other) {
       return other >= value;
     };
   },
-  ">": (value) => {
+  '>': (value) => {
     return function (other) {
       return other > value;
     };
   },
 };
 
-operators[".."] = operators["<="];
+operators['..'] = operators['<='];

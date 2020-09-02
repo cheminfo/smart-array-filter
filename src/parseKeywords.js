@@ -1,18 +1,18 @@
-var separators = /[ ;,\t\r\n]/;
+let separators = /[ ;,\t\r\n]/;
 
 export default function parseKeywords(keywords) {
-  var result = [];
-  var inQuotes = false;
-  var inSeparator = true;
-  var currentWord = [];
-  var previous = "";
-  for (var i = 0; i < keywords.length; i++) {
-    var current = keywords.charAt(i);
+  let result = [];
+  let inQuotes = false;
+  let inSeparator = true;
+  let currentWord = [];
+  let previous = '';
+  for (let i = 0; i < keywords.length; i++) {
+    let current = keywords.charAt(i);
     if (inQuotes) {
       if (previous === '"') {
         // escaped quote
         if (current === '"') {
-          previous = "";
+          previous = '';
           continue;
         }
         // end of quoted part
@@ -36,22 +36,22 @@ export default function parseKeywords(keywords) {
     // start of quoted part
     if (current === '"') {
       inQuotes = true;
-      previous = "";
+      previous = '';
       continue;
     }
     // start of separator part
     if (separators.test(current)) {
-      if (currentWord.length) result.push(currentWord.join(""));
+      if (currentWord.length) result.push(currentWord.join(''));
       currentWord = [];
       inSeparator = true;
       continue;
     }
     currentWord.push(current);
-    previous = "";
+    previous = '';
   }
 
   if (previous === '"') currentWord.pop();
-  if (currentWord.length) result.push(currentWord.join(""));
+  if (currentWord.length) result.push(currentWord.join(''));
 
   return result;
 }
