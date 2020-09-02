@@ -1,7 +1,7 @@
 {
   "name": "smart-array-filter",
   "version": "1.1.0",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "module": "src/index.js",
   "description": "Filter an array of objects",
   "keywords": [
@@ -28,6 +28,7 @@
     "build": "cheminfo-build --entry src/index.js"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "cheminfo-build": "^1.1.4",
     "cheminfo-tools": "^1.23.3",
     "istanbul": "^0.4.5",
