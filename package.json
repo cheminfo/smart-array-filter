@@ -15,9 +15,9 @@
     "src"
   ],
   "author": "Michaël Zasso",
-  "repository": "cheminfo-js/smart-array-filter",
+  "repository": "cheminfo/smart-array-filter",
   "bugs": {
-    "url": "https://github.com/cheminfo-js/smart-array-filter/issues"
+    "url": "https://github.com/cheminfo/smart-array-filter/issues"
   },
   "prettier": {
     "arrowParens": "always",
@@ -26,7 +26,7 @@
     "tabWidth": 2,
     "trailingComma": "all"
   },
-  "homepage": "https://github.com/cheminfo-js/smart-array-filter",
+  "homepage": "https://github.com/cheminfo/smart-array-filter",
   "license": "MIT",
   "scripts": {
     "build": "cheminfo-build --entry src/index.js",
