@@ -1,7 +1,7 @@
 /**
  * smart-array-filter - Filter an array of objects
- * @version v2.0.0
- * @link https://github.com/cheminfo-js/smart-array-filter
+ * @version v2.0.1
+ * @link https://github.com/cheminfo/smart-array-filter
  * @license MIT
  */
 (function (global, factory) {
@@ -390,10 +390,10 @@
 	function filter(array, options = {}) {
 	  let result = [];
 	  let {
-	    limit = Infinity,
 	    index = false,
 	    predicate = 'AND'
 	  } = options;
+	  let limit = options.limit ? options.limit : Infinity;
 	  let keywords = options.keywords || [];
 	  let insensitive = options.caseSensitive ? '' : 'i';
 
