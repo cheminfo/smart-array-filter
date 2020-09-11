@@ -1,6 +1,6 @@
 /**
  * smart-array-filter - Filter an array of objects
- * @version v1.1.0
+ * @version v2.0.0
  * @link https://github.com/cheminfo-js/smart-array-filter
  * @license MIT
  */
@@ -281,22 +281,21 @@
 	};
 	operators$1['..'] = operators$1['<='];
 	function getCheckString(keyword, insensitive) {
-	  let match = /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?([a-zA-Z0-9_-]+)([a-zA-Z(?:(\.\.)0-9_-]+)?\s*\)?$/.exec(keyword);
+	  let parts = keyword.split('..');
+	  let match = /^\s*\(?\s*(<|<=|=|>=|>)?(\S*)\s*\)?$/.exec(parts[0]);
 
 	  let checkString = () => false;
 
 	  if (match) {
 	    let operator = match[1];
 	    let query = match[2];
-	    let dots = match[3];
-	    let secondQuery = match[4];
+	    let dots = parts.length > 1 ? '..' : '';
+	    let secondQuery = parts[1];
 
 	    if (operator) {
 	      checkString = operators$1[operator](query, insensitive);
 	    } else if (dots) {
 	      if (secondQuery !== '') {
-	        secondQuery = parseFloat(secondQuery);
-
 	        checkString = function (string) {
 	          return query <= string && string <= secondQuery;
 	        };
@@ -377,11 +376,26 @@
 	  return result;
 	}
 
+	/**
+	 *
+	 * @param {Array} array
+	 * @param {object} [options={}]
+	 * @param {number} [options.limit=Infinity]
+	 * @param {boolean} [options.caseSensitive=false]
+	 * @param {string|Array} [options.keywords=[]]
+	 * @param {boolean} [options.index=false] Returns the indices in the array that match
+	 * @param {boolean} [options.predicate='AND'] Could be either AND or OR
+	 */
+
 	function filter(array, options = {}) {
 	  let result = [];
-	  let limit = options.limit || Infinity;
-	  let insensitive = options.caseSensitive ? '' : 'i';
+	  let {
+	    limit = Infinity,
+	    index = false,
+	    predicate = 'AND'
+	  } = options;
 	  let keywords = options.keywords || [];
+	  let insensitive = options.caseSensitive ? '' : 'i';
 
 	  if (typeof keywords === 'string') {
 	    keywords = parseKeywords(keywords);
@@ -409,10 +423,11 @@
 	        let key = keyword.substring(0, colon);
 
 	        if (key === 'is') {
-	          criterion.is = new RegExp(`^${lodash_escaperegexp(value)}$`, insensitive);
+	          // a property path exists
+	          criterion.is = new RegExp(`(^|\\.)${lodash_escaperegexp(value)}(\\.|$)`, insensitive);
 	        }
 
-	        criterion.key = key;
+	        criterion.key = new RegExp(`(^|\\.)${lodash_escaperegexp(key)}(\\.|$)`, insensitive);
 	      }
 
 	      fillCriterion(criterion, value, insensitive);
@@ -422,11 +437,10 @@
 
 	    return criterion;
 	  });
-	  let index = !!options.index;
 	  let matched = 0;
 
 	  for (let i = 0; i < array.length && matched < limit; i++) {
-	    if (match(array[i], keywords, options.predicate || 'AND')) {
+	    if (match(array[i], keywords, predicate)) {
 	      matched = result.push(index ? i : array[i]);
 	    }
 	  }
@@ -445,7 +459,7 @@
 
 	    for (let i = 0; i < keywords.length; i++) {
 	      // match XOR negate
-	      if (recursiveMatch(element, keywords[i]) ? !keywords[i].negate : keywords[i].negate) {
+	      if (recursiveMatch(element, keywords[i], []) ? !keywords[i].negate : keywords[i].negate) {
 	        if (predicate === 'OR') {
 	          return true;
 	        }
@@ -462,31 +476,35 @@
 	  return true;
 	}
 
-	function recursiveMatch(element, keyword, key) {
+	function recursiveMatch(element, keyword, keys) {
 	  if (typeof element === 'object') {
 	    if (Array.isArray(element)) {
 	      for (let i = 0; i < element.length; i++) {
-	        if (recursiveMatch(element[i], keyword)) {
-	          console.log(element[i], keyword);
-	          console.log('TRUE');
+	        if (recursiveMatch(element[i], keyword, keys)) {
 	          return true;
 	        }
 	      }
 	    } else {
 	      for (let i in element) {
-	        if (recursiveMatch(element[i], keyword, i)) {
-	          return true;
-	        }
+	        keys.push(i);
+	        let didMatch = recursiveMatch(element[i], keyword, keys);
+	        keys.pop();
+	        if (didMatch) return true;
 	      }
 	    }
-	  } else if (key && keyword.is && keyword.is.test(key)) {
-	    return !!element;
-	  } else if (!keyword.is) {
-	    if (key && keyword.key && key !== keyword.key) return false;
+	  } else if (keyword.is) {
+	    // we check for the presence of a key (jpath)
+	    if (keyword.is.test(keys.join('.'))) {
+	      return !!element;
+	    } else {
+	      return false;
+	    }
+	  } else {
+	    // need to check if keys match
+	    if (keyword.key && !keyword.key.test(keys.join('.'))) return false; //if (key && keyword.key && key !== keyword.key) return false;
+
 	    return nativeMatch(element, keyword);
 	  }
-
-	  return false;
 	}
 
 	function nativeMatch(element, keyword) {
