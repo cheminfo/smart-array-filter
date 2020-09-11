@@ -86,7 +86,7 @@ describe('filter', () => {
 
   it('with property name', () => {
     assert({ keywords: ['a:a'] }, 1);
-    assert({ keywords: ['A:a'] }, 0);
+    assert({ keywords: ['A:a'], caseSensitive: true }, 0);
     assert({ keywords: ['a:A'] }, 1);
     assert({ keywords: ['a:b'] }, 0);
     assert({ keywords: ['e:123'] }, 1);
@@ -125,13 +125,17 @@ describe('filter', () => {
   });
 
   it('is', () => {
+    // check if some fields are defined
+
+    assert({ keywords: ['is:m.n'] }, 1);
     assert({ keywords: ['is:bool'] }, 2);
     assert({ keywords: ['is:other'] }, 0);
     assert({ keywords: ['is:a'] }, 1);
-    assert({ keywords: ['is:c'] }, 0);
+    assert({ keywords: ['is:c'] }, 1);
   });
 
   it('math operators', () => {
+    assert({ keywords: ['e:>125'] }, 0);
     assert({ keywords: ['e:123'] }, 1);
     assert({ keywords: ['e:125'] }, 0);
     assert({ keywords: ['e:=123'] }, 1);
@@ -145,7 +149,6 @@ describe('filter', () => {
     assert({ keywords: ['e:<=200'] }, 1);
     assert({ keywords: ['e:<=100'] }, 0);
 
-    assert({ keywords: ['e:>125'] }, 0);
     assert({ keywords: ['e:>123'] }, 0);
     assert({ keywords: ['e:>120'] }, 1);
 
@@ -162,6 +165,7 @@ describe('filter', () => {
     assert({ keywords: ['e:100..'] }, 1);
 
     assert({ keywords: ['e:100..150'] }, 1);
+    assert({ keywords: ['e:100.2..150.2'] }, 1);
     assert({ keywords: ['e:150..200'] }, 0);
     assert({ keywords: ['e:10..20'] }, 0);
     assert({ keywords: ['e:20..10'] }, 0);
@@ -169,11 +173,15 @@ describe('filter', () => {
   });
 
   it('special characters', () => {
-    assert({ keywords: ['.'] }, 0);
     assert({ keywords: ['[]'] }, 1);
+    assert({ keywords: ['.'] }, 0);
   });
 
   it('numbers', () => {
+    assert({ keywords: ['-3.5'] }, 2); // meaning an entry where 3.5 is not there !
+    assert({ keywords: ['-neg:-3.5'] }, 1); // meaning an entry where 3.5 is not there !
+    assert({ keywords: ['<-3'] }, 1); // meaning an entry where 3.5 is not there !
+    assert({ keywords: ['<-3.5'] }, 0); // meaning an entry where 3.5 is not there !
     assert({ keywords: ['(-3.5)'] }, 1);
     assert({ keywords: ['4'] }, 0);
     assert({ keywords: ['54.6'] }, 0);

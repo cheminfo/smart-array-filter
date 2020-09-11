@@ -9,10 +9,17 @@ describe('chemicals tests', () => {
     assert('', 200);
     assert('brand:FisherSci', 29);
     assert('Cetrimonium', 3);
+    assert('=Cetrimonium', 0);
     assert('=Formaldehyde', 7);
   });
 
+  it('string comparison', () => {
+    assert('brand:>FisherSci', 9);
+    assert('brand:>=FisherSci', 38);
+  });
+
   it('numbers', () => {
+    assert('mp:-15', 5);
     assert('mp:=230', 3);
     assert('price1:<0', 0);
     assert('price1:<0', 0, { limit: 100 });
