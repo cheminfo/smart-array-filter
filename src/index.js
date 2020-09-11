@@ -17,7 +17,9 @@ import parseKeywords from './parseKeywords';
 export function filter(array, options = {}) {
   let result = [];
 
-  let { limit = Infinity, index = false, predicate = 'AND' } = options;
+  let { index = false, predicate = 'AND' } = options;
+
+  let limit = options.limit ? options.limit : Infinity;
 
   let keywords = options.keywords || [];
 

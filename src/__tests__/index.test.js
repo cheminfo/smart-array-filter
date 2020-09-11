@@ -29,10 +29,12 @@ let test = [
   },
 ];
 
-describe('filter', () => {
+describe('index.test', () => {
   it('no keywords: filter nothing', () => {
     assert(undefined, 2);
     assert({ keywords: null }, 2);
+    assert({ keywords: null, limit: 1 }, 1);
+    assert({ keywords: null, limit: 0 }, 2);
   });
 
   it('1 keyword, OR', () => {
