@@ -1,6 +1,6 @@
 /**
  * smart-array-filter - Filter an array of objects
- * @version v2.0.2
+ * @version v2.0.3
  * @link https://github.com/cheminfo/smart-array-filter
  * @license MIT
  */
