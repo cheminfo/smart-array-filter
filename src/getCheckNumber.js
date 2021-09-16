@@ -1,26 +1,26 @@
 const operators = {
   '<': (query) => {
-    return function (number) {
+    return (number) => {
       return number < query;
     };
   },
   '<=': (query) => {
-    return function (number) {
+    return (number) => {
       return number <= query;
     };
   },
   '=': (query) => {
-    return function (number) {
+    return (number) => {
       return number === query;
     };
   },
   '>=': (query) => {
-    return function (number) {
+    return (number) => {
       return number >= query;
     };
   },
   '>': (query) => {
-    return function (number) {
+    return (number) => {
       return number > query;
     };
   },
@@ -30,9 +30,10 @@ const operators = {
 operators['..'] = operators['<='];
 
 export default function getCheckNumber(keyword) {
-  let match = /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(
-    keyword,
-  );
+  let match =
+    /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(
+      keyword,
+    );
   let checkNumber = () => false;
   if (match) {
     let operator = match[1];
@@ -44,7 +45,7 @@ export default function getCheckNumber(keyword) {
     } else if (dots) {
       if (secondQuery !== '') {
         secondQuery = parseFloat(secondQuery);
-        checkNumber = function (number) {
+        checkNumber = (number) => {
           return query <= number && number <= secondQuery;
         };
       } else {

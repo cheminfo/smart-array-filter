@@ -27,7 +27,7 @@ export function filter(array, options = {}) {
   if (typeof keywords === 'string') {
     keywords = parseKeywords(keywords);
   }
-  keywords = keywords.map(function (keyword) {
+  keywords = keywords.map((keyword) => {
     let criterion = {
       is: false,
       key: false,

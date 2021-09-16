@@ -2,12 +2,12 @@ import escapeRegExp from 'lodash.escaperegexp';
 
 const operators = {
   '<': (query) => {
-    return function (string) {
+    return (string) => {
       return string < query;
     };
   },
   '<=': (query) => {
-    return function (string) {
+    return (string) => {
       return string <= query;
     };
   },
@@ -15,7 +15,7 @@ const operators = {
     query = `^${escapeRegExp(query)}$`;
     const reg = new RegExp(query, insensitive);
 
-    return function (string) {
+    return (string) => {
       return reg.test(string);
     };
   },
@@ -23,17 +23,17 @@ const operators = {
     query = escapeRegExp(query);
     const reg = new RegExp(query, insensitive);
 
-    return function (string) {
+    return (string) => {
       return reg.test(string);
     };
   },
   '>=': (query) => {
-    return function (string) {
+    return (string) => {
       return string >= query;
     };
   },
   '>': (query) => {
-    return function (string) {
+    return (string) => {
       return string > query;
     };
   },
@@ -54,7 +54,7 @@ export default function getCheckString(keyword, insensitive) {
       checkString = operators[operator](query, insensitive);
     } else if (dots) {
       if (secondQuery !== '') {
-        checkString = function (string) {
+        checkString = (string) => {
           return query <= string && string <= secondQuery;
         };
       } else {
