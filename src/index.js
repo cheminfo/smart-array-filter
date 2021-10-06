@@ -10,6 +10,7 @@ import parseKeywords from './parseKeywords';
  * @param {object} [options={}]
  * @param {number} [options.limit=Infinity]
  * @param {boolean} [options.caseSensitive=false]
+ * @param {array} [options.ignorePaths=[]] // list of jpath to ignore
  * @param {string|Array} [options.keywords=[]]
  * @param {boolean} [options.index=false] Returns the indices in the array that match
  * @param {boolean} [options.predicate='AND'] Could be either AND or OR
@@ -17,13 +18,17 @@ import parseKeywords from './parseKeywords';
 export function filter(array, options = {}) {
   let result = [];
 
-  let { index = false, predicate = 'AND' } = options;
+  let { index = false, predicate = 'AND', ignorePaths = [] } = options;
+  let insensitive = options.caseSensitive ? '' : 'i';
+
+  ignorePaths = ignorePaths.map(
+    (key) => new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, insensitive),
+  );
 
   let limit = options.limit ? options.limit : Infinity;
 
   let keywords = options.keywords || [];
 
-  let insensitive = options.caseSensitive ? '' : 'i';
   if (typeof keywords === 'string') {
     keywords = parseKeywords(keywords);
   }
@@ -63,10 +68,9 @@ export function filter(array, options = {}) {
 
     return criterion;
   });
-
   let matched = 0;
   for (let i = 0; i < array.length && matched < limit; i++) {
-    if (match(array[i], keywords, predicate)) {
+    if (match(array[i], keywords, predicate, { ignorePaths })) {
       matched = result.push(index ? i : array[i]);
     }
   }
@@ -78,13 +82,13 @@ function fillCriterion(criterion, keyword, insensitive) {
   criterion.checkNumber = getCheckNumber(keyword);
 }
 
-export function match(element, keywords, predicate) {
+export function match(element, keywords, predicate, options) {
   if (keywords.length) {
     let found = false;
     for (let i = 0; i < keywords.length; i++) {
       // match XOR negate
       if (
-        recursiveMatch(element, keywords[i], [])
+        recursiveMatch(element, keywords[i], [], options)
           ? !keywords[i].negate
           : keywords[i].negate
       ) {
@@ -101,18 +105,18 @@ export function match(element, keywords, predicate) {
   return true;
 }
 
-function recursiveMatch(element, keyword, keys) {
+function recursiveMatch(element, keyword, keys, options) {
   if (typeof element === 'object') {
     if (Array.isArray(element)) {
       for (let i = 0; i < element.length; i++) {
-        if (recursiveMatch(element[i], keyword, keys)) {
+        if (recursiveMatch(element[i], keyword, keys, options)) {
           return true;
         }
       }
     } else {
       for (let i in element) {
         keys.push(i);
-        let didMatch = recursiveMatch(element[i], keyword, keys);
+        let didMatch = recursiveMatch(element[i], keyword, keys, options);
         keys.pop();
         if (didMatch) return true;
       }
@@ -126,8 +130,11 @@ function recursiveMatch(element, keyword, keys) {
     }
   } else {
     // need to check if keys match
-    if (keyword.key && !keyword.key.test(keys.join('.'))) return false;
-    //if (key && keyword.key && key !== keyword.key) return false;
+    const joinedKeys = keys.join('.');
+    for (let ignorePath of options.ignorePaths) {
+      if (ignorePath.test(joinedKeys)) return false;
+    }
+    if (keyword.key && !keyword.key.test(joinedKeys)) return false;
     return nativeMatch(element, keyword);
   }
 }
