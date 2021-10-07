@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/cheminfo/smart-array-filter/compare/v2.0.3...v2.1.0) (2021-10-07)
+
+
+### Features
+
+* add ignorePaths option ([ba2eac4](https://github.com/cheminfo/smart-array-filter/commit/ba2eac4e7947b191e0f24c1dd767a69602e3f5f5))
+
 1.1.0 / 2016-08-26
 ==================
 
