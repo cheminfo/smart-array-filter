@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.1.1](https://www.github.com/cheminfo/smart-array-filter/compare/v2.1.0...v2.1.1) (2021-10-07)
+
+
+### Bug Fixes
+
+* add missing prettier script ([5a33fc5](https://www.github.com/cheminfo/smart-array-filter/commit/5a33fc5b2e179aa3289902a14942f725fe816e92))
+* remove dist folder because it is not maintained ([a802161](https://www.github.com/cheminfo/smart-array-filter/commit/a8021610b49b19bb158c4b11e6873ddc8a615bd2))
+
 ## [2.1.0](https://github.com/cheminfo/smart-array-filter/compare/v2.0.3...v2.1.0) (2021-10-07)
 
 
