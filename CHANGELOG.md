@@ -1,3 +1,5 @@
+# Changelog
+
 ## [2.1.0](https://github.com/cheminfo/smart-array-filter/compare/v2.0.3...v2.1.0) (2021-10-07)
 
 
