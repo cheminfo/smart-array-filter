@@ -13,7 +13,8 @@ test('pathAlias', () => {
   assert({ keywords: ['abc:3'], pathAlias: { abc: 'h.f' } }, 1);
   assert({ keywords: ['abc:2'], pathAlias: { abc: 'h.f' } }, 0);
   assert({ keywords: ['abc:1'], pathAlias: { abc: /h\..*\.a/ } }, 1);
-  assert({ keywords: ['abc:2'], pathAlias: { abc: /h\..*\.a/ } }, 0);
+  assert({ keywords: ['abc:3'], pathAlias: { abc: /(h\.a|h\.e)/ } }, 0);
+  assert({ keywords: ['abc:3'], pathAlias: { abc: /(h\.a|h\.f)/ } }, 1);
 });
 
 function assert(options, length) {
