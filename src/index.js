@@ -11,6 +11,7 @@ import parseKeywords from './parseKeywords';
  * @param {number} [options.limit=Infinity]
  * @param {boolean} [options.caseSensitive=false]
  * @param {array} [options.ignorePaths=[]] // list of jpath to ignore
+ * @param {array} [options.pathAlias={}] // key (string), value (string of regexp)
  * @param {string|Array} [options.keywords=[]]
  * @param {boolean} [options.index=false] Returns the indices in the array that match
  * @param {boolean} [options.predicate='AND'] Could be either AND or OR
@@ -18,11 +19,17 @@ import parseKeywords from './parseKeywords';
 export function filter(array, options = {}) {
   let result = [];
 
-  let { index = false, predicate = 'AND', ignorePaths = [] } = options;
+  let {
+    index = false,
+    predicate = 'AND',
+    ignorePaths = [],
+    pathAlias = {},
+  } = options;
   let insensitive = options.caseSensitive ? '' : 'i';
 
+  pathAlias = ensureObjectOfRegExps(pathAlias, { insensitive });
   ignorePaths = ignorePaths.map(
-    (key) => new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, insensitive),
+    (path) => new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive),
   );
 
   let limit = options.limit ? options.limit : Infinity;
@@ -56,10 +63,14 @@ export function filter(array, options = {}) {
             insensitive,
           );
         }
-        criterion.key = new RegExp(
-          `(^|\\.)${escapeRegExp(key)}(\\.|$)`,
-          insensitive,
-        );
+        if (pathAlias[key]) {
+          criterion.key = pathAlias[key];
+        } else {
+          criterion.key = new RegExp(
+            `(^|\\.)${escapeRegExp(key)}(\\.|$)`,
+            insensitive,
+          );
+        }
       }
       fillCriterion(criterion, value, insensitive);
     } else {
@@ -70,7 +81,7 @@ export function filter(array, options = {}) {
   });
   let matched = 0;
   for (let i = 0; i < array.length && matched < limit; i++) {
-    if (match(array[i], keywords, predicate, { ignorePaths })) {
+    if (match(array[i], keywords, predicate, { ignorePaths, pathAlias })) {
       matched = result.push(index ? i : array[i]);
     }
   }
@@ -134,7 +145,12 @@ function recursiveMatch(element, keyword, keys, options) {
     for (let ignorePath of options.ignorePaths) {
       if (ignorePath.test(joinedKeys)) return false;
     }
-    if (keyword.key && !keyword.key.test(joinedKeys)) return false;
+    if (keyword.key) {
+      const key = options.pathAlias[keyword.key]
+        ? options.pathAlias[keyword.key]
+        : keyword.key;
+      if (!key.test(joinedKeys)) return false;
+    }
     return nativeMatch(element, keyword);
   }
 }
@@ -147,4 +163,20 @@ function nativeMatch(element, keyword) {
   } else {
     return false;
   }
+}
+
+function ensureObjectOfRegExps(object, options) {
+  const { insensitive } = options;
+  const toReturn = {};
+  for (const [key, value] of Object.entries(object)) {
+    if (value instanceof RegExp) {
+      toReturn[key] = value;
+    } else {
+      toReturn[key] = new RegExp(
+        `(^|\\.)${escapeRegExp(value)}(\\.|$)`,
+        insensitive,
+      );
+    }
+  }
+  return toReturn;
 }
