@@ -1,7 +1,6 @@
 {
   "name": "smart-array-filter",
   "version": "2.2.0",
-  "main": "lib/index.js",
   "module": "src/index.js",
   "description": "Filter an array of objects",
   "keywords": [
