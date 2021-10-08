@@ -38,7 +38,7 @@
     "test": "npm run test-coverage && npm run eslint",
     "test-coverage": "jest --coverage",
     "test-only": "jest",
-    "postinstall": "npm run build-lib"
+    "prepack": "npm run build-lib"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
