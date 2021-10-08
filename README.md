@@ -75,6 +75,10 @@ filter(array, {
   keyword: 'a.b:>=1', // 2 consecutive properties (not including array indices)
 });
 filter(array, {
+  keyword: 'dog:>=1',
+  pathAlias: { dog: 'a.b' }, // you can define path alias
+});
+filter(array, {
   keyword: 'b:>1', // 2 consecutive properties (not including array indices)
 });
 filter(array, {
