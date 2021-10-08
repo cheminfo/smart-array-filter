@@ -2,7 +2,7 @@
 
 import { filter } from '..';
 
-let test = [
+let data = [
   {
     h: [{ e: 1 }, { e: 2 }, { f: 3 }],
     i: ['jkl'],
@@ -26,5 +26,5 @@ test('ignorePaths', () => {
 });
 
 function assert(options, length) {
-  expect(filter(test, options)).toHaveLength(length);
+  expect(filter(data, options)).toHaveLength(length);
 }
