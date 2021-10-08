@@ -6,13 +6,13 @@ import parseKeywords from './parseKeywords';
 
 /**
  *
- * @param {Array} array
+ * @param {Array} array array to filter
  * @param {object} [options={}]
- * @param {number} [options.limit=Infinity]
- * @param {boolean} [options.caseSensitive=false]
- * @param {array} [options.ignorePaths=[]] // list of jpath to ignore
- * @param {array} [options.pathAlias={}] // key (string), value (string of regexp)
- * @param {string|Array} [options.keywords=[]]
+ * @param {number} [options.limit=Infinity] Maximum number of results
+ * @param {boolean} [options.caseSensitive=false] By default we ignore case
+ * @param {array} [options.ignorePaths=[]] Array of jpath to ignore
+ * @param {array} [options.pathAlias={}] key (string), value (string of regexp)
+ * @param {string|Array} [options.keywords=[]] list of keywords used to filter the array
  * @param {boolean} [options.index=false] Returns the indices in the array that match
  * @param {boolean} [options.predicate='AND'] Could be either AND or OR
  */
