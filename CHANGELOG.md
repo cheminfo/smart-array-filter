@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.0](https://www.github.com/cheminfo/smart-array-filter/compare/v2.2.0...v2.3.0) (2021-10-14)
+
+
+### Features
+
+* add CJS build ([8f582e5](https://www.github.com/cheminfo/smart-array-filter/commit/8f582e5cfdd13c1b46e0c6ab69ce4f19408cbc85))
+* publish lib in npm ([cf3f269](https://www.github.com/cheminfo/smart-array-filter/commit/cf3f269f1f5d5dd056aceeb6990262113d3557b2))
+
 ## [2.2.0](https://www.github.com/cheminfo/smart-array-filter/compare/v2.1.0...v2.2.0) (2021-10-08)
 
 
