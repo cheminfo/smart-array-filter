@@ -29,16 +29,16 @@
   "homepage": "https://github.com/cheminfo/smart-array-filter",
   "license": "MIT",
   "scripts": {
-    "build": "cheminfo-build --entry src/index.js",
-    "build-lib": "rollup -c rollup.config.js",
+    "build": "cheminfo-build --entry src/index.js --root SmartArrayFilter",
+    "compile": "rollup -c",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
+    "prepack": "npm run compile",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
     "test": "npm run test-coverage && npm run eslint",
     "test-coverage": "jest --coverage",
-    "test-only": "jest",
-    "prepack": "npm run build-lib"
+    "test-only": "jest"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
