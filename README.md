@@ -34,23 +34,23 @@ var array = [
   { id: '3', pet: 'horse' },
 ];
 filter(array, {
-  keyword: '-pet:cat', // not a cat
+  keywords: '-pet:cat', // not a cat
 });
 
 filter(array, {
-  keyword: '2', // any field has the value 2
+  keywords: '2', // any field has the value 2
 });
 
 filter(array, {
-  keyword: '>2', // any field has the value after 2. Strings will be included and letters are after numbers in ascii code
+  keywords: '>2', // any field has the value after 2. Strings will be included and letters are after numbers in ascii code
 });
 
 filter(array, {
-  keyword: 'id:>=2', // id greater or equal to 2
+  keywords: 'id:>=2', // id greater or equal to 2
 });
 
 filter(array, {
-  keyword: 'id:1..2', // id between 1 and 2 (including 1 and 2)
+  keywords: 'id:1..2', // id between 1 and 2 (including 1 and 2)
 });
 ```
 
@@ -59,30 +59,30 @@ If you enter many criteria by default there is a 'AND' combination
 ```js
 var array = [{ animals: ['dog', 'cat'] }, { animals: ['horse', 'cat'] }];
 filter(array, {
-  keyword: 'animals:cat', // array must contain a cat
+  keywords: 'animals:cat', // array must contain a cat
 });
 filter(array, {
-  keyword: 'animals:o', // by default it is include so match dog and horse
+  keywords: 'animals:o', // by default it is include so match dog and horse
 });
 filter(array, {
-  keyword: 'animals:=o', // must contain exactly a 'o'
+  keywords: 'animals:=o', // must contain exactly a 'o'
 });
 ```
 
 ```js
 var array = [{ a: [{ b: 1 }, { c: 2 }] }, { a: [{ b: 2 }, { d: 2 }] }];
 filter(array, {
-  keyword: 'a.b:>=1', // 2 consecutive properties (not including array indices)
+  keywords: 'a.b:>=1', // 2 consecutive properties (not including array indices)
 });
 filter(array, {
-  keyword: 'dog:>=1',
+  keywords: 'dog:>=1',
   pathAlias: { dog: 'a.b' }, // you can define path alias
 });
 filter(array, {
-  keyword: 'b:>1', // 2 consecutive properties (not including array indices)
+  keywords: 'b:>1', // 2 consecutive properties (not including array indices)
 });
 filter(array, {
-  keyword: 'd:2', // 2 consecutive properties (not including array indices)
+  keywords: 'd:2', // 2 consecutive properties (not including array indices)
 });
 ```
 
