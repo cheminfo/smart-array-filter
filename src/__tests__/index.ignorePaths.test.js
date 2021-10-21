@@ -23,6 +23,9 @@ test('ignorePaths', () => {
   assert({ keywords: ['h.e:2'], ignorePaths: ['h'] }, 0);
   assert({ keywords: ['i:jkl'], ignorePaths: ['h'] }, 1);
   assert({ keywords: ['i:jkl'], ignorePaths: ['i'] }, 0);
+  assert({ keywords: ['h.f:3'], ignorePaths: [/e.*/] }, 1);
+  assert({ keywords: ['h.f:3'], ignorePaths: [/h.*f/] }, 0);
+  assert({ keywords: ['h.f:3'], ignorePaths: [/e.*g/] }, 1);
 });
 
 function assert(options, length) {

@@ -29,8 +29,10 @@ export function filter(array, options = {}) {
   let insensitive = options.caseSensitive ? '' : 'i';
 
   pathAlias = ensureObjectOfRegExps(pathAlias, { insensitive });
-  ignorePaths = ignorePaths.map(
-    (path) => new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive),
+  ignorePaths = ignorePaths.map((path) =>
+    typeof path === 'string'
+      ? new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive)
+      : path,
   );
 
   let limit = options.limit ? options.limit : Infinity;
