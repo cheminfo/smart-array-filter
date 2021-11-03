@@ -1,5 +1,11 @@
 import nativeMatch from './nativeMatch';
 
+/**
+ * @param element
+ * @param criterium
+ * @param keys
+ * @param options
+ */
 export default function recursiveMatch(element, criterium, keys, options) {
   if (typeof element === 'object') {
     if (Array.isArray(element)) {

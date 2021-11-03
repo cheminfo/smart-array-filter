@@ -26,6 +26,10 @@ describe('simple filter', () => {
   });
 });
 
+/**
+ * @param options
+ * @param length
+ */
 function assert(options, length) {
   expect(filter(test, options)).toHaveLength(length);
 }

@@ -27,6 +27,10 @@ describe('chemicalDetails tests', () => {
   });
 });
 
+/**
+ * @param keywords
+ * @param length
+ */
 function assert(keywords, length) {
   expect(filter(chemicals, { keywords: keywords })).toHaveLength(length);
 }

@@ -1,5 +1,9 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
+/**
+ * @param object
+ * @param options
+ */
 export default function ensureObjectOfRegExps(object, options) {
   const { insensitive } = options;
   const toReturn = {};

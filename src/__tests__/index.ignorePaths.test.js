@@ -28,6 +28,10 @@ test('ignorePaths', () => {
   assert({ keywords: ['h.f:3'], ignorePaths: [/e.*g/] }, 1);
 });
 
+/**
+ * @param options
+ * @param length
+ */
 function assert(options, length) {
   expect(filter(data, options)).toHaveLength(length);
 }

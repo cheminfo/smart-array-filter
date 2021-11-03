@@ -29,6 +29,9 @@ const operators = {
 // we also deal with ..10 and 10..
 operators['..'] = operators['<='];
 
+/**
+ * @param keyword
+ */
 export default function getCheckNumber(keyword) {
   let match =
     /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(

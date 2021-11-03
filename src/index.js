@@ -7,15 +7,15 @@ import parseKeywords from './utils/parseKeywords';
 
 /**
  *
- * @param {Array} array array to filter
+ * @param {Array} array - Array to filter.
  * @param {object} [options={}]
- * @param {number} [options.limit=Infinity] Maximum number of results
- * @param {boolean} [options.caseSensitive=false] By default we ignore case
- * @param {array} [options.ignorePaths=[]] Array of jpath to ignore
- * @param {array} [options.pathAlias={}] key (string), value (string of regexp)
- * @param {string|Array} [options.keywords=[]] list of keywords used to filter the array
- * @param {boolean} [options.index=false] Returns the indices in the array that match
- * @param {boolean} [options.predicate='AND'] Could be either AND or OR
+ * @param {number} [options.limit=Infinity] - Maximum number of results.
+ * @param {boolean} [options.caseSensitive=false] - By default we ignore case.
+ * @param {Array} [options.ignorePaths=[]] - Array of jpath to ignore.
+ * @param {Array} [options.pathAlias={}] - Key (string), value (string of regexp).
+ * @param {string|Array} [options.keywords=[]] - List of keywords used to filter the array.
+ * @param {boolean} [options.index=false] - Returns the indices in the array that match.
+ * @param {boolean} [options.predicate='AND'] - Could be either AND or OR.
  */
 export function filter(array, options = {}) {
   let result = [];

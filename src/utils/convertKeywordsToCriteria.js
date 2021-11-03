@@ -3,6 +3,10 @@ import escapeRegExp from 'lodash.escaperegexp';
 import getCheckNumber from './getCheckNumber';
 import getCheckString from './getCheckString';
 
+/**
+ * @param keywords
+ * @param options
+ */
 export default function convertKeywordsToCriteria(keywords, options) {
   const { insensitive, pathAlias } = options;
   return keywords.map((keyword) => {
@@ -47,6 +51,11 @@ export default function convertKeywordsToCriteria(keywords, options) {
   });
 }
 
+/**
+ * @param criterion
+ * @param keyword
+ * @param insensitive
+ */
 function fillCriterion(criterion, keyword, insensitive) {
   criterion.checkString = getCheckString(keyword, insensitive);
   criterion.checkNumber = getCheckNumber(keyword);

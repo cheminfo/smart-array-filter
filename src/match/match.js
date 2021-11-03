@@ -1,5 +1,11 @@
 import recursiveMatch from './recursiveMatch';
 
+/**
+ * @param element
+ * @param criteria
+ * @param predicate
+ * @param options
+ */
 export default function match(element, criteria, predicate, options) {
   if (criteria.length) {
     let found = false;

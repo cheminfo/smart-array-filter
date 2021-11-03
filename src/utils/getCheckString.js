@@ -41,6 +41,10 @@ const operators = {
 
 operators['..'] = operators['<='];
 
+/**
+ * @param keyword
+ * @param insensitive
+ */
 export default function getCheckString(keyword, insensitive) {
   let parts = keyword.split('..');
   let match = /^\s*\(?\s*(<|<=|=|>=|>)?(\S*)\s*\)?$/.exec(parts[0]);

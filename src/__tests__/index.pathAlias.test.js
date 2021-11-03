@@ -17,6 +17,10 @@ test('pathAlias', () => {
   assert({ keywords: ['abc:3'], pathAlias: { abc: /(h\.a|h\.f)/ } }, 1);
 });
 
+/**
+ * @param options
+ * @param length
+ */
 function assert(options, length) {
   expect(filter(data, options)).toHaveLength(length);
 }

@@ -209,6 +209,10 @@ describe('index.test', () => {
   });
 });
 
+/**
+ * @param options
+ * @param length
+ */
 function assert(options, length) {
   expect(filter(test, options)).toHaveLength(length);
 }
