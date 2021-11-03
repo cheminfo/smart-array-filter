@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
+    "@types/lodash.escaperegexp": "^4.1.6",
     "cheminfo-build": "^1.1.11",
     "eslint": "^8.1.0",
     "eslint-config-cheminfo-typescript": "^10.2.1",
