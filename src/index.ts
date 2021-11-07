@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import escapeRegExp from 'lodash.escaperegexp';
 
 import match from './match/match';
@@ -41,7 +42,7 @@ export interface ArrayType {
 }
 /**
  *
- * filter.
+ * Filter.
  *
  * @param array - Array to filter.
  * @param [options={}] - Object.
@@ -52,7 +53,7 @@ export interface ArrayType {
  * @param [options.keywords=[]] - List of keywords used to filter the array.
  * @param [options.index=false] - Returns the indices in the array that match.
  * @param [options.predicate='AND'] - Could be either AND or OR.
- * @returns ArrayType.
+ * @returns String[] | number[].
  */
 export function filter(
   array: ArrayType[] | string[] | number[] | { [s: string | number]: any },
@@ -60,7 +61,7 @@ export function filter(
     ignorePaths: [],
     pathAlias: {},
   },
-) {
+): string[] | number[] {
   let result = [];
 
   let {

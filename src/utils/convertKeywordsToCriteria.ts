@@ -23,14 +23,12 @@ export default function convertKeywordsToCriteria(
 ): Criterion[] {
   const { insensitive, pathAlias } = options;
   return keywords.map((keyword) => {
-    let criterion: Criterion = {
+    let criterion = {
       is: false,
       key: false,
       negate: false,
       valueReg: undefined,
-      checkString: () => false,
-      checkNumber: () => false,
-    };
+    } as Criterion;
 
     if (keyword.startsWith('-')) {
       criterion.negate = true;
