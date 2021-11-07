@@ -34,11 +34,14 @@ describe('chemicals tests', () => {
 });
 
 /**
- * @param keywords
- * @param length
- * @param options
+ * Assert.
+ *
+ * @param keywords - String.
+ * @param length - Number.
+ * @param options - Object.
+ * @param options.limit - Number.
  */
-function assert(keywords, length, options) {
+function assert(keywords: string, length: number, options?: { limit: number }) {
   options = Object.assign({ keywords: keywords }, options);
   expect(filter(chemicals, options)).toHaveLength(length);
 }

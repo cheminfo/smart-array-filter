@@ -3,14 +3,10 @@ let separators = /[ ;,\t\r\n]/;
 /**
  * Need to convert a string to an array of keywords taking into account single and boule quotes.
  *
- * @param {string} keywords
- * @returns {Array<string>}
+ * @param keywords - String.
+ * @returns String[].
  */
-
-/**
- * @param keywords
- */
-export default function parseKeywords(keywords) {
+export default function parseKeywords(keywords: string): string[] {
   let result = [];
   let inQuotes = false;
   let inSeparator = true;

@@ -1,12 +1,19 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 /**
- * @param object
- * @param options
+ * EnsureObjectOfRegExps.
+ *
+ * @param object  - { [index: string]: string|RegExp }.
+ * @param options - Object.
+ * @param options.insensitive - String.
+ * @returns - Result.
  */
-export default function ensureObjectOfRegExps(object, options) {
+export default function ensureObjectOfRegExps(
+  object: { [index: string]: string | RegExp },
+  options: { insensitive: string },
+) {
   const { insensitive } = options;
-  const toReturn = {};
+  const toReturn: { [index: string]: RegExp } = {};
   for (const [key, value] of Object.entries(object)) {
     if (value instanceof RegExp) {
       toReturn[key] = value;

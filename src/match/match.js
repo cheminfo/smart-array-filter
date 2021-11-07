@@ -1,4 +1,5 @@
-import recursiveMatch from './recursiveMatch';
+import recursiveMatch from './recursiveMatch.js';
+
 
 /**
  * @param element

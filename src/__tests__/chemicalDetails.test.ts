@@ -28,9 +28,11 @@ describe('chemicalDetails tests', () => {
 });
 
 /**
- * @param keywords
- * @param length
+ * Assert.
+ *
+ * @param keywords - String.
+ * @param length - Number.
  */
-function assert(keywords, length) {
+function assert(keywords: string, length: number) {
   expect(filter(chemicals, { keywords: keywords })).toHaveLength(length);
 }

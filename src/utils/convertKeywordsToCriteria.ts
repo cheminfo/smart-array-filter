@@ -1,16 +1,10 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
+import { Criterion } from '..';
+
 import getCheckNumber from './getCheckNumber';
 import getCheckString from './getCheckString';
 
-interface Criterion{
-    is: boolean|RegExp,
-    key: boolean|RegExp,
-    negate: boolean,
-    valueReg: boolean|undefined,
-    checkString?:boolean,
-    checkNumber?:boolean
-}
 /**
  * ConvertKeywordsToCriteria.
  *
@@ -20,10 +14,16 @@ interface Criterion{
  * @param options.pathAlias - String.
  * @returns Criterion.
  */
-export default function convertKeywordsToCriteria(keywords:string[], options:{ insensitive:string, pathAlias:{ [index:string] : boolean } }):Criterion[] {
+export default function convertKeywordsToCriteria(
+  keywords: string[],
+  options: {
+    insensitive: string;
+    pathAlias: { [index: string]: boolean | RegExp | string };
+  },
+): Criterion[] {
   const { insensitive, pathAlias } = options;
   return keywords.map((keyword) => {
-    let criterion:Criterion = {
+    let criterion: Criterion = {
       is: false,
       key: false,
       negate: false,
@@ -71,7 +71,11 @@ export default function convertKeywordsToCriteria(keywords:string[], options:{ i
  * @param keyword - String.
  * @param insensitive - String.
  */
-function fillCriterion(criterion:Criterion, keyword:string, insensitive:string) {
+function fillCriterion(
+  criterion: Criterion,
+  keyword: string,
+  insensitive: string,
+) {
   criterion.checkString = getCheckString(keyword, insensitive);
   criterion.checkNumber = getCheckNumber(keyword);
 }

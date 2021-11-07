@@ -19,9 +19,11 @@ describe('parseKeywords', () => {
 });
 
 /**
- * @param keywords
- * @param result
+ * Assert.
+ *
+ * @param keywords - String.
+ * @param result - Result.
  */
-function assert(keywords, result) {
+function assert(keywords: string, result: string[]) {
   expect(parseKeywords(keywords)).toStrictEqual(result);
 }
