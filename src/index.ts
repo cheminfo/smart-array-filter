@@ -21,8 +21,8 @@ export interface Criterion {
   key: boolean | RegExp | string;
   negate: boolean;
   valueReg: boolean | undefined;
-  checkString?: (arg: string) => boolean;
-  checkNumber?: (arg: number) => boolean;
+  checkString: (arg: string) => boolean;
+  checkNumber: (arg: number) => boolean;
 }
 export interface ArrayType {
   a?: string;
@@ -55,10 +55,13 @@ export interface ArrayType {
  * @returns ArrayType.
  */
 export function filter(
-  array: ArrayType[]|string[]|number[]|{[s:string|number]:any},
-  options: OptionsType|undefined = {},
-){
-  let result= [];
+  array: ArrayType[] | string[] | number[] | { [s: string | number]: any },
+  options: OptionsType | undefined = {
+    ignorePaths: [],
+    pathAlias: {},
+  },
+) {
+  let result = [];
 
   let {
     index = false,

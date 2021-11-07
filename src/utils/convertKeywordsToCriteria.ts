@@ -28,6 +28,8 @@ export default function convertKeywordsToCriteria(
       key: false,
       negate: false,
       valueReg: undefined,
+      checkString: () => false,
+      checkNumber: () => false,
     };
 
     if (keyword.startsWith('-')) {
