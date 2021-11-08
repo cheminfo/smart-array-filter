@@ -7,13 +7,13 @@ let separators = /[ ;,\t\r\n]/;
  * @returns String[].
  */
 export default function parseKeywords(keywords: string): string[] {
-  let result = [];
+  const result = [];
   let inQuotes = false;
   let inSeparator = true;
   let currentWord = [];
   let previous = '';
   for (let i = 0; i < keywords.length; i++) {
-    let current = keywords.charAt(i);
+    const current = keywords.charAt(i);
     if (inQuotes) {
       if (previous === '"') {
         // escaped quote

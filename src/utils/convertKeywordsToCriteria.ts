@@ -18,12 +18,12 @@ export default function convertKeywordsToCriteria(
   keywords: string[],
   options: {
     insensitive: string;
-    pathAlias: { [index: string]: boolean | RegExp | string };
+    pathAlias: Record<string, boolean | string | RegExp>;
   },
 ): Criterion[] {
   const { insensitive, pathAlias } = options;
   return keywords.map((keyword) => {
-    let criterion = {
+    const criterion = {
       is: false,
       key: false,
       negate: false,
@@ -34,11 +34,11 @@ export default function convertKeywordsToCriteria(
       criterion.negate = true;
       keyword = keyword.substring(1);
     }
-    let colon = keyword.indexOf(':');
+    const colon = keyword.indexOf(':');
     if (colon > -1) {
-      let value = keyword.substring(colon + 1);
+      const value = keyword.substring(colon + 1);
       if (colon > 0) {
-        let key = keyword.substring(0, colon);
+        const key = keyword.substring(0, colon);
         if (key === 'is') {
           // a property path exists
           criterion.is = new RegExp(

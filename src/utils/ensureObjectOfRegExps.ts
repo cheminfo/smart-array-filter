@@ -6,14 +6,14 @@ import escapeRegExp from 'lodash.escaperegexp';
  * @param object  - { [index: string]: string|RegExp }.
  * @param options - Object.
  * @param options.insensitive - String.
- * @returns - Result.
+ * @returns - Record<string, string|RegExp>.
  */
 export default function ensureObjectOfRegExps(
-  object: { [index: string]: string | RegExp },
+  object: Record<string, RegExp | string>,
   options: { insensitive: string },
-) {
+): Record<string, string | RegExp> {
   const { insensitive } = options;
-  const toReturn: { [index: string]: RegExp } = {};
+  const toReturn: Record<string, RegExp | string> = {};
   for (const [key, value] of Object.entries(object)) {
     if (value instanceof RegExp) {
       toReturn[key] = value;

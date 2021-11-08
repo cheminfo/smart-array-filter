@@ -1,26 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ArrayType, Criterion } from '..';
+import { Criterion } from '..';
 
 import nativeMatch from './nativeMatch';
 
 /**
  * RecursiveMatch.
  *
- * @param element - ArrayType.
+ * @param element - String | number | Record<string, string>.
  * @param criterium - Criterion.
  * @param keys - String[].
  * @param options - Object.
  * @param options.ignorePaths - RegExp[].
- * @param options.pathAlias - { [s: string]: RegExp }.
+ * @param options.pathAlias - Record<string, string|RegExp>.
  * @returns Boolean.
  */
 export default function recursiveMatch(
-  element: ArrayType | string | number | any,
+  element: string | number | Record<string, string>,
   criterium: Criterion,
   keys: string[],
   options: {
     ignorePaths: RegExp[];
-    pathAlias: { [s: string]: RegExp | string };
+    pathAlias: Record<string, string | RegExp>;
   },
 ): boolean {
   if (typeof element === 'object') {
@@ -31,9 +30,9 @@ export default function recursiveMatch(
         }
       }
     } else {
-      for (let i in element) {
+      for (const i in element) {
         keys.push(i);
-        let didMatch = recursiveMatch(element[i], criterium, keys, options);
+        const didMatch = recursiveMatch(element[i], criterium, keys, options);
         keys.pop();
         if (didMatch) return true;
       }
@@ -48,7 +47,7 @@ export default function recursiveMatch(
   } else {
     // need to check if keys match
     const joinedKeys = keys.join('.');
-    for (let ignorePath of options.ignorePaths) {
+    for (const ignorePath of options.ignorePaths) {
       if (ignorePath.test(joinedKeys)) return false;
     }
     if (criterium.key) {

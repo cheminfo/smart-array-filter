@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import escapeRegExp from 'lodash.escaperegexp';
 
 import match from './match/match';
@@ -15,8 +13,10 @@ export interface OptionsType {
   insensitive?: string;
   predicate?: string;
   ignorePaths?: RegExp[] | string[];
-  pathAlias?: { abc: string | RegExp } | { [s: string]: string | RegExp };
+  pathAlias?: { abc: string | RegExp } | Record<string, string | RegExp>;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Data = string[] | number[] | Record<string | number, any>;
 export interface Criterion {
   is: boolean | RegExp;
   key: boolean | RegExp | string;
@@ -24,21 +24,6 @@ export interface Criterion {
   valueReg: boolean | undefined;
   checkString: (arg: string) => boolean;
   checkNumber: (arg: number) => boolean;
-}
-export interface ArrayType {
-  a?: string;
-  b?: string;
-  c?: string[];
-  d?: {
-    e?: number;
-    f?: {
-      g?: string[];
-    };
-  };
-  i?: string[];
-  neg?: number;
-  spec?: string;
-  bool?: boolean;
 }
 /**
  *
@@ -56,10 +41,10 @@ export interface ArrayType {
  * @returns String[] | number[].
  */
 export function filter(
-  array: ArrayType[] | string[] | number[] | { [s: string | number]: any },
-  options: OptionsType = {}},
+  array: Data,
+  options: OptionsType = {},
 ): string[] | number[] {
-  let result = [];
+  const result = [];
 
   let {
     index = false,
@@ -67,18 +52,16 @@ export function filter(
     ignorePaths = [],
     pathAlias = {},
   } = options;
-  let insensitive = options.caseSensitive ? '' : 'i';
 
+  const limit = options.limit ? options.limit : Infinity;
+  const insensitive = options.caseSensitive ? '' : 'i';
+  let keywords = options.keywords || [];
   pathAlias = ensureObjectOfRegExps(pathAlias, { insensitive });
   ignorePaths = ignorePaths.map((path) =>
     typeof path === 'string'
       ? new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive)
       : path,
   );
-
-  let limit = options.limit ? options.limit : Infinity;
-
-  let keywords = options.keywords || [];
 
   if (typeof keywords === 'string') {
     keywords = parseKeywords(keywords);

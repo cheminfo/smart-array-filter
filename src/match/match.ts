@@ -1,25 +1,25 @@
-import { ArrayType, Criterion } from '../index';
+import { Criterion } from '../index';
 
 import recursiveMatch from './recursiveMatch';
 
 /**
  * Match.
  *
- * @param element - ArrayType|String|number.
+ * @param element - String | number | Record<string, string>.
  * @param criteria - Criterion[].
  * @param predicate - String.
  * @param options - Object.
  * @param options.ignorePaths - RegExp[].
- * @param options.pathAlias - { [s: string]: RegExp|string }.
+ * @param options.pathAlias - Record<string, string|RegExp>s.
  * @returns Boolean.
  */
 export default function match(
-  element: ArrayType | string | number,
+  element: string | number | Record<string, string>,
   criteria: Criterion[],
   predicate: string,
   options: {
     ignorePaths: RegExp[];
-    pathAlias: { [s: string]: RegExp | string };
+    pathAlias: Record<string, string | RegExp>;
   },
 ) {
   if (criteria.length) {

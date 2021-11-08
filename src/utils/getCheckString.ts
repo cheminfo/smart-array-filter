@@ -1,8 +1,9 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-const operators: {
-  [index: string]: (arg1: string, arg2?: string) => (arg: string) => boolean;
-} = {
+const operators: Record<
+  string,
+  (arg1: string, arg2?: string) => (arg: string) => boolean
+> = {
   '<': (query) => {
     return (string) => {
       return string < query;
@@ -54,15 +55,15 @@ export default function getCheckString(
   keyword: string,
   insensitive: string,
 ): (arg: string) => boolean {
-  let parts = keyword.split('..');
+  const parts = keyword.split('..');
   // eslint-disable-next-line prefer-named-capture-group
-  let match = /^\s*\(?\s*(<|<=|=|>=|>)?(\S*)\s*\)?$/.exec(parts[0]);
+  const match = /^\s*\(?\s*(<|<=|=|>=|>)?(\S*)\s*\)?$/.exec(parts[0]);
   let checkString: (arg: string) => boolean = () => false;
   if (match) {
-    let operator = match[1];
-    let query = match[2];
-    let dots = parts.length > 1 ? '..' : '';
-    let secondQuery = parts[1];
+    const operator = match[1];
+    const query = match[2];
+    const dots = parts.length > 1 ? '..' : '';
+    const secondQuery = parts[1];
     if (operator) {
       checkString = operators[operator](query, insensitive);
     } else if (dots) {
