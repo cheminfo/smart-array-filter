@@ -59,7 +59,7 @@ export default function getCheckString(
   let match = /^\s*\(?\s*(<|<=|=|>=|>)?(\S*)\s*\)?$/.exec(parts[0]);
   let checkString: (arg: string) => boolean = () => false;
   if (match) {
-    let operator: string = match[1];
+    let operator = match[1];
     let query = match[2];
     let dots = parts.length > 1 ? '..' : '';
     let secondQuery = parts[1];
