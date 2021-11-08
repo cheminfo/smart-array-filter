@@ -57,10 +57,7 @@ export interface ArrayType {
  */
 export function filter(
   array: ArrayType[] | string[] | number[] | { [s: string | number]: any },
-  options: OptionsType | undefined = {
-    ignorePaths: [],
-    pathAlias: {},
-  },
+  options: OptionsType = {}},
 ): string[] | number[] {
   let result = [];
 
