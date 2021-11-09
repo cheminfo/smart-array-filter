@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://www.github.com/cheminfo/smart-array-filter/compare/v3.0.0...v3.1.0) (2021-11-09)
+
+
+### Features
+
+* when alias is string, make sure it matches the full property ([3ed166b](https://www.github.com/cheminfo/smart-array-filter/commit/3ed166bb4ce5dfd1ef1c0f1dc4815b937e4f46c2))
+
+
+### Bug Fixes
+
+* use negative lookahead to avoid wrongly identifying the query operator ([c78eef4](https://www.github.com/cheminfo/smart-array-filter/commit/c78eef4653ce328186f343c10c98eb292f7a5eff))
+
 ## [3.0.0](https://www.github.com/cheminfo/smart-array-filter/compare/v2.3.0...v3.0.0) (2021-11-09)
 
 
