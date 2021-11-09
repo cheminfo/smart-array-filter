@@ -8,9 +8,9 @@ import { Criterion } from '..';
  * @returns Boolean.
  */
 export default function nativeMatch(
-  element: string | number,
+  element: string | number | boolean | undefined,
   keyword: Criterion,
-) {
+): boolean {
   if (typeof element === 'string') {
     return keyword.checkString(element);
   } else if (typeof element === 'number') {

@@ -1,4 +1,4 @@
-import { Criterion } from '../index';
+import { Criterion, Json } from '../index';
 
 import recursiveMatch from './recursiveMatch';
 
@@ -14,14 +14,14 @@ import recursiveMatch from './recursiveMatch';
  * @returns Boolean.
  */
 export default function match(
-  element: string | number | Record<string, string>,
+  element: Json,
   criteria: Criterion[],
   predicate: string,
   options: {
     ignorePaths: RegExp[];
     pathAlias: Record<string, string | RegExp>;
   },
-) {
+): boolean {
   if (criteria.length) {
     let found = false;
     for (const criterion of criteria) {

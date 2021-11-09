@@ -5,18 +5,35 @@ import convertKeywordsToCriteria from './utils/convertKeywordsToCriteria';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
 import parseKeywords from './utils/parseKeywords';
 
-export interface OptionsType {
+interface OptionsTypeBase {
   keywords?: string[] | string | null;
   limit?: number;
   caseSensitive?: boolean;
-  index?: boolean;
   insensitive?: string;
   predicate?: string;
   ignorePaths?: RegExp[] | string[];
   pathAlias?: { abc: string | RegExp } | Record<string, string | RegExp>;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Data = string[] | number[] | Record<string | number, any>;
+
+export type OptionsTypeWithIndex = OptionsTypeBase & {
+  index: true;
+};
+
+export type OptionsTypeWithoutIndex = OptionsTypeBase & {
+  index?: false;
+};
+
+export type OptionsType = OptionsTypeWithIndex | OptionsTypeWithoutIndex;
+
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Json[]
+  | { [key: string]: Json };
+
 export interface Criterion {
   is: boolean | RegExp;
   key: boolean | RegExp | string;
@@ -25,6 +42,20 @@ export interface Criterion {
   checkString: (arg: string) => boolean;
   checkNumber: (arg: number) => boolean;
 }
+
+export function filter<T extends Json>(
+  array: T[],
+  options?: OptionsTypeWithIndex,
+): number[];
+export function filter<T extends Json>(
+  array: T[],
+  options?: OptionsTypeWithoutIndex,
+): T[];
+export function filter<T extends Json>(
+  array: Json[],
+  options?: OptionsType,
+): T[] | number[];
+
 /**
  *
  * Filter.
@@ -41,9 +72,9 @@ export interface Criterion {
  * @returns String[] | number[].
  */
 export function filter(
-  array: Data,
+  array: Json[],
   options: OptionsType = {},
-): string[] | number[] {
+): Json[] | number[] {
   const result = [];
 
   let {

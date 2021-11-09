@@ -1,4 +1,4 @@
-import { Criterion } from '..';
+import { Criterion, Json } from '..';
 
 import nativeMatch from './nativeMatch';
 
@@ -14,7 +14,7 @@ import nativeMatch from './nativeMatch';
  * @returns Boolean.
  */
 export default function recursiveMatch(
-  element: string | number | Record<string, string>,
+  element: Json,
   criterium: Criterion,
   keys: string[],
   options: {

@@ -1,6 +1,6 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
 
-import { filter, OptionsType } from '..';
+import { filter, OptionsTypeWithoutIndex } from '..';
 
 import chemicals from './chemicals.json';
 
@@ -41,7 +41,11 @@ describe('chemicals tests', () => {
  * @param options - Object.
  * @param options.limit - Number.
  */
-function assert(keywords: string, length: number, options?: OptionsType) {
+function assert(
+  keywords: string,
+  length: number,
+  options?: OptionsTypeWithoutIndex,
+) {
   options = Object.assign({ keywords: keywords }, options);
   expect(filter(chemicals, options)).toHaveLength(length);
 }
