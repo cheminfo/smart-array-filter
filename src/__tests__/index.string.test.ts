@@ -15,6 +15,13 @@ describe('string filter', () => {
 
     assert({ keywords: ['i:jk'] }, 1);
     assert({ keywords: ['i:=jk'] }, 0);
+    assert({ keywords: ['i:>=jk'] }, 1);
+    assert({ keywords: ['i:>=jkl'] }, 1);
+    assert({ keywords: ['i:<=jkl'] }, 1);
+    assert({ keywords: ['i:<=jkla'] }, 1);
+    assert({ keywords: ['i:<jkl'] }, 0);
+    assert({ keywords: ['i:>jkl'] }, 0);
+
     assert({ keywords: ['h'] }, 1);
     assert({ keywords: ['k'] }, 1);
     assert({ keywords: ['=k'] }, 0);
