@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.1.1](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.0...v3.1.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* removed unused filter option "sensitive" ([02259da](https://www.github.com/cheminfo/smart-array-filter/commit/02259daf6ccea93a3401397778c427a4ccbe5804))
+
 ## [3.1.0](https://www.github.com/cheminfo/smart-array-filter/compare/v3.0.0...v3.1.0) (2021-11-09)
 
 
