@@ -25,6 +25,11 @@ describe('chemicals tests', () => {
     assert('price1:<50', 50, { limit: 50 });
     assert('price1:<50', 85, { limit: 100 });
     assert('price1:>=50', 99);
+    assert('price:>=5000', 0, {
+      pathAlias: {
+        price: /^price.*/i,
+      },
+    });
     assert('mp:230..230', 3);
     assert('mw:30..31', 7);
     assert('idontexist:', 0);

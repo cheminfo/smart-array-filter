@@ -9,7 +9,6 @@ interface OptionsTypeBase {
   keywords?: string[] | string | null;
   limit?: number;
   caseSensitive?: boolean;
-  insensitive?: string;
   predicate?: string;
   ignorePaths?: RegExp[] | string[];
   pathAlias?: Record<string, string | RegExp>;
