@@ -12,7 +12,7 @@ interface OptionsTypeBase {
   insensitive?: string;
   predicate?: string;
   ignorePaths?: RegExp[] | string[];
-  pathAlias?: { abc: string | RegExp } | Record<string, string | RegExp>;
+  pathAlias?: Record<string, string | RegExp>;
 }
 
 export type OptionsTypeWithIndex = OptionsTypeBase & {
