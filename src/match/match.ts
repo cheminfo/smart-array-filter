@@ -19,7 +19,7 @@ export default function match(
   predicate: string,
   options: {
     ignorePaths: RegExp[];
-    pathAlias: Record<string, string | RegExp>;
+    pathAlias: Record<string, RegExp>;
   },
 ): boolean {
   if (criteria.length) {

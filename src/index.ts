@@ -35,10 +35,9 @@ export type Json =
   | { [key: string]: Json };
 
 export interface Criterion {
-  is: boolean | RegExp;
-  key: boolean | RegExp | string;
+  is?: RegExp;
+  key?: RegExp;
   negate: boolean;
-  valueReg: boolean | undefined;
   checkString: (arg: string) => boolean;
   checkNumber: (arg: number) => boolean;
 }
@@ -81,13 +80,13 @@ export function filter(
     index = false,
     predicate = 'AND',
     ignorePaths = [],
-    pathAlias = {},
+    pathAlias: pathAliasOption = {},
   } = options;
 
   const limit = options.limit ? options.limit : Infinity;
   const insensitive = options.caseSensitive ? '' : 'i';
   let keywords = options.keywords || [];
-  pathAlias = ensureObjectOfRegExps(pathAlias, { insensitive });
+  const pathAlias = ensureObjectOfRegExps(pathAliasOption, { insensitive });
   ignorePaths = ignorePaths.map((path) =>
     typeof path === 'string'
       ? new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive)

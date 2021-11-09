@@ -11,9 +11,10 @@ import escapeRegExp from 'lodash.escaperegexp';
 export default function ensureObjectOfRegExps(
   object: Record<string, RegExp | string>,
   options: { insensitive: string },
-): Record<string, string | RegExp> {
+): Record<string, RegExp> {
   const { insensitive } = options;
-  const toReturn: Record<string, RegExp | string> = {};
+  const toReturn: Record<string, RegExp> = {};
+
   for (const [key, value] of Object.entries(object)) {
     if (value instanceof RegExp) {
       toReturn[key] = value;

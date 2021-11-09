@@ -10,7 +10,6 @@ import nativeMatch from './nativeMatch';
  * @param keys - String[].
  * @param options - Object.
  * @param options.ignorePaths - RegExp[].
- * @param options.pathAlias - Record<string, string|RegExp>.
  * @returns Boolean.
  */
 export default function recursiveMatch(
@@ -19,7 +18,6 @@ export default function recursiveMatch(
   keys: string[],
   options: {
     ignorePaths: RegExp[];
-    pathAlias: Record<string, string | RegExp>;
   },
 ): boolean {
   if (typeof element === 'object') {
@@ -39,7 +37,7 @@ export default function recursiveMatch(
     }
   } else if (criterium.is) {
     // we check for the presence of a key (jpath)
-    if ((criterium.is as RegExp).test(keys.join('.'))) {
+    if (criterium.is.test(keys.join('.'))) {
       return !!element;
     } else {
       return false;
@@ -51,10 +49,7 @@ export default function recursiveMatch(
       if (ignorePath.test(joinedKeys)) return false;
     }
     if (criterium.key) {
-      const key = options.pathAlias[criterium.key as string]
-        ? (options.pathAlias[criterium.key as string] as RegExp)
-        : (criterium.key as RegExp);
-      if (!key.test(joinedKeys)) return false;
+      if (!criterium.key.test(joinedKeys)) return false;
     }
     return nativeMatch(element, criterium);
   }

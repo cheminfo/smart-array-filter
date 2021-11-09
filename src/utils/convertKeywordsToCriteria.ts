@@ -18,17 +18,12 @@ export default function convertKeywordsToCriteria(
   keywords: string[],
   options: {
     insensitive: string;
-    pathAlias: Record<string, boolean | string | RegExp>;
+    pathAlias: Record<string, RegExp>;
   },
 ): Criterion[] {
   const { insensitive, pathAlias } = options;
   return keywords.map((keyword) => {
-    const criterion = {
-      is: false,
-      key: false,
-      negate: false,
-      valueReg: undefined,
-    } as Criterion;
+    const criterion = {} as Criterion;
 
     if (keyword.startsWith('-')) {
       criterion.negate = true;
