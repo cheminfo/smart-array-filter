@@ -1,5 +1,3 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
-
 import { filter, OptionsType } from '..';
 
 let test = [

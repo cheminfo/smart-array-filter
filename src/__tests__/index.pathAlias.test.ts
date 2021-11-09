@@ -1,5 +1,4 @@
 /* eslint-disable prefer-named-capture-group */
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
 
 import { filter, OptionsType } from '..';
 

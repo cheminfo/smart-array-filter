@@ -1,5 +1,3 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
-
 import { filter, OptionsTypeWithoutIndex } from '..';
 
 import chemicals from './chemicals.json';

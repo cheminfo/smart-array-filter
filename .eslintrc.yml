@@ -1,3 +1,5 @@
 extends: [cheminfo-typescript, cheminfo-typescript/jsdoc]
 parserOptions:
   sourceType: module
+rules:
+  jest/expect-expect: ['error', { 'assertFunctionNames': ['assert', 'expect'] }]
