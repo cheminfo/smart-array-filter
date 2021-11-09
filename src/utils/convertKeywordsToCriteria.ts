@@ -6,13 +6,7 @@ import getCheckNumber from './getCheckNumber';
 import getCheckString from './getCheckString';
 
 /**
- * ConvertKeywordsToCriteria.
- *
- * @param keywords - String.
- * @param options -Options.
- * @param options.insensitive - { [index:String] : boolean } }.
- * @param options.pathAlias - String.
- * @returns Criterion.
+ * @internal
  */
 export default function convertKeywordsToCriteria(
   keywords: string[],

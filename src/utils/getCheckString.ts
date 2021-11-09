@@ -57,7 +57,7 @@ export default function getCheckString(
 ): (arg: string) => boolean {
   const parts = keyword.split('..');
   // eslint-disable-next-line prefer-named-capture-group
-  const match = /^\s*\(?\s*(<(?!=)|<=|=|>=|>(?!=))?(\S*)\s*\)?$/.exec(parts[0]);
+  const match = /^\s*\(?\s*(<=|<|=|>=|>)?(\S*)\s*\)?$/.exec(parts[0]);
   let checkString: (arg: string) => boolean = () => false;
   if (match) {
     const operator = match[1];
