@@ -18,7 +18,7 @@ export default function convertKeywordsToCriteria(
   keywords: string[],
   options: {
     insensitive: string;
-    pathAlias: Record<string, boolean | string | RegExp>;
+    pathAlias: Record<string, string | RegExp>;
   },
 ): Criterion[] {
   const { insensitive, pathAlias } = options;

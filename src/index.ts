@@ -36,7 +36,7 @@ export type Json =
 
 export interface Criterion {
   is: boolean | RegExp;
-  key: boolean | RegExp | string;
+  key: false | RegExp | string;
   negate: boolean;
   valueReg: boolean | undefined;
   checkString: (arg: string) => boolean;
