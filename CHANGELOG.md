@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.0](https://www.github.com/cheminfo/smart-array-filter/compare/v2.3.0...v3.0.0) (2021-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate to typescript
+
+### Features
+
+* allow ignorePaths to be a regexp ([9fb2890](https://www.github.com/cheminfo/smart-array-filter/commit/9fb289000c8ca245b5c95d2081edc087c3a3940a))
+* migrate to typescript ([7cdcfac](https://www.github.com/cheminfo/smart-array-filter/commit/7cdcfacefa814828a79ecb2480d6b61bf1ec3f7e))
+
 ## [2.3.0](https://www.github.com/cheminfo/smart-array-filter/compare/v2.2.0...v2.3.0) (2021-10-14)
 
 
