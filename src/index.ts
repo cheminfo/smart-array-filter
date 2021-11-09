@@ -10,7 +10,7 @@ interface OptionsTypeBase {
   limit?: number;
   caseSensitive?: boolean;
   predicate?: string;
-  ignorePaths?: RegExp[] | string[];
+  ignorePaths?: Array<RegExp | string>;
   pathAlias?: Record<string, string | RegExp>;
 }
 
@@ -78,7 +78,7 @@ export function filter(
   let {
     index = false,
     predicate = 'AND',
-    ignorePaths = [],
+    ignorePaths: ignorePathsOption = [],
     pathAlias: pathAliasOption = {},
   } = options;
 
@@ -86,7 +86,7 @@ export function filter(
   const insensitive = options.caseSensitive ? '' : 'i';
   let keywords = options.keywords || [];
   const pathAlias = ensureObjectOfRegExps(pathAliasOption, { insensitive });
-  ignorePaths = ignorePaths.map((path) =>
+  const ignorePaths = ignorePathsOption.map((path) =>
     typeof path === 'string'
       ? new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive)
       : path,
