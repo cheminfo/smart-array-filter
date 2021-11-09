@@ -51,18 +51,10 @@ export default function recursiveMatch(
       if (ignorePath.test(joinedKeys)) return false;
     }
     if (criterium.key) {
-      if (typeof criterium.key === 'string') {
-        const alias = options.pathAlias[criterium.key];
-        if (typeof alias === 'string') {
-          if (alias !== joinedKeys) {
-            if (!joinedKeys.startsWith(`${alias}.`)) return false;
-          }
-        } else {
-          if (!alias.test(joinedKeys)) return false;
-        }
-      } else {
-        if (!criterium.key.test(joinedKeys)) return false;
-      }
+      const key = options.pathAlias[criterium.key as string]
+        ? (options.pathAlias[criterium.key as string] as RegExp)
+        : (criterium.key as RegExp);
+      if (!key.test(joinedKeys)) return false;
     }
     return nativeMatch(element, criterium);
   }
