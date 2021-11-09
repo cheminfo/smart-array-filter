@@ -1,6 +1,4 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
-
-import { filter } from '..';
+import { filter, OptionsType } from '..';
 
 let test = [
   {
@@ -209,6 +207,12 @@ describe('index.test', () => {
   });
 });
 
-function assert(options, length) {
+/**
+ * Assert.
+ *
+ * @param options - OptionsType.
+ * @param length - Number.
+ */
+function assert(options: OptionsType | undefined, length: number) {
   expect(filter(test, options)).toHaveLength(length);
 }

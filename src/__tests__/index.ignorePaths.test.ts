@@ -1,6 +1,4 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
-
-import { filter } from '..';
+import { filter, OptionsType } from '..';
 
 let data = [
   {
@@ -28,6 +26,14 @@ test('ignorePaths', () => {
   assert({ keywords: ['h.f:3'], ignorePaths: [/e.*g/] }, 1);
 });
 
-function assert(options, length) {
+/**
+ * Assert.
+ *
+ * @param options - Object.
+ * @param options.keywords - RegExp[].
+ * @param options.ignorePaths - RegExp[].
+ * @param length - Number.
+ */
+function assert(options: OptionsType, length: number) {
   expect(filter(data, options)).toHaveLength(length);
 }

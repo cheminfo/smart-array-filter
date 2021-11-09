@@ -1,6 +1,6 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
+/* eslint-disable prefer-named-capture-group */
 
-import { filter } from '..';
+import { filter, OptionsType } from '..';
 
 let data = [
   {
@@ -17,6 +17,15 @@ test('pathAlias', () => {
   assert({ keywords: ['abc:3'], pathAlias: { abc: /(h\.a|h\.f)/ } }, 1);
 });
 
-function assert(options, length) {
+/**
+ * Assert.
+ *
+ * @param options - Object.
+ * @param options.keywords - String[].
+ * @param options.pathAlias - Object.
+ * @param options.pathAlias.abc - RegExp | string.
+ * @param length - Number.
+ */
+function assert(options: OptionsType, length: number) {
   expect(filter(data, options)).toHaveLength(length);
 }

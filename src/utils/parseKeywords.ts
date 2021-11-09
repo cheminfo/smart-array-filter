@@ -1,19 +1,19 @@
 let separators = /[ ;,\t\r\n]/;
 
 /**
- * Need to convert a string to an array of keywords taking into account single and boule quotes
- * @param {string} keywords
- * @returns {array<string>}
+ * Need to convert a string to an array of keywords taking into account single and boule quotes.
+ *
+ * @param keywords - String.
+ * @returns String[].
  */
-
-export default function parseKeywords(keywords) {
-  let result = [];
+export default function parseKeywords(keywords: string): string[] {
+  const result = [];
   let inQuotes = false;
   let inSeparator = true;
   let currentWord = [];
   let previous = '';
   for (let i = 0; i < keywords.length; i++) {
-    let current = keywords.charAt(i);
+    const current = keywords.charAt(i);
     if (inQuotes) {
       if (previous === '"') {
         // escaped quote

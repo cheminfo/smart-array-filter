@@ -1,5 +1,3 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
-
 import { filter } from '..';
 
 import chemicals from './chemicalDetails.json';
@@ -27,6 +25,12 @@ describe('chemicalDetails tests', () => {
   });
 });
 
-function assert(keywords, length) {
+/**
+ * Assert.
+ *
+ * @param keywords - String.
+ * @param length - Number.
+ */
+function assert(keywords: string, length: number) {
   expect(filter(chemicals, { keywords: keywords })).toHaveLength(length);
 }

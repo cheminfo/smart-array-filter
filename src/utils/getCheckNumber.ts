@@ -1,4 +1,4 @@
-const operators = {
+const operators: Record<string, (arg1: number) => (arg: number) => boolean> = {
   '<': (query) => {
     return (number) => {
       return number < query;
@@ -29,17 +29,26 @@ const operators = {
 // we also deal with ..10 and 10..
 operators['..'] = operators['<='];
 
-export default function getCheckNumber(keyword) {
-  let match =
+/**
+ * GetCheckNumber.
+ *
+ * @param keyword - String.
+ * @returns (number)=>boolean.
+ */
+export default function getCheckNumber(
+  keyword: string,
+): (arg: number) => boolean {
+  const match =
+    // eslint-disable-next-line prefer-named-capture-group
     /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(
       keyword,
     );
-  let checkNumber = () => false;
+  let checkNumber: (arg: number) => boolean = () => false;
   if (match) {
-    let operator = match[1];
-    let query = parseFloat(match[2]);
-    let dots = match[3];
-    let secondQuery = match[4];
+    const operator = match[1];
+    const query = parseFloat(match[2]);
+    const dots = match[3];
+    let secondQuery: string | number = match[4];
     if (operator) {
       checkNumber = operators[operator](query);
     } else if (dots) {

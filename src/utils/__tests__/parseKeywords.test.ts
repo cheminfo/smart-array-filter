@@ -1,5 +1,3 @@
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["assert","expect"] }] */
-
 import parseKeywords from '../parseKeywords';
 
 describe('parseKeywords', () => {
@@ -18,6 +16,12 @@ describe('parseKeywords', () => {
   });
 });
 
-function assert(keywords, result) {
+/**
+ * Assert.
+ *
+ * @param keywords - String.
+ * @param result - Result.
+ */
+function assert(keywords: string, result: string[]) {
   expect(parseKeywords(keywords)).toStrictEqual(result);
 }
