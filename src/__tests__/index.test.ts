@@ -124,16 +124,6 @@ describe('index.test', () => {
     ).toStrictEqual([]);
   });
 
-  it('is', () => {
-    // check if some fields are defined
-
-    assert({ keywords: ['is:m.n'] }, 1);
-    assert({ keywords: ['is:bool'] }, 2);
-    assert({ keywords: ['is:other'] }, 0);
-    assert({ keywords: ['is:a'] }, 1);
-    assert({ keywords: ['is:c'] }, 1);
-  });
-
   it('math operators', () => {
     assert({ keywords: ['e:>125'] }, 0);
     assert({ keywords: ['e:123'] }, 1);
