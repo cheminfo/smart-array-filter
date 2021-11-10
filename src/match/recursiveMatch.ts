@@ -1,4 +1,5 @@
-import { Criterion, Json } from '..';
+import { Criterion } from '..';
+import { Json } from '../utils/types';
 
 import nativeMatch from './nativeMatch';
 

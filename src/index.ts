@@ -4,6 +4,7 @@ import match from './match/match';
 import convertKeywordsToCriteria from './utils/convertKeywordsToCriteria';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
 import parseKeywords from './utils/parseKeywords';
+import { Json } from './utils/types';
 
 interface OptionsTypeBase {
   keywords?: string[] | string | null;
@@ -24,15 +25,6 @@ export type OptionsTypeWithoutIndex = OptionsTypeBase & {
 
 export type OptionsType = OptionsTypeWithIndex | OptionsTypeWithoutIndex;
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | Json[]
-  | { [key: string]: Json };
-
 export interface Criterion {
   is?: RegExp;
   key?: RegExp;
@@ -41,24 +33,15 @@ export interface Criterion {
   checkNumber: (arg: number) => boolean;
 }
 
-export function filter<T extends Json>(
-  array: T[],
-  options?: OptionsTypeWithIndex,
-): number[];
-export function filter<T extends Json>(
-  array: T[],
-  options?: OptionsTypeWithoutIndex,
-): T[];
-export function filter<T extends Json>(
-  array: Json[],
-  options?: OptionsType,
-): T[] | number[];
+export function filter<T>(array: T[], options?: OptionsTypeWithIndex): number[];
+export function filter<T>(array: T[], options?: OptionsTypeWithoutIndex): T[];
+export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
 
 /**
  *
  * Filter.
  *
- * @param array - Array to filter.
+ * @param data - Array to filter.
  * @param [options={}] - Object.
  * @param [options.limit=Infinity] - Maximum number of results.
  * @param [options.caseSensitive=false] - By default we ignore case.
@@ -69,12 +52,10 @@ export function filter<T extends Json>(
  * @param [options.predicate='AND'] - Could be either AND or OR.
  * @returns String[] | number[].
  */
-export function filter(
-  array: Json[],
+export function filter<T extends any>(
+  data: T[],
   options: OptionsType = {},
-): Json[] | number[] {
-  const result = [];
-
+): T[] | number[] {
   let {
     index = false,
     predicate = 'AND',
@@ -100,10 +81,25 @@ export function filter(
     pathAlias,
   });
   let matched = 0;
-  for (let i = 0; i < array.length && matched < limit; i++) {
-    if (match(array[i], criteria, predicate, { ignorePaths, pathAlias })) {
-      matched = result.push(index ? i : array[i]);
+  if (index) {
+    const result: number[] = [];
+    for (let i = 0; i < data.length && matched < limit; i++) {
+      if (
+        match(data[i] as Json, criteria, predicate, { ignorePaths, pathAlias })
+      ) {
+        matched = result.push(i);
+      }
     }
+    return result;
+  } else {
+    const result: T[] = [];
+    for (let i = 0; i < data.length && matched < limit; i++) {
+      if (
+        match(data[i] as Json, criteria, predicate, { ignorePaths, pathAlias })
+      ) {
+        matched = result.push(data[i]);
+      }
+    }
+    return result;
   }
-  return result;
 }

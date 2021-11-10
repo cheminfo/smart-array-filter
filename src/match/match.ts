@@ -1,4 +1,5 @@
-import { Criterion, Json } from '../index';
+import { Criterion } from '../index';
+import { Json } from '../utils/types';
 
 import recursiveMatch from './recursiveMatch';
 
