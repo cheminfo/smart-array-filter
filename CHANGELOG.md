@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.1.2](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.1...v3.1.2) (2021-11-10)
+
+
+### Bug Fixes
+
+* make data input type less types less restrictive ([e0ee2ea](https://www.github.com/cheminfo/smart-array-filter/commit/e0ee2eaf1c057190c1ca0520f2533d1946e69efd))
+
 ### [3.1.1](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.0...v3.1.1) (2021-11-09)
 
 
