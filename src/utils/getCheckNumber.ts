@@ -1,33 +1,34 @@
-const operators: Record<string, (arg1: number) => (arg: number) => boolean> = {
-  '<': (query) => {
-    return (number) => {
-      return number < query;
-    };
-  },
-  '<=': (query) => {
-    return (number) => {
-      return number <= query;
-    };
-  },
-  '=': (query) => {
-    return (number) => {
-      return number === query;
-    };
-  },
-  '>=': (query) => {
-    return (number) => {
-      return number >= query;
-    };
-  },
-  '>': (query) => {
-    return (number) => {
-      return number > query;
-    };
-  },
-};
-
-// we also deal with ..10 and 10..
-operators['..'] = operators['<='];
+const operators: Record<string, (arg1: number[]) => (arg: number) => boolean> =
+  {
+    '<': function lt(values) {
+      return (number) => {
+        return number < values[0];
+      };
+    },
+    '<=': function lte(values) {
+      return (number) => {
+        return number <= values[0];
+      };
+    },
+    '=': function equal(values) {
+      return (number) => {
+        return number === values[0];
+      };
+    },
+    '>=': function gte(values) {
+      return (number) => {
+        return number >= values[0];
+      };
+    },
+    '>': function gt(values) {
+      return (number) => {
+        return number > values[0];
+      };
+    },
+    '..': function range(values) {
+      return (number) => number >= values[0] && number <= values[1];
+    },
+  };
 
 /**
  * @internal
@@ -35,33 +36,25 @@ operators['..'] = operators['<='];
 export default function getCheckNumber(
   keyword: string,
 ): (arg: number) => boolean {
-  const { query, secondQuery, operator } = splitNumberOperator(keyword);
+  const { values, operator } = splitNumberOperator(keyword);
 
-  let checkNumber: (arg: number) => boolean = () => false;
-
-  if (operator && operator !== '..') {
-    checkNumber = operators[operator](query);
-  } else if (operator && secondQuery) {
-    checkNumber = (number) => {
-      return query <= number && number <= secondQuery;
-    };
-  } else {
-    checkNumber = operators['='](query);
+  const checkOperator = operators[operator];
+  if (!checkOperator) {
+    throw new Error(`unknown operator ${operator}`);
   }
-
-  return checkNumber;
+  return checkOperator(values);
 }
 
 /**
  * @internal
  */
 export function splitNumberOperator(keyword: string): {
-  query: number;
-  operator?: string;
+  values: number[];
+  operator: string;
   /**
    * Is null when has the dot operator with a second value
    */
-  secondQuery?: number | null;
+  secondQuery?: number;
 } {
   const match =
     /^\s*\(?\s*(?<startOperator><|<=|=|>=|>|\.\.)?(?<firstValue>-?\d*\.?\d+)(?:(?<afterDots>\.\.)(?<secondValue>-?\d*\.?\d*))?\s*\)?\s*$/.exec(
@@ -69,7 +62,8 @@ export function splitNumberOperator(keyword: string): {
     );
   if (!match) {
     return {
-      query: Number(keyword),
+      operator: '=',
+      values: [Number(keyword)],
     };
   }
   if (!match.groups) {
@@ -77,23 +71,26 @@ export function splitNumberOperator(keyword: string): {
   }
   const { startOperator, firstValue, afterDots, secondValue } = match.groups;
   let operator = startOperator;
+  let values = firstValue ? [Number(firstValue)] : [];
 
   // ..12
   if (startOperator === '..') {
     operator = '<=';
   }
-
   // 12..
-  if (!startOperator && afterDots && !secondValue) {
+  else if (!startOperator && afterDots && !secondValue) {
     operator = '>=';
   }
   // 12..14
   else if (afterDots) {
     operator = '..';
   }
+
+  if (secondValue) {
+    values.push(Number(secondValue));
+  }
   return {
-    query: Number(firstValue),
-    operator,
-    secondQuery: secondValue ? Number(secondValue) : undefined,
+    values,
+    operator: operator || '=',
   };
 }

@@ -56,69 +56,58 @@ describe('operators', () => {
 
   it('number operators', () => {
     expect(splitNumberOperator('123.45')).toStrictEqual({
-      query: 123.45,
-      operator: undefined,
-      secondQuery: undefined,
+      values: [123.45],
+      operator: '=',
     });
 
     expect(splitNumberOperator('=123.45')).toStrictEqual({
-      query: 123.45,
+      values: [123.45],
       operator: '=',
-      secondQuery: undefined,
     });
 
     expect(splitNumberOperator('>123.45')).toStrictEqual({
-      query: 123.45,
+      values: [123.45],
       operator: '>',
-      secondQuery: undefined,
     });
 
     expect(splitNumberOperator('<123.45')).toStrictEqual({
-      query: 123.45,
+      values: [123.45],
       operator: '<',
-      secondQuery: undefined,
     });
 
     expect(splitNumberOperator('<=123.45')).toStrictEqual({
-      query: 123.45,
+      values: [123.45],
       operator: '<=',
-      secondQuery: undefined,
     });
 
     expect(splitNumberOperator('>=123.45')).toStrictEqual({
-      query: 123.45,
+      values: [123.45],
       operator: '>=',
-      secondQuery: undefined,
     });
 
     expect(splitNumberOperator('123.45..123.56')).toStrictEqual({
-      query: 123.45,
+      values: [123.45, 123.56],
       operator: '..',
-      secondQuery: 123.56,
     });
 
     expect(splitNumberOperator('=1..2')).toStrictEqual({
-      query: 1,
+      values: [1, 2],
       operator: '..',
-      secondQuery: 2,
     });
 
     expect(splitNumberOperator('2..3')).toStrictEqual({
-      query: 2,
+      values: [2, 3],
       operator: '..',
-      secondQuery: 3,
     });
 
     expect(splitNumberOperator('..3')).toStrictEqual({
-      query: 3,
+      values: [3],
       operator: '<=',
-      secondQuery: undefined,
     });
 
     expect(splitNumberOperator('3..')).toStrictEqual({
-      query: 3,
+      values: [3],
       operator: '>=',
-      secondQuery: undefined,
     });
   });
 });
