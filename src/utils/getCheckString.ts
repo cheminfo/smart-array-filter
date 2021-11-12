@@ -2,47 +2,50 @@ import escapeRegExp from 'lodash.escaperegexp';
 
 const operators: Record<
   string,
-  (arg1: string, arg2?: string) => (arg: string) => boolean
+  (arg1: string[], arg2?: string) => (arg: string) => boolean
 > = {
-  '<': (query) => {
+  '<': function lt(query) {
     return (string) => {
-      return string < query;
+      return string < query[0];
     };
   },
-  '<=': (query) => {
+  '<=': function lte(query) {
     return (string) => {
-      return string <= query;
+      return string <= query[0];
     };
   },
-  '=': (query, insensitive) => {
-    query = `^${escapeRegExp(query)}$`;
-    const reg = new RegExp(query, insensitive);
+  '=': function equal(query, insensitive) {
+    const regVal = `^${escapeRegExp(query[0])}$`;
+    const reg = new RegExp(regVal, insensitive);
 
     return (string) => {
       return reg.test(string);
     };
   },
-  '~': (query, insensitive) => {
-    query = escapeRegExp(query);
-    const reg = new RegExp(query, insensitive);
+  '~': function fuzzy(query, insensitive) {
+    const regVal = escapeRegExp(query[0]);
+    const reg = new RegExp(regVal, insensitive);
 
     return (string) => {
       return reg.test(string);
     };
   },
-  '>=': (query) => {
+  '>=': function lge(query) {
     return (string) => {
-      return string >= query;
+      return string >= query[0];
     };
   },
-  '>': (query) => {
+  '>': function lg(query) {
     return (string) => {
-      return string > query;
+      return string > query[0];
+    };
+  },
+  '..': function range(query) {
+    return (string) => {
+      return string >= query[0] && string <= query[1];
     };
   },
 };
-
-operators['..'] = operators['<='];
 
 /**
  * GetCheckString.
@@ -55,21 +58,13 @@ export default function getCheckString(
   keyword: string,
   insensitive: string,
 ): (arg: string) => boolean {
-  const { query, secondQuery, operator } = splitStringOperator(keyword);
-  let checkString: (arg: string) => boolean = () => false;
+  const { values, operator } = splitStringOperator(keyword);
 
-  if (operator !== '..') {
-    checkString = operators[operator](query, insensitive);
-  } else if (secondQuery) {
-    if (secondQuery !== '') {
-      checkString = (string) => {
-        return query <= string && string <= secondQuery;
-      };
-    } else {
-      checkString = operators['>='](query, insensitive);
-    }
+  const operatorCheck = operators[operator];
+  if (!operatorCheck) {
+    throw new Error(`unreachable unknown operator ${operator}`);
   }
-  return checkString;
+  return operatorCheck(values, insensitive);
 }
 
 /**
@@ -77,19 +72,18 @@ export default function getCheckString(
  */
 export function splitStringOperator(keyword: string): {
   operator: string;
-  query: string;
-  secondQuery?: string;
+  values: string[];
 } {
   const parts = keyword.split('..');
 
-  const match = /^\s*\(?(?<operator><=|<|=|>=|>)?\s*(?<query>\S*)\s*\)?$/.exec(
+  const match = /^\s*\(?(?<operator><=|<|=|>=|>)?\s*(?<value>\S*)\s*\)?$/.exec(
     parts[0],
   );
   if (!match) {
     // Should never happen
     return {
       operator: '~',
-      query: keyword,
+      values: [keyword],
     };
   }
 
@@ -97,22 +91,22 @@ export function splitStringOperator(keyword: string): {
     throw new Error('unreachable');
   }
 
-  let { operator, query } = match.groups;
+  let { operator, value } = match.groups;
   let secondQuery: string | undefined = parts[1];
+  let values: string[] = [value];
   if (parts.length > 1) {
     operator = '..';
     if (!secondQuery) {
       operator = '>=';
-      secondQuery = undefined;
-    } else if (!query) {
-      query = secondQuery;
+    } else if (!value) {
+      values = [secondQuery];
       operator = '<=';
-      secondQuery = undefined;
+    } else {
+      values.push(secondQuery);
     }
   }
   return {
     operator: operator || '~',
-    query,
-    secondQuery,
+    values,
   };
 }

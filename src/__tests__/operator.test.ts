@@ -4,63 +4,53 @@ import { splitStringOperator } from '../utils/getCheckString';
 describe('operators', () => {
   it('string operators', () => {
     expect(splitStringOperator('value')).toStrictEqual({
-      query: 'value',
+      values: ['value'],
       operator: '~',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('=value')).toStrictEqual({
-      query: 'value',
+      values: ['value'],
       operator: '=',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('> value')).toStrictEqual({
-      query: 'value',
+      values: ['value'],
       operator: '>',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('<value')).toStrictEqual({
-      query: 'value',
+      values: ['value'],
       operator: '<',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('<=value')).toStrictEqual({
-      query: 'value',
+      values: ['value'],
       operator: '<=',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('>= value')).toStrictEqual({
-      query: 'value',
+      values: ['value'],
       operator: '>=',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('value1..value2')).toStrictEqual({
-      query: 'value1',
+      values: ['value1', 'value2'],
       operator: '..',
-      secondQuery: 'value2',
     });
 
     expect(splitStringOperator('value1..')).toStrictEqual({
-      query: 'value1',
+      values: ['value1'],
       operator: '>=',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('..value2')).toStrictEqual({
-      query: 'value2',
+      values: ['value2'],
       operator: '<=',
-      secondQuery: undefined,
     });
 
     expect(splitStringOperator('  ')).toStrictEqual({
-      query: '',
+      values: [''],
       operator: '~',
-      secondQuery: undefined,
     });
   });
 
