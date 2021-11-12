@@ -124,13 +124,14 @@ describe('index.test', () => {
     ).toStrictEqual([]);
   });
 
-  it('math operators', () => {
-    assert({ keywords: ['e:>125'] }, 0);
+  it('equality operator', () => {
     assert({ keywords: ['e:123'] }, 1);
     assert({ keywords: ['e:125'] }, 0);
     assert({ keywords: ['e:=123'] }, 1);
     assert({ keywords: ['e:=125'] }, 0);
-
+  });
+  it('gt,lt,gte,lte operators', () => {
+    assert({ keywords: ['e:>125'] }, 0);
     assert({ keywords: ['e:<123'] }, 0);
     assert({ keywords: ['e:<200'] }, 1);
     assert({ keywords: ['e:<100'] }, 0);
@@ -145,15 +146,21 @@ describe('index.test', () => {
     assert({ keywords: ['e:>=123'] }, 1);
     assert({ keywords: ['e:>=120'] }, 1);
     assert({ keywords: ['e:>=125'] }, 0);
+  });
 
+  it('math dot operator with end only', () => {
     assert({ keywords: ['e:..100'] }, 0);
     assert({ keywords: ['e:..123'] }, 1);
     assert({ keywords: ['e:..200'] }, 1);
+  });
 
+  it('math dot operator with start only', () => {
     assert({ keywords: ['e:200..'] }, 0);
     assert({ keywords: ['e:123..'] }, 1);
     assert({ keywords: ['e:100..'] }, 1);
+  });
 
+  it('math dot operator with start and end', () => {
     assert({ keywords: ['e:100..150'] }, 1);
     assert({ keywords: ['e:100.2..150.2'] }, 1);
     assert({ keywords: ['e:150..200'] }, 0);

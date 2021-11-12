@@ -30,39 +30,70 @@ const operators: Record<string, (arg1: number) => (arg: number) => boolean> = {
 operators['..'] = operators['<='];
 
 /**
- * GetCheckNumber.
- *
- * @param keyword - String.
- * @returns (number)=>boolean.
+ * @internal
  */
 export default function getCheckNumber(
   keyword: string,
 ): (arg: number) => boolean {
+  const { query, secondQuery, operator } = splitNumberOperator(keyword);
+
+  let checkNumber: (arg: number) => boolean = () => false;
+
+  if (operator && operator !== '..') {
+    checkNumber = operators[operator](query);
+  } else if (operator && secondQuery) {
+    checkNumber = (number) => {
+      return query <= number && number <= secondQuery;
+    };
+  } else {
+    checkNumber = operators['='](query);
+  }
+
+  return checkNumber;
+}
+
+/**
+ * @internal
+ */
+export function splitNumberOperator(keyword: string): {
+  query: number;
+  operator?: string;
+  /**
+   * Is null when has the dot operator with a second value
+   */
+  secondQuery?: number | null;
+} {
   const match =
-    // eslint-disable-next-line prefer-named-capture-group
-    /^\s*\(?\s*(<|<=|=|>=|>|\.\.)?(-?\d*\.?\d+)(?:(\.\.)(-?\d*\.?\d*))?\s*\)?\s*$/.exec(
+    /^\s*\(?\s*(?<startOperator><|<=|=|>=|>|\.\.)?(?<firstValue>-?\d*\.?\d+)(?:(?<afterDots>\.\.)(?<secondValue>-?\d*\.?\d*))?\s*\)?\s*$/.exec(
       keyword,
     );
-  let checkNumber: (arg: number) => boolean = () => false;
-  if (match) {
-    const operator = match[1];
-    const query = parseFloat(match[2]);
-    const dots = match[3];
-    let secondQuery: string | number = match[4];
-    if (operator) {
-      checkNumber = operators[operator](query);
-    } else if (dots) {
-      if (secondQuery !== '') {
-        secondQuery = parseFloat(secondQuery);
-        checkNumber = (number) => {
-          return query <= number && number <= secondQuery;
-        };
-      } else {
-        checkNumber = operators['>='](query);
-      }
-    } else {
-      checkNumber = operators['='](query);
-    }
+  if (!match) {
+    return {
+      query: Number(keyword),
+    };
   }
-  return checkNumber;
+  if (!match.groups) {
+    throw new Error('unreachable');
+  }
+  const { startOperator, firstValue, afterDots, secondValue } = match.groups;
+  let operator = startOperator;
+
+  // ..12
+  if (startOperator === '..') {
+    operator = '<=';
+  }
+
+  // 12..
+  if (!startOperator && afterDots && !secondValue) {
+    operator = '>=';
+  }
+  // 12..14
+  else if (afterDots) {
+    operator = '..';
+  }
+  return {
+    query: Number(firstValue),
+    operator,
+    secondQuery: secondValue ? Number(secondValue) : undefined,
+  };
 }
