@@ -83,16 +83,22 @@ export function splitStringOperator(keyword: string): {
   secondQuery?: string;
 } {
   const parts = keyword.split('..');
-  // eslint-disable-next-line prefer-named-capture-group
-  const match = /^\s*\(?\s*(<=|<|=|>=|>)?\s*(\S*)\s*\)?$/.exec(parts[0]);
+
+  const match = /^\s*\(?(?<operator><=|<|=|>=|>)?\s*(?<query>\S*)\s*\)?$/.exec(
+    parts[0],
+  );
   if (!match) {
+    // Should never happen
     return {
       query: keyword,
     };
   }
 
-  const operator = match[1];
-  const query = match[2];
+  if (!match.groups) {
+    throw new Error('unreachable');
+  }
+
+  const { operator, query } = match.groups;
   const secondQuery = parts[1];
   return {
     operator,

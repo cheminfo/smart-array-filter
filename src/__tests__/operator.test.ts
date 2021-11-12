@@ -50,6 +50,12 @@ describe('operators', () => {
       operator: '=',
       secondQuery: 'value2',
     });
+
+    expect(splitStringOperator('  ')).toStrictEqual({
+      query: '',
+      operator: undefined,
+      secondQuery: undefined,
+    });
   });
 
   it('number operators', () => {
