@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.1.3](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.2...v3.1.3) (2021-11-12)
+
+
+### Bug Fixes
+
+* add number operator parsing test when not a number ([07c3351](https://www.github.com/cheminfo/smart-array-filter/commit/07c335170403c1ef62a808f0628b5497935d4fc6))
+
 ### [3.1.2](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.1...v3.1.2) (2021-11-10)
 
 
