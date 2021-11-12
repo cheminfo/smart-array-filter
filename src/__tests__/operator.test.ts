@@ -5,7 +5,7 @@ describe('operators', () => {
   it('string operators', () => {
     expect(splitStringOperator('value')).toStrictEqual({
       query: 'value',
-      operator: undefined,
+      operator: '~',
       secondQuery: undefined,
     });
 
@@ -41,19 +41,25 @@ describe('operators', () => {
 
     expect(splitStringOperator('value1..value2')).toStrictEqual({
       query: 'value1',
-      operator: undefined,
+      operator: '..',
       secondQuery: 'value2',
     });
 
-    expect(splitStringOperator('=value1..value2')).toStrictEqual({
+    expect(splitStringOperator('value1..')).toStrictEqual({
       query: 'value1',
-      operator: '=',
-      secondQuery: 'value2',
+      operator: '>=',
+      secondQuery: undefined,
+    });
+
+    expect(splitStringOperator('..value2')).toStrictEqual({
+      query: 'value2',
+      operator: '<=',
+      secondQuery: undefined,
     });
 
     expect(splitStringOperator('  ')).toStrictEqual({
       query: '',
-      operator: undefined,
+      operator: '~',
       secondQuery: undefined,
     });
   });

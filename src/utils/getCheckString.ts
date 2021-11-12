@@ -58,7 +58,7 @@ export default function getCheckString(
   const { query, secondQuery, operator } = splitStringOperator(keyword);
   let checkString: (arg: string) => boolean = () => false;
 
-  if (operator) {
+  if (operator !== '..') {
     checkString = operators[operator](query, insensitive);
   } else if (secondQuery) {
     if (secondQuery !== '') {
@@ -68,8 +68,6 @@ export default function getCheckString(
     } else {
       checkString = operators['>='](query, insensitive);
     }
-  } else {
-    checkString = operators['~'](query, insensitive);
   }
   return checkString;
 }
@@ -78,7 +76,7 @@ export default function getCheckString(
  * @internal
  */
 export function splitStringOperator(keyword: string): {
-  operator?: string;
+  operator: string;
   query: string;
   secondQuery?: string;
 } {
@@ -90,6 +88,7 @@ export function splitStringOperator(keyword: string): {
   if (!match) {
     // Should never happen
     return {
+      operator: '~',
       query: keyword,
     };
   }
@@ -98,10 +97,21 @@ export function splitStringOperator(keyword: string): {
     throw new Error('unreachable');
   }
 
-  const { operator, query } = match.groups;
-  const secondQuery = parts[1];
+  let { operator, query } = match.groups;
+  let secondQuery: string | undefined = parts[1];
+  if (parts.length > 1) {
+    operator = '..';
+    if (!secondQuery) {
+      operator = '>=';
+      secondQuery = undefined;
+    } else if (!query) {
+      query = secondQuery;
+      operator = '<=';
+      secondQuery = undefined;
+    }
+  }
   return {
-    operator,
+    operator: operator || '~',
     query,
     secondQuery,
   };
