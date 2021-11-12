@@ -57,7 +57,7 @@ export function splitNumberOperator(keyword: string): {
   secondQuery?: number;
 } {
   const match =
-    /^\s*\(?\s*(?<startOperator><|<=|=|>=|>|\.\.)?(?<firstValue>-?\d*\.?\d+)(?:(?<afterDots>\.\.)(?<secondValue>-?\d*\.?\d*))?\s*\)?\s*$/.exec(
+    /^\s*\(?\s*(?<startOperator><=|>=|<|=|>|\.\.)?(?<firstValue>-?\d*\.?\d+)(?:(?<afterDots>\.\.)(?<secondValue>-?\d*\.?\d*))?\s*\)?\s*$/.exec(
       keyword,
     );
   if (!match) {
