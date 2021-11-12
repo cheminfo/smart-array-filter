@@ -109,5 +109,10 @@ describe('operators', () => {
       values: [3],
       operator: '>=',
     });
+
+    expect(splitNumberOperator('xyz')).toStrictEqual({
+      values: [Number.NaN],
+      operator: '=',
+    });
   });
 });
