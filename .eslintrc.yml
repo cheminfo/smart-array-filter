@@ -1,5 +1,3 @@
-extends: [cheminfo-typescript, cheminfo-typescript/jsdoc]
-parserOptions:
-  sourceType: module
+extends: [cheminfo-typescript]
 rules:
-  jest/expect-expect: ['error', { 'assertFunctionNames': ['assert', 'expect'] }]
+  '@typescript-eslint/prefer-for-of': 'off'
