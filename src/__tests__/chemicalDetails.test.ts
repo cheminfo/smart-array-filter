@@ -23,6 +23,13 @@ describe('chemicalDetails tests', () => {
     assert('price:>200.5', 2);
     assert('mw:39.9..40.0', 1);
   });
+
+  it('and', () => {
+    assert('mw:132.16192 mw:132.16192', 1);
+    assert('price:>200.5', 2);
+    assert('mw:39.9..40.0 mw:38..42', 1);
+    assert('price:>200.5 mw:>250', 1);
+  });
 });
 
 /**
