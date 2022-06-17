@@ -52,10 +52,10 @@ export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
  * @param [options.predicate='AND'] - Could be either AND or OR.
  * @returns String[] | number[].
  */
-export function filter<T extends any>(
-  data: T[],
+export function filter(
+  data: Json[],
   options: OptionsType = {},
-): T[] | number[] {
+): Json[] | number[] {
   let {
     index = false,
     predicate = 'AND',
@@ -84,19 +84,15 @@ export function filter<T extends any>(
   if (index) {
     const result: number[] = [];
     for (let i = 0; i < data.length && matched < limit; i++) {
-      if (
-        match(data[i] as Json, criteria, predicate, { ignorePaths, pathAlias })
-      ) {
+      if (match(data[i], criteria, predicate, { ignorePaths, pathAlias })) {
         matched = result.push(i);
       }
     }
     return result;
   } else {
-    const result: T[] = [];
+    const result: Json[] = [];
     for (let i = 0; i < data.length && matched < limit; i++) {
-      if (
-        match(data[i] as Json, criteria, predicate, { ignorePaths, pathAlias })
-      ) {
+      if (match(data[i], criteria, predicate, { ignorePaths, pathAlias })) {
         matched = result.push(data[i]);
       }
     }
