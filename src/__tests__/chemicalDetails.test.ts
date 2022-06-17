@@ -39,5 +39,5 @@ describe('chemicalDetails tests', () => {
  * @param length - Number.
  */
 function assert(keywords: string, length: number) {
-  expect(filter(chemicals, { keywords: keywords })).toHaveLength(length);
+  expect(filter(chemicals, { keywords })).toHaveLength(length);
 }
