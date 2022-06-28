@@ -49,6 +49,6 @@ function assert(
   length: number,
   options?: OptionsTypeWithoutIndex,
 ) {
-  options = {keywords, ...options};
+  options = { keywords, ...options };
   expect(filter(chemicals, options)).toHaveLength(length);
 }
