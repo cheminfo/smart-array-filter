@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.0](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.3...v3.2.0) (2022-07-15)
+
+
+### Features
+
+* add includePaths property ([42a4e7c](https://www.github.com/cheminfo/smart-array-filter/commit/42a4e7cb1993ae6e17b63ca05c8497131f7ab3a1))
+* allow comma separated values (as OR operator) ([8652f11](https://www.github.com/cheminfo/smart-array-filter/commit/8652f11d752ca2ddb79d71cab893df3f40aaba6e))
+
 ### [3.1.3](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.2...v3.1.3) (2021-11-12)
 
 
