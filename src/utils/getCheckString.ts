@@ -15,19 +15,31 @@ const operators: Record<
     };
   },
   '=': function equal(query, insensitive) {
-    const regVal = `^${escapeRegExp(query[0])}$`;
-    const reg = new RegExp(regVal, insensitive);
-
+    const possibilities = query[0]
+      .split(',')
+      .filter((item) => item)
+      .map((string) => new RegExp(`^${escapeRegExp(string)}$`, insensitive));
     return (string) => {
-      return reg.test(string);
+      for (const possibility of possibilities) {
+        if (possibility.test(string)) {
+          return true;
+        }
+      }
+      return false;
     };
   },
   '~': function fuzzy(query, insensitive) {
-    const regVal = escapeRegExp(query[0]);
-    const reg = new RegExp(regVal, insensitive);
-
+    const possibilities = query[0]
+      .split(',')
+      .filter((item) => item)
+      .map((string) => new RegExp(escapeRegExp(string), insensitive));
     return (string) => {
-      return reg.test(string);
+      for (const possibility of possibilities) {
+        if (possibility.test(string)) {
+          return true;
+        }
+      }
+      return false;
     };
   },
   '>=': function lge(query) {
@@ -41,6 +53,11 @@ const operators: Record<
     };
   },
   '..': function range(query) {
+    return (string) => {
+      return string >= query[0] && string <= query[1];
+    };
+  },
+  in: function range(query) {
     return (string) => {
       return string >= query[0] && string <= query[1];
     };

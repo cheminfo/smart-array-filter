@@ -51,6 +51,7 @@ describe('index.test', () => {
     assert({ keywords: ['c'], predicate: 'AND' }, 1);
     assert({ keywords: ['d'], predicate: 'AND' }, 1);
     assert({ keywords: ['123'], predicate: 'AND' }, 1);
+    assert({ keywords: ['123,234'], predicate: 'AND' }, 1);
     assert({ keywords: ['h'], predicate: 'AND' }, 2);
     assert({ keywords: ['z'], predicate: 'AND' }, 0);
   });
@@ -90,6 +91,8 @@ describe('index.test', () => {
     assert({ keywords: ['a:A'] }, 1);
     assert({ keywords: ['a:b'] }, 0);
     assert({ keywords: ['e:123'] }, 1);
+    assert({ keywords: ['e:12,23,123'] }, 1);
+    assert({ keywords: ['e:12,23,34'] }, 0);
   });
 
   it('exact word', () => {

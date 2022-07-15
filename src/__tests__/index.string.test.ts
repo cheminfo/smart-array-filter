@@ -35,6 +35,11 @@ describe('string filter', () => {
     assert({ keywords: ['h:>i'] }, 0);
     assert({ keywords: ['h:>g'] }, 1);
   });
+
+  it('comma separated', () => {
+    assert({ keywords: ['h:=a,h,b'] }, 1);
+    assert({ keywords: ['a,h,b'] }, 1);
+  });
 });
 
 /**

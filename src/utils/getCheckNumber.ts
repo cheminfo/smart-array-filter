@@ -1,32 +1,47 @@
-const operators: Record<string, (arg1: number[]) => (arg: number) => boolean> =
+const operators: Record<string, (arg1: string[]) => (arg: number) => boolean> =
   {
     '<': function lt(values) {
+      const value = Number(values[0]);
       return (number) => {
-        return number < values[0];
+        return number < value;
       };
     },
     '<=': function lte(values) {
+      const value = Number(values[0]);
       return (number) => {
-        return number <= values[0];
+        return number <= value;
       };
     },
     '=': function equal(values) {
+      const possibleNumbers = values[0]
+        .split(',')
+        .filter((item: string) => item)
+        .map(Number);
       return (number) => {
-        return number === values[0];
+        for (let i = 0; i < possibleNumbers.length; i++) {
+          if (number === possibleNumbers[i]) {
+            return true;
+          }
+        }
+        return false;
       };
     },
     '>=': function gte(values) {
+      const value = Number(values[0]);
       return (number) => {
-        return number >= values[0];
+        return number >= value;
       };
     },
     '>': function gt(values) {
+      const value = Number(values[0]);
       return (number) => {
-        return number > values[0];
+        return number > value;
       };
     },
     '..': function range(values) {
-      return (number) => number >= values[0] && number <= values[1];
+      const valueLow = Number(values[0]);
+      const valueHigh = Number(values[1]);
+      return (number) => number >= valueLow && number <= valueHigh;
     },
   };
 
@@ -49,12 +64,12 @@ export default function getCheckNumber(
  * @internal
  */
 export function splitNumberOperator(keyword: string): {
-  values: number[];
+  values: string[];
   operator: string;
   /**
    * Is null when has the dot operator with a second value
    */
-  secondQuery?: number;
+  secondQuery?: string;
 } {
   const match =
     /^\s*\(?\s*(?<startOperator><=|>=|<|=|>|\.\.)?(?<firstValue>-?\d*\.?\d+)(?:(?<afterDots>\.\.)(?<secondValue>-?\d*\.?\d*))?\s*\)?\s*$/.exec(
@@ -63,7 +78,7 @@ export function splitNumberOperator(keyword: string): {
   if (!match) {
     return {
       operator: '=',
-      values: [Number(keyword)],
+      values: [keyword],
     };
   }
   if (!match.groups) {
@@ -71,7 +86,7 @@ export function splitNumberOperator(keyword: string): {
   }
   const { startOperator, firstValue, afterDots, secondValue } = match.groups;
   let operator = startOperator;
-  let values = firstValue ? [Number(firstValue)] : [];
+  let values = firstValue ? [firstValue] : [];
 
   // ..12
   if (startOperator === '..') {
@@ -87,7 +102,7 @@ export function splitNumberOperator(keyword: string): {
   }
 
   if (secondValue) {
-    values.push(Number(secondValue));
+    values.push(secondValue);
   }
   return {
     values,

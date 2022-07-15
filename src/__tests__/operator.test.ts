@@ -56,62 +56,62 @@ describe('operators', () => {
 
   it('number operators', () => {
     expect(splitNumberOperator('123.45')).toStrictEqual({
-      values: [123.45],
+      values: ['123.45'],
       operator: '=',
     });
 
     expect(splitNumberOperator('=123.45')).toStrictEqual({
-      values: [123.45],
+      values: ['123.45'],
       operator: '=',
     });
 
     expect(splitNumberOperator('>123.45')).toStrictEqual({
-      values: [123.45],
+      values: ['123.45'],
       operator: '>',
     });
 
     expect(splitNumberOperator('<123.45')).toStrictEqual({
-      values: [123.45],
+      values: ['123.45'],
       operator: '<',
     });
 
     expect(splitNumberOperator('<=123.45')).toStrictEqual({
-      values: [123.45],
+      values: ['123.45'],
       operator: '<=',
     });
 
     expect(splitNumberOperator('>=123.45')).toStrictEqual({
-      values: [123.45],
+      values: ['123.45'],
       operator: '>=',
     });
 
     expect(splitNumberOperator('123.45..123.56')).toStrictEqual({
-      values: [123.45, 123.56],
+      values: ['123.45', '123.56'],
       operator: '..',
     });
 
     expect(splitNumberOperator('=1..2')).toStrictEqual({
-      values: [1, 2],
+      values: ['1', '2'],
       operator: '..',
     });
 
     expect(splitNumberOperator('2..3')).toStrictEqual({
-      values: [2, 3],
+      values: ['2', '3'],
       operator: '..',
     });
 
     expect(splitNumberOperator('..3')).toStrictEqual({
-      values: [3],
+      values: ['3'],
       operator: '<=',
     });
 
     expect(splitNumberOperator('3..')).toStrictEqual({
-      values: [3],
+      values: ['3'],
       operator: '>=',
     });
 
     expect(splitNumberOperator('xyz')).toStrictEqual({
-      values: [Number.NaN],
+      values: ['xyz'],
       operator: '=',
     });
   });
