@@ -20,6 +20,7 @@ export default function match(
   predicate: string,
   options: {
     ignorePaths: RegExp[];
+    includePaths?: RegExp[];
     pathAlias: Record<string, RegExp>;
   },
 ): boolean {

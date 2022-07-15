@@ -12,6 +12,7 @@ interface OptionsTypeBase {
   caseSensitive?: boolean;
   predicate?: string;
   ignorePaths?: Array<RegExp | string>;
+  includePaths?: Array<RegExp | string>;
   pathAlias?: Record<string, string | RegExp>;
 }
 
@@ -46,6 +47,7 @@ export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
  * @param [options.limit=Infinity] - Maximum number of results.
  * @param [options.caseSensitive=false] - By default we ignore case.
  * @param [options.ignorePaths=[]] - Array of jpath to ignore.
+ * @param [options.includePaths] - Array of jpath to allow, default everything.
  * @param [options.pathAlias={}] - Key (string), value (string of regexp).
  * @param [options.keywords=[]] - List of keywords used to filter the array.
  * @param [options.index=false] - Returns the indices in the array that match.
@@ -60,6 +62,7 @@ export function filter(
     index = false,
     predicate = 'AND',
     ignorePaths: ignorePathsOption = [],
+    includePaths: includePathsOption,
     pathAlias: pathAliasOption = {},
   } = options;
 
@@ -72,6 +75,13 @@ export function filter(
       ? new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive)
       : path,
   );
+  const includePaths = includePathsOption
+    ? includePathsOption.map((path) =>
+        typeof path === 'string'
+          ? new RegExp(`(^|\\.)${escapeRegExp(path)}(\\.|$)`, insensitive)
+          : path,
+      )
+    : undefined;
 
   if (typeof keywords === 'string') {
     keywords = parseKeywords(keywords);
@@ -84,7 +94,13 @@ export function filter(
   if (index) {
     const result: number[] = [];
     for (let i = 0; i < data.length && matched < limit; i++) {
-      if (match(data[i], criteria, predicate, { ignorePaths, pathAlias })) {
+      if (
+        match(data[i], criteria, predicate, {
+          ignorePaths,
+          includePaths,
+          pathAlias,
+        })
+      ) {
         matched = result.push(i);
       }
     }
@@ -92,7 +108,13 @@ export function filter(
   } else {
     const result: Json[] = [];
     for (let i = 0; i < data.length && matched < limit; i++) {
-      if (match(data[i], criteria, predicate, { ignorePaths, pathAlias })) {
+      if (
+        match(data[i], criteria, predicate, {
+          ignorePaths,
+          includePaths,
+          pathAlias,
+        })
+      ) {
         matched = result.push(data[i]);
       }
     }

@@ -19,6 +19,7 @@ export default function recursiveMatch(
   keys: string[],
   options: {
     ignorePaths: RegExp[];
+    includePaths?: RegExp[];
   },
 ): boolean {
   if (typeof element === 'object') {
@@ -49,6 +50,17 @@ export default function recursiveMatch(
     for (const ignorePath of options.ignorePaths) {
       if (ignorePath.test(joinedKeys)) return false;
     }
+    if (options.includePaths) {
+      let included = false;
+      for (const includePath of options.includePaths) {
+        if (includePath.test(joinedKeys)) {
+          included = true;
+          break;
+        }
+      }
+      if (!included) return false;
+    }
+
     if (criterium.key) {
       if (!criterium.key.test(joinedKeys)) return false;
     }

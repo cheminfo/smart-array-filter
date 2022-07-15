@@ -57,11 +57,6 @@ const operators: Record<
       return string >= query[0] && string <= query[1];
     };
   },
-  in: function range(query) {
-    return (string) => {
-      return string >= query[0] && string <= query[1];
-    };
-  },
 };
 
 /**

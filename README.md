@@ -23,6 +23,8 @@ const array = [
 const filteredData = filter(array, {
   limit: 1,
   keywords: 'Do', // search for any field that contains the "Do" string
+  includePaths,
+  excludedPaths: [],
   caseSensitive: true,
 });
 ```
