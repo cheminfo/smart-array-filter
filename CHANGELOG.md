@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://www.github.com/cheminfo/smart-array-filter/compare/v3.2.0...v4.0.0) (2022-08-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* allow a 'or' operator with comma separated values
+
+### Features
+
+* allow a 'or' operator with comma separated values ([2798d82](https://www.github.com/cheminfo/smart-array-filter/commit/2798d82f38170c034e2c65b5abe805587c054790))
+
 ## [3.2.0](https://www.github.com/cheminfo/smart-array-filter/compare/v3.1.3...v3.2.0) (2022-07-15)
 
 
