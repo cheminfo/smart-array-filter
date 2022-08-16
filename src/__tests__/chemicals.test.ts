@@ -16,6 +16,10 @@ describe('chemicals tests', () => {
     assert('brand:>=FisherSci', 38);
   });
 
+  it('or operator', () => {
+    assert('mf:"C H5","C H2"', 10);
+  });
+
   it('numbers', () => {
     assert('mp:-15', 5);
     assert('mp:=230', 3);

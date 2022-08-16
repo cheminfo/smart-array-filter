@@ -58,6 +58,5 @@ export default function parseKeywords(keywords: string): string[] {
 
   if (previous === '"') currentWord.pop();
   if (currentWord.length) result.push(currentWord.join(''));
-
   return result;
 }

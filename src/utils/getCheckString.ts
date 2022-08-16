@@ -1,5 +1,7 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
+import charSplit from './charSplit';
+
 const operators: Record<
   string,
   (arg1: string[], arg2?: string) => (arg: string) => boolean
@@ -15,8 +17,7 @@ const operators: Record<
     };
   },
   '=': function equal(query, insensitive) {
-    const possibilities = query[0]
-      .split(',')
+    const possibilities = charSplit(query[0], ',')
       .filter((item) => item)
       .map((string) => new RegExp(`^${escapeRegExp(string)}$`, insensitive));
     return (string) => {
@@ -29,8 +30,7 @@ const operators: Record<
     };
   },
   '~': function fuzzy(query, insensitive) {
-    const possibilities = query[0]
-      .split(',')
+    const possibilities = charSplit(query[0], ',')
       .filter((item) => item)
       .map((string) => new RegExp(escapeRegExp(string), insensitive));
     return (string) => {

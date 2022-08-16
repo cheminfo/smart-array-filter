@@ -104,7 +104,7 @@ describe('index.test', () => {
   });
 
   it('complex', () => {
-    assert({ keywords: 'a:a -x:aoe, e:123;  -o:bae   ' }, 1);
+    assert({ keywords: 'a:a -x:aoe e:123  -o:bae   ' }, 1);
     assert({ keywords: ['a:a', '-x:aoe', 'e:123', '-o:bae'] }, 1);
   });
 

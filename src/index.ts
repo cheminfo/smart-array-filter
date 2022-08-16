@@ -1,9 +1,9 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 import match from './match/match';
+import charSplit from './utils/charSplit';
 import convertKeywordsToCriteria from './utils/convertKeywordsToCriteria';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
-import parseKeywords from './utils/parseKeywords';
 import { Json } from './utils/types';
 
 interface OptionsTypeBase {
@@ -84,7 +84,7 @@ export function filter(
     : undefined;
 
   if (typeof keywords === 'string') {
-    keywords = parseKeywords(keywords);
+    keywords = charSplit(keywords, /[ \t\r\n]/);
   }
   const criteria = convertKeywordsToCriteria(keywords, {
     insensitive,
