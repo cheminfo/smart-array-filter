@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.0.1](https://www.github.com/cheminfo/smart-array-filter/compare/v4.0.0...v4.0.1) (2023-04-20)
+
+
+### Miscellaneous Chores
+
+* improve type of predicate option ([23b668a](https://www.github.com/cheminfo/smart-array-filter/commit/23b668ac25e736e2a43eacd07d602e46bb64d884))
+
 ## [4.0.0](https://www.github.com/cheminfo/smart-array-filter/compare/v3.2.0...v4.0.0) (2022-08-16)
 
 
