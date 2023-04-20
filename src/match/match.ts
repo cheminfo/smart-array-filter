@@ -1,4 +1,4 @@
-import { Criterion } from '../index';
+import { Criterion, Predicate } from '../index';
 import { Json } from '../utils/types';
 
 import recursiveMatch from './recursiveMatch';
@@ -17,7 +17,7 @@ import recursiveMatch from './recursiveMatch';
 export default function match(
   element: Json,
   criteria: Criterion[],
-  predicate: string,
+  predicate: Predicate,
   options: {
     ignorePaths: RegExp[];
     includePaths?: RegExp[];

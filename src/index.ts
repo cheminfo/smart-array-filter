@@ -10,7 +10,7 @@ interface OptionsTypeBase {
   keywords?: string[] | string | null;
   limit?: number;
   caseSensitive?: boolean;
-  predicate?: string;
+  predicate?: Predicate;
   ignorePaths?: Array<RegExp | string>;
   includePaths?: Array<RegExp | string>;
   pathAlias?: Record<string, string | RegExp>;
@@ -33,6 +33,8 @@ export interface Criterion {
   checkString: (arg: string) => boolean;
   checkNumber: (arg: number) => boolean;
 }
+
+export type Predicate = 'AND' | 'OR';
 
 export function filter<T>(array: T[], options?: OptionsTypeWithIndex): number[];
 export function filter<T>(array: T[], options?: OptionsTypeWithoutIndex): T[];
