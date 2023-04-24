@@ -1,4 +1,5 @@
-import { Criterion, Predicate } from '../index';
+import { Predicate } from '../index';
+import { Criterion } from '../utils/convertKeywordToCriterion';
 import { Json } from '../utils/types';
 
 import recursiveMatch from './recursiveMatch';
