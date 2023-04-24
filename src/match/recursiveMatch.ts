@@ -1,4 +1,4 @@
-import { Criterion } from '..';
+import { Criterion } from '../utils/convertKeywordToCriterion';
 import { Json } from '../utils/types';
 
 import nativeMatch from './nativeMatch';
@@ -7,7 +7,7 @@ import nativeMatch from './nativeMatch';
  * RecursiveMatch.
  *
  * @param element - String | number | Record<string, string>.
- * @param criterium - Criterion.
+ * @param criterion - Criterion.
  * @param keys - String[].
  * @param options - Object.
  * @param options.ignorePaths - RegExp[].
@@ -15,7 +15,7 @@ import nativeMatch from './nativeMatch';
  */
 export default function recursiveMatch(
   element: Json,
-  criterium: Criterion,
+  criterion: Criterion,
   keys: string[],
   options: {
     ignorePaths: RegExp[];
@@ -25,21 +25,21 @@ export default function recursiveMatch(
   if (typeof element === 'object') {
     if (Array.isArray(element)) {
       for (const elm of element) {
-        if (recursiveMatch(elm, criterium, keys, options)) {
+        if (recursiveMatch(elm, criterion, keys, options)) {
           return true;
         }
       }
     } else {
       for (const i in element) {
         keys.push(i);
-        const didMatch = recursiveMatch(element[i], criterium, keys, options);
+        const didMatch = recursiveMatch(element[i], criterion, keys, options);
         keys.pop();
         if (didMatch) return true;
       }
     }
-  } else if (criterium.is) {
+  } else if (criterion.type === 'exists') {
     // we check for the presence of a key (jpath)
-    if (criterium.is.test(keys.join('.'))) {
+    if (criterion.key.test(keys.join('.'))) {
       return !!element;
     } else {
       return false;
@@ -61,10 +61,10 @@ export default function recursiveMatch(
       if (!included) return false;
     }
 
-    if (criterium.key) {
-      if (!criterium.key.test(joinedKeys)) return false;
+    if (criterion.key) {
+      if (!criterion.key.test(joinedKeys)) return false;
     }
-    return nativeMatch(element, criterium);
+    return nativeMatch(element, criterion);
   }
   return false;
 }

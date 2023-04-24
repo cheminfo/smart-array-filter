@@ -2,7 +2,7 @@ import escapeRegExp from 'lodash.escaperegexp';
 
 import match from './match/match';
 import charSplit from './utils/charSplit';
-import convertKeywordsToCriteria from './utils/convertKeywordsToCriteria';
+import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
 import { Json } from './utils/types';
 
@@ -25,14 +25,6 @@ export type OptionsTypeWithoutIndex = OptionsTypeBase & {
 };
 
 export type OptionsType = OptionsTypeWithIndex | OptionsTypeWithoutIndex;
-
-export interface Criterion {
-  is?: RegExp;
-  key?: RegExp;
-  negate: boolean;
-  checkString: (arg: string) => boolean;
-  checkNumber: (arg: number) => boolean;
-}
 
 export type Predicate = 'AND' | 'OR';
 
@@ -89,7 +81,7 @@ export function filter(
     keywords = charSplit(keywords, /[ \t\r\n]/);
   }
   const criteria = convertKeywordsToCriteria(keywords, {
-    insensitive,
+    caseSensitive: options.caseSensitive,
     pathAlias,
   });
   let matched = 0;

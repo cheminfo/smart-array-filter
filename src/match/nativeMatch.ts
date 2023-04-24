@@ -1,4 +1,4 @@
-import { Criterion } from '..';
+import { ValueCriterion } from '../utils/convertKeywordToCriterion';
 
 /**
  * NativeMatch.
@@ -9,7 +9,7 @@ import { Criterion } from '..';
  */
 export default function nativeMatch(
   element: string | number | boolean | undefined,
-  keyword: Criterion,
+  keyword: ValueCriterion,
 ): boolean {
   if (typeof element === 'string') {
     return keyword.checkString(element);
