@@ -65,7 +65,7 @@ describe('operators', () => {
       operator: '=',
     });
 
-    expect(splitNumberOperator('>123.45')).toStrictEqual({
+    expect(splitNumberOperator('> 123.45')).toStrictEqual({
       values: ['123.45'],
       operator: '>',
     });
@@ -86,6 +86,21 @@ describe('operators', () => {
     });
 
     expect(splitNumberOperator('123.45..123.56')).toStrictEqual({
+      values: ['123.45', '123.56'],
+      operator: '..',
+    });
+
+    expect(splitNumberOperator('123.45.. 123.56')).toStrictEqual({
+      values: ['123.45', '123.56'],
+      operator: '..',
+    });
+
+    expect(splitNumberOperator('123.45 ..123.56')).toStrictEqual({
+      values: ['123.45', '123.56'],
+      operator: '..',
+    });
+
+    expect(splitNumberOperator('123.45 .. 123.56')).toStrictEqual({
       values: ['123.45', '123.56'],
       operator: '..',
     });
