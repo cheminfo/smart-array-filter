@@ -104,7 +104,7 @@ export function splitStringOperator(keyword: string): {
   }
 
   let { operator, value } = match.groups;
-  let secondQuery: string | undefined = parts[1];
+  let secondQuery: string | undefined = parts[1]?.trim();
   let values: string[] = [value];
   if (parts.length > 1) {
     operator = '..';
