@@ -91,7 +91,7 @@ export function convertKeywordToCriterion(
 }
 
 export function convertKeywordsToCriteria(
-  keywords: Array<string | Criterion>,
+  keywords: string[],
   options: {
     caseSensitive?: boolean;
     pathAlias: Record<string, RegExp>;
@@ -100,9 +100,6 @@ export function convertKeywordsToCriteria(
   },
 ): Criterion[] {
   return keywords.map((keyword) => {
-    if (typeof keyword === 'object') {
-      return keyword;
-    }
     return convertKeywordToCriterion(keyword, options);
   });
 }

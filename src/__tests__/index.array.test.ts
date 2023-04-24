@@ -17,6 +17,14 @@ describe('simple2 filter', () => {
     assert({ keywords: 'h.e:>2' }, 0);
     assert({ keywords: 'h.e:>=2' }, 1);
   });
+
+  it('not possible to include array index in key', () => {
+    assert({ keywords: 'h:>0' }, 1);
+    assert({ keywords: 'h.0:>0' }, 0);
+    assert({ keywords: 'h.e:>0' }, 1);
+    assert({ keywords: 'h.0.e:>0' }, 0);
+    assert({ keywords: 'is:h.0' }, 0);
+  });
 });
 
 /**

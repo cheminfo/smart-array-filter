@@ -38,6 +38,21 @@ describe('operators', () => {
       operator: '..',
     });
 
+    expect(splitStringOperator('value1 ..value2')).toStrictEqual({
+      values: ['value1', 'value2'],
+      operator: '..',
+    });
+
+    expect(splitStringOperator('value1.. value2')).toStrictEqual({
+      values: ['value1', 'value2'],
+      operator: '..',
+    });
+
+    expect(splitStringOperator('value1 .. value2')).toStrictEqual({
+      values: ['value1', 'value2'],
+      operator: '..',
+    });
+
     expect(splitStringOperator('value1..')).toStrictEqual({
       values: ['value1'],
       operator: '>=',
