@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.0.2](https://www.github.com/cheminfo/smart-array-filter/compare/v4.0.1...v4.0.2) (2023-04-27)
+
+
+### Bug Fixes
+
+* make math operator parsing robust to extra spaces ([c7c512f](https://www.github.com/cheminfo/smart-array-filter/commit/c7c512fe18d3756441f48939e6d271c7b5c9c88a))
+
 ### [4.0.1](https://www.github.com/cheminfo/smart-array-filter/compare/v4.0.0...v4.0.1) (2023-04-20)
 
 
