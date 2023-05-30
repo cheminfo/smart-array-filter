@@ -99,6 +99,7 @@ If `keywords` is an array of strings, each string will be considered as a keywor
   - `..` to define a range. Example: `lifeExpectancy:10..40`
   - The range operators also work with strings, using the ascii code.
 - Negation: `-name:Gorilla` will match all entries except the ones which match `name:Gorilla`. This operator can be combined with other operators: `-name:=Gorilla`.
+- Presence of a property: `is:phylum` will match all entries that has a property called `phylum`. This operator can also be negated `-is:phylum`
 
 ### Search within arrays
 
