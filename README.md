@@ -125,7 +125,7 @@ filter(animals, {
 
 [npm-image]: https://img.shields.io/npm/v/smart-array-filter.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/smart-array-filter
-[travis-image]: https://img.shields.io/travis/cheminfo/smart-array-filter/master.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/cheminfo/smart-array-filter/main.svg?style=flat-square
 [travis-url]: https://travis-ci.org/cheminfo/smart-array-filter
 [coveralls-image]: https://img.shields.io/coveralls/cheminfo/smart-array-filter.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/cheminfo/smart-array-filter
