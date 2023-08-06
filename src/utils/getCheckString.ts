@@ -103,8 +103,9 @@ export function splitStringOperator(keyword: string): {
     throw new Error('unreachable');
   }
 
-  let { operator, value } = match.groups;
-  let secondQuery: string | undefined = parts[1]?.trim();
+  const { value } = match.groups;
+  let { operator } = match.groups;
+  const secondQuery: string | undefined = parts[1]?.trim();
   let values: string[] = [value];
   if (parts.length > 1) {
     operator = '..';

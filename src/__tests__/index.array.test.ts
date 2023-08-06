@@ -1,6 +1,6 @@
 import { filter, OptionsType } from '..';
 
-let test = [
+const test = [
   {
     h: [{ e: 1 }, { e: 2 }, { f: 3 }],
     i: ['jkl'],

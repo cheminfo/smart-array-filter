@@ -2,7 +2,7 @@
 
 import { filter, OptionsType } from '..';
 
-let data = [
+const data = [
   {
     h: [{ e: 1 }, { e: 2 }, { f: 3 }, { g: { a: 1, b: 2 } }],
     i: ['jkl'],

@@ -52,7 +52,7 @@ export function filter(
   data: Json[],
   options: OptionsType = {},
 ): Json[] | number[] {
-  let {
+  const {
     index = false,
     predicate = 'AND',
     ignorePaths: ignorePathsOption = [],

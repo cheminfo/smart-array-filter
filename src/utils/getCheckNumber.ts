@@ -86,7 +86,7 @@ export function splitNumberOperator(keyword: string): {
   }
   const { startOperator, firstValue, afterDots, secondValue } = match.groups;
   let operator = startOperator;
-  let values = firstValue ? [firstValue] : [];
+  const values = firstValue ? [firstValue] : [];
 
   // ..12
   if (startOperator === '..') {
