@@ -42,7 +42,7 @@ test('charSplit wth regexp', () => {
   //   'Roche',
   //  'Ciba geigy',
   // ]);
-  expect(charSplit(`Roche    \r\n   "Ciba geigy"`, /[\t\r\n ]+/)).toStrictEqual(
+  expect(charSplit(`Roche    \r\n   "Ciba geigy"`, /[\t\n\r ]+/)).toStrictEqual(
     ['Roche', 'Ciba geigy'],
   );
 });

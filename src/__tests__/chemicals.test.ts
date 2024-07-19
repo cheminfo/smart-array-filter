@@ -42,7 +42,6 @@ describe('chemicals tests', () => {
 
 /**
  * Assert.
- *
  * @param keywords - String.
  * @param length - Number.
  * @param options - Object.

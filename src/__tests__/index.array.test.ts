@@ -29,7 +29,6 @@ describe('simple2 filter', () => {
 
 /**
  * Assert.
- *
  * @param options - Object.
  * @param options.keywords - String.
  * @param length - Number.

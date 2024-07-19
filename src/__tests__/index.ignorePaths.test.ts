@@ -28,7 +28,6 @@ test('ignorePaths', () => {
 
 /**
  * Assert.
- *
  * @param options - Object.
  * @param options.keywords - RegExp[].
  * @param options.ignorePaths - RegExp[].

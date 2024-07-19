@@ -35,7 +35,6 @@ test('pathAlias', () => {
 
 /**
  * Assert.
- *
  * @param options - Object.
  * @param options.keywords - String[].
  * @param options.pathAlias - Object.

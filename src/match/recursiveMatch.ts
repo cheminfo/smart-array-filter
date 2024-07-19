@@ -5,12 +5,12 @@ import nativeMatch from './nativeMatch';
 
 /**
  * RecursiveMatch.
- *
  * @param element - String | number | Record<string, string>.
  * @param criterion - Criterion.
  * @param keys - String[].
  * @param options - Object.
  * @param options.ignorePaths - RegExp[].
+ * @param options.includePaths
  * @returns Boolean.
  */
 export default function recursiveMatch(
@@ -61,9 +61,7 @@ export default function recursiveMatch(
       if (!included) return false;
     }
 
-    if (criterion.key) {
-      if (!criterion.key.test(joinedKeys)) return false;
-    }
+    if (criterion.key && !criterion.key.test(joinedKeys)) return false;
     return nativeMatch(element, criterion);
   }
   return false;

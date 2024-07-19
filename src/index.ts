@@ -34,18 +34,17 @@ export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
 
 /**
  *
- * Filter.
- *
+ *Filter.
  * @param data - Array to filter.
- * @param [options={}] - Object.
- * @param [options.limit=Infinity] - Maximum number of results.
- * @param [options.caseSensitive=false] - By default we ignore case.
- * @param [options.ignorePaths=[]] - Array of jpath to ignore.
+ * @param [options] - Object.
+ * @param [options.limit] - Maximum number of results.
+ * @param [options.caseSensitive] - By default we ignore case.
+ * @param [options.ignorePaths] - Array of jpath to ignore.
  * @param [options.includePaths] - Array of jpath to allow, default everything.
- * @param [options.pathAlias={}] - Key (string), value (string of regexp).
- * @param [options.keywords=[]] - List of keywords used to filter the array.
- * @param [options.index=false] - Returns the indices in the array that match.
- * @param [options.predicate='AND'] - Could be either AND or OR.
+ * @param [options.pathAlias] - Key (string), value (string of regexp).
+ * @param [options.keywords] - List of keywords used to filter the array.
+ * @param [options.index] - Returns the indices in the array that match.
+ * @param [options.predicate] - Could be either AND or OR.
  * @returns String[] | number[].
  */
 export function filter(
@@ -60,7 +59,7 @@ export function filter(
     pathAlias: pathAliasOption = {},
   } = options;
 
-  const limit = options.limit ? options.limit : Infinity;
+  const limit = options.limit || Infinity;
   const insensitive = options.caseSensitive ? '' : 'i';
   let keywords = options.keywords || [];
   const pathAlias = ensureObjectOfRegExps(pathAliasOption, { insensitive });
@@ -78,7 +77,7 @@ export function filter(
     : undefined;
 
   if (typeof keywords === 'string') {
-    keywords = charSplit(keywords, /[ \t\r\n]/);
+    keywords = charSplit(keywords, /[\t\n\r ]/);
   }
   const criteria = convertKeywordsToCriteria(keywords, {
     caseSensitive: options.caseSensitive,

@@ -2,6 +2,7 @@
  * We split a string into an array of strings except if it in single or double quotes.
  * @param string
  * @param char
+ * @param delimiter
  * @returns
  */
 
@@ -41,5 +42,5 @@ export default function charSplit(
       }
       return result;
     })
-    .filter((result) => result);
+    .filter(Boolean);
 }

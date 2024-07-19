@@ -18,7 +18,7 @@ const operators: Record<
   },
   '=': function equal(query, insensitive) {
     const possibilities = charSplit(query[0], ',')
-      .filter((item) => item)
+      .filter(Boolean)
       .map((string) => new RegExp(`^${escapeRegExp(string)}$`, insensitive));
     return (string) => {
       for (const possibility of possibilities) {
@@ -31,7 +31,7 @@ const operators: Record<
   },
   '~': function fuzzy(query, insensitive) {
     const possibilities = charSplit(query[0], ',')
-      .filter((item) => item)
+      .filter(Boolean)
       .map((string) => new RegExp(escapeRegExp(string), insensitive));
     return (string) => {
       for (const possibility of possibilities) {
@@ -61,7 +61,6 @@ const operators: Record<
 
 /**
  * GetCheckString.
- *
  * @param keyword - String.
  * @param insensitive - String.
  * @returns CheckString. (string)=>boolean.

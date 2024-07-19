@@ -6,13 +6,13 @@ import recursiveMatch from './recursiveMatch';
 
 /**
  * Match.
- *
  * @param element - String | number | Record<string, string>.
  * @param criteria - Criterion[].
  * @param predicate - String.
  * @param options - Object.
  * @param options.ignorePaths - RegExp[].
  * @param options.pathAlias - Record<string, string|RegExp>s.
+ * @param options.includePaths
  * @returns Boolean.
  */
 export default function match(
@@ -25,7 +25,7 @@ export default function match(
     pathAlias: Record<string, RegExp>;
   },
 ): boolean {
-  if (criteria.length) {
+  if (criteria.length > 0) {
     let found = false;
     for (const criterion of criteria) {
       // match XOR negate

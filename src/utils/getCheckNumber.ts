@@ -13,13 +13,10 @@ const operators: Record<string, (arg1: string[]) => (arg: number) => boolean> =
       };
     },
     '=': function equal(values) {
-      const possibleNumbers = values[0]
-        .split(',')
-        .filter((item: string) => item)
-        .map(Number);
+      const possibleNumbers = values[0].split(',').filter(Boolean).map(Number);
       return (number) => {
-        for (let i = 0; i < possibleNumbers.length; i++) {
-          if (number === possibleNumbers[i]) {
+        for (const possibleNumber of possibleNumbers) {
+          if (number === possibleNumber) {
             return true;
           }
         }

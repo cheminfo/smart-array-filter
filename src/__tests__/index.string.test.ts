@@ -44,7 +44,6 @@ describe('string filter', () => {
 
 /**
  * Assert.
- *
  * @param options - OptionsType.
  * @param options.keywords - String[].
  * @param length - Number.

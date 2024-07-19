@@ -209,7 +209,6 @@ describe('index.test', () => {
 
 /**
  * Assert.
- *
  * @param options - OptionsType.
  * @param length - Number.
  */
