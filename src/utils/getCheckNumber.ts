@@ -63,6 +63,7 @@ export default function getCheckNumber(
 export function splitNumberOperator(keyword: string): {
   values: string[];
   operator: string;
+
   /**
    * Is null when has the dot operator with a second value
    */

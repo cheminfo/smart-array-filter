@@ -8,10 +8,12 @@ import getCheckString from './getCheckString';
  */
 export interface KeyCriterion {
   type: 'exists';
+
   /**
    * The regexp that should match the key. If the key does not meet the regexp,
    */
   key: RegExp;
+
   /**
    * Match non-existing keys instead of existing keys
    */
@@ -23,10 +25,12 @@ export interface KeyCriterion {
  */
 export interface ValueCriterion {
   type: 'matches';
+
   /**
    * The regexp that should match the key. Non matching keys are not checked
    */
   key?: RegExp;
+
   /**
    * Use to match anything that does not match the value
    */
