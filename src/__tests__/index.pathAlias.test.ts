@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest';
 /* eslint-disable prefer-named-capture-group */
 
 import { filter, OptionsType } from '..';

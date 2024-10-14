@@ -60,7 +60,7 @@ export function convertKeywordToCriterion(
     keyword = keyword.slice(1);
   }
   const colon = keyword.indexOf(':');
-  if (colon > -1) {
+  if (colon !== -1) {
     const value = keyword.slice(Math.max(0, colon + 1));
     if (colon > 0) {
       const key = keyword.slice(0, Math.max(0, colon));

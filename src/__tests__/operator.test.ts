@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { splitNumberOperator } from '../utils/getCheckNumber';
 import { splitStringOperator } from '../utils/getCheckString';
 

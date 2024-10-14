@@ -1,5 +1,7 @@
 import assert from 'node:assert';
 
+import { test, expect } from 'vitest';
+
 import { convertKeywordToCriterion } from '../convertKeywordToCriterion';
 
 test('value keyword with field', () => {

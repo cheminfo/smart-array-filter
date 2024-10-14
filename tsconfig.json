@@ -3,6 +3,7 @@
     "checkJs": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "outDir": "lib",
     "sourceMap": true,
