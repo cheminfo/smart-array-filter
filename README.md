@@ -57,15 +57,8 @@ const filteredData = filter(array, {
 | `limit`         | `number`               | `Infinity` | The maximum number of results to return.                  |
 | `caseSensitive` | `boolean`              | `false`    | Whether the search should be case sensitive.              |
 | `predicate`     | `"AND"` or `"OR"`      | `"AND"`    | The predicate to use to combine matches between keywords. |
-| `depth`         | `number`               | `Infinity` | The depth to which the objects are inspected.             |
 | `includePaths`  | `string[]`             | `[]`       | The paths to include when searching for matches.          |
 | `ignorePaths`   | `string[]`             | `[]`       | The paths to ignore when searching for matches.           |
-
-### Recursivity
-
-By default, objects are inspected recursively. This means that if your data has circular references, it might throw a `RangeError: Maximum call stack size exceeded` error.
-
-To limit recursivity at a certain depth, you can set the `depth` option.
 
 ### Search within specific fields
 
