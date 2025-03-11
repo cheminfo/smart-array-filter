@@ -154,25 +154,26 @@ describe('index.test', () => {
     assert({ keywords: ['e:>=125'] }, 0);
   });
 
-  it('math dot operator with end only', () => {
+  it('match dot operator with end only', () => {
     assert({ keywords: ['e:..100'] }, 0);
     assert({ keywords: ['e:..123'] }, 1);
     assert({ keywords: ['e:..200'] }, 1);
   });
 
-  it('math dot operator with start only', () => {
+  it('match dot operator with start only', () => {
     assert({ keywords: ['e:200..'] }, 0);
     assert({ keywords: ['e:123..'] }, 1);
     assert({ keywords: ['e:100..'] }, 1);
   });
 
-  it('math dot operator with start and end', () => {
+  it('match dot operator with start and end', () => {
     assert({ keywords: ['e:100..150'] }, 1);
     assert({ keywords: ['e:100.2..150.2'] }, 1);
     assert({ keywords: ['e:150..200'] }, 0);
     assert({ keywords: ['e:10..20'] }, 0);
     assert({ keywords: ['e:20..10'] }, 0);
-    assert({ keywords: ['e:150..100'] }, 0);
+    assert({ keywords: ['e:100..150'] }, 1);
+    assert({ keywords: ['e:150..100'] }, 1);
   });
 
   it('special characters', () => {

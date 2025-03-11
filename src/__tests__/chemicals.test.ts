@@ -39,6 +39,7 @@ describe('chemicals tests', () => {
     });
     assert('mp:230..230', 3);
     assert('mw:30..31', 7);
+    assert('mw:31..30', 7);
     assert('idontexist:', 0);
   });
 });
