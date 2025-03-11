@@ -100,7 +100,7 @@ export function splitNumberOperator(keyword: string): {
   }
 
   if (secondValue) {
-    if (secondValue < firstValue) {
+    if (Number(secondValue) < Number(firstValue)) {
       values.unshift(secondValue);
     } else {
       values.push(secondValue);

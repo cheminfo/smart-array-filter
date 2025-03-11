@@ -113,8 +113,10 @@ export function splitStringOperator(keyword: string): {
     } else if (!value) {
       values = [secondQuery];
       operator = '<=';
-    } else {
+    } else if (value < secondQuery) {
       values.push(secondQuery);
+    } else {
+      values.unshift(secondQuery);
     }
   }
   return {

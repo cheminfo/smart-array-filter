@@ -132,6 +132,16 @@ describe('operators', () => {
       operator: '..',
     });
 
+    expect(splitNumberOperator('=2..10')).toStrictEqual({
+      values: ['2', '10'],
+      operator: '..',
+    });
+
+    expect(splitNumberOperator('=10..2')).toStrictEqual({
+      values: ['2', '10'],
+      operator: '..',
+    });
+
     expect(splitNumberOperator('2..3')).toStrictEqual({
       values: ['2', '3'],
       operator: '..',
