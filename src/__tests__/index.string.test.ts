@@ -14,6 +14,8 @@ const test = [
 describe('string filter', () => {
   it('string range', () => {
     assert({ keywords: ['i:j..k'] }, 1);
+    assert({ keywords: ['i:k..j'] }, 1);
+    assert({ keywords: ['i:kk..j'] }, 1);
     assert({ keywords: ['i:a..b'] }, 0);
   });
 

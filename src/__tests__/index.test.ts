@@ -168,6 +168,7 @@ describe('index.test', () => {
 
   it('match dot operator with start and end', () => {
     assert({ keywords: ['e:100..150'] }, 1);
+    assert({ keywords: ['e:2..150'] }, 1);
     assert({ keywords: ['e:100.2..150.2'] }, 1);
     assert({ keywords: ['e:150..200'] }, 0);
     assert({ keywords: ['e:10..20'] }, 0);
