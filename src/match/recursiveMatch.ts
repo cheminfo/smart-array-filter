@@ -1,5 +1,5 @@
-import { Criterion } from '../utils/convertKeywordToCriterion';
-import { Json } from '../utils/types';
+import type { Criterion } from '../utils/convertKeywordToCriterion';
+import type { Json } from '../utils/types';
 
 import nativeMatch from './nativeMatch';
 

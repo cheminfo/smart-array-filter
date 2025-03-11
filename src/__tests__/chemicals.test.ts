@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-import { filter, OptionsTypeWithoutIndex } from '..';
+import type { OptionsTypeWithoutIndex } from '..';
+import { filter } from '..';
 
 import chemicals from './chemicals.json';
 

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-import { filter, OptionsType } from '..';
+import type { OptionsType } from '..';
+import { filter } from '..';
 
 const test = [
   {

@@ -4,7 +4,7 @@ import match from './match/match';
 import charSplit from './utils/charSplit';
 import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
-import { Json } from './utils/types';
+import type { Json } from './utils/types';
 
 interface OptionsTypeBase {
   keywords?: string[] | string | null;
@@ -28,7 +28,7 @@ export type OptionsType = OptionsTypeWithIndex | OptionsTypeWithoutIndex;
 
 export type Predicate = 'AND' | 'OR';
 
-export function filter<T>(array: T[], options?: OptionsTypeWithIndex): number[];
+export function filter(array: Json[], options?: OptionsTypeWithIndex): number[];
 export function filter<T>(array: T[], options?: OptionsTypeWithoutIndex): T[];
 export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
 
