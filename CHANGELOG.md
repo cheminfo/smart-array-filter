@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.1.1](https://www.github.com/cheminfo/smart-array-filter/compare/v4.1.0...v4.1.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* ranges and sorting values ([#42](https://www.github.com/cheminfo/smart-array-filter/issues/42)) ([5d32797](https://www.github.com/cheminfo/smart-array-filter/commit/5d32797c001ac300753b741e4d0ce1ab0fabfb45))
+
 ## [4.1.0](https://www.github.com/cheminfo/smart-array-filter/compare/v4.0.2...v4.1.0) (2025-03-11)
 
 
