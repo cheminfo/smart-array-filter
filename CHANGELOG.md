@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://www.github.com/cheminfo/smart-array-filter/compare/v4.0.2...v4.1.0) (2025-03-11)
+
+
+### Features
+
+* for ranges the 2 numbers order is not important ([af2b777](https://www.github.com/cheminfo/smart-array-filter/commit/af2b7770fd8a9c60ad25b87bf2fad3f31cc3ccaa))
+
 ### [4.0.2](https://www.github.com/cheminfo/smart-array-filter/compare/v4.0.1...v4.0.2) (2023-04-27)
 
 
