@@ -18,8 +18,8 @@ const operators: Record<string, (arg1: string[]) => (arg: number) => boolean> =
         .filter((item: string) => item)
         .map(Number);
       return (number) => {
-        for (let i = 0; i < possibleNumbers.length; i++) {
-          if (number === possibleNumbers[i]) {
+        for (const possibleNumber of possibleNumbers) {
+          if (number === possibleNumber) {
             return true;
           }
         }
@@ -86,7 +86,7 @@ export function splitNumberOperator(keyword: string): {
   }
   const { startOperator, firstValue, afterDots, secondValue } = match.groups;
   let operator = startOperator;
-  let values = firstValue ? [firstValue] : [];
+  const values = firstValue ? [firstValue] : [];
 
   // ..12
   if (startOperator === '..') {

@@ -1,7 +1,7 @@
-import { Criterion } from '../utils/convertKeywordToCriterion';
-import { Json } from '../utils/types';
+import type { Criterion } from '../utils/convertKeywordToCriterion.ts';
+import type { Json } from '../utils/types.ts';
 
-import nativeMatch from './nativeMatch';
+import nativeMatch from './nativeMatch.ts';
 
 /**
  * RecursiveMatch.

@@ -1,5 +1,7 @@
-import { splitNumberOperator } from '../utils/getCheckNumber';
-import { splitStringOperator } from '../utils/getCheckString';
+import { describe, expect, it } from 'vitest';
+
+import { splitNumberOperator } from '../utils/getCheckNumber.ts';
+import { splitStringOperator } from '../utils/getCheckString.ts';
 
 describe('operators', () => {
   it('string operators', () => {

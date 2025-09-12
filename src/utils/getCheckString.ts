@@ -1,6 +1,6 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import charSplit from './charSplit';
+import charSplit from './charSplit.ts';
 
 const operators: Record<
   string,
@@ -18,8 +18,8 @@ const operators: Record<
   },
   '=': function equal(query, insensitive) {
     const possibilities = charSplit(query[0], ',')
-      .filter((item) => item)
-      .map((string) => new RegExp(`^${escapeRegExp(string)}$`, insensitive));
+      .filter(Boolean)
+      .map((str) => new RegExp(`^${escapeRegExp(str)}$`, insensitive));
     return (string) => {
       for (const possibility of possibilities) {
         if (possibility.test(string)) {
@@ -103,8 +103,9 @@ export function splitStringOperator(keyword: string): {
     throw new Error('unreachable');
   }
 
-  let { operator, value } = match.groups;
-  let secondQuery: string | undefined = parts[1]?.trim();
+  let operator = match.groups.operator;
+  const value = match.groups.value;
+  const secondQuery: string | undefined = parts[1]?.trim();
   let values: string[] = [value];
   if (parts.length > 1) {
     operator = '..';

@@ -1,10 +1,6 @@
 /**
  * We split a string into an array of strings except if it in single or double quotes.
- * @param string
- * @param char
- * @returns
  */
-
 export default function charSplit(
   string: string,
   delimiter: string | RegExp,
@@ -41,5 +37,5 @@ export default function charSplit(
       }
       return result;
     })
-    .filter((result) => result);
+    .filter(Boolean);
 }

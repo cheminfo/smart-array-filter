@@ -1,4 +1,6 @@
-import charSplit from '../charSplit';
+import { expect, test } from 'vitest';
+
+import charSplit from './charSplit.ts';
 
 test('charSplit on comma', () => {
   expect(charSplit(`Roche,"Ciba geigy",Lonza`, ',')).toStrictEqual([

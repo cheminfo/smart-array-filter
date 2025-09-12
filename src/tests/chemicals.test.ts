@@ -1,6 +1,8 @@
-import { filter, OptionsTypeWithoutIndex } from '..';
+import { describe, expect, it } from 'vitest';
 
-import chemicals from './chemicals.json';
+import chemicals from '../../fixtures/chemicals.json' with { type: 'json' };
+import type { OptionsTypeWithoutIndex } from '../index.js';
+import { filter } from '../index.js';
 
 describe('chemicals tests', () => {
   it('string matching', () => {

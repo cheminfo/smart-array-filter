@@ -1,6 +1,6 @@
-import assert from 'assert';
+import { assert, expect, it } from 'vitest';
 
-import { convertKeywordToCriterion } from '../convertKeywordToCriterion';
+import { convertKeywordToCriterion } from './convertKeywordToCriterion.ts';
 
 it('value keyword with field', () => {
   const criterium = convertKeywordToCriterion('a:a');

@@ -1,10 +1,10 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import match from './match/match';
-import charSplit from './utils/charSplit';
-import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion';
-import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
-import { Json } from './utils/types';
+import match from './match/match.ts';
+import charSplit from './utils/charSplit.ts';
+import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion.ts';
+import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps.ts';
+import type { Json } from './utils/types.ts';
 
 interface OptionsTypeBase {
   keywords?: string[] | string | null;
@@ -28,6 +28,8 @@ export type OptionsType = OptionsTypeWithIndex | OptionsTypeWithoutIndex;
 
 export type Predicate = 'AND' | 'OR';
 
+// The generic T is needed for the overload to work
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function filter<T>(array: T[], options?: OptionsTypeWithIndex): number[];
 export function filter<T>(array: T[], options?: OptionsTypeWithoutIndex): T[];
 export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
@@ -52,7 +54,7 @@ export function filter(
   data: Json[],
   options: OptionsType = {},
 ): Json[] | number[] {
-  let {
+  const {
     index = false,
     predicate = 'AND',
     ignorePaths: ignorePathsOption = [],

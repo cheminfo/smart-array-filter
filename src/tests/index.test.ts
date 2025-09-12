@@ -1,6 +1,9 @@
-import { filter, OptionsType } from '..';
+import { describe, expect, it } from 'vitest';
 
-let test = [
+import type { OptionsType } from '../index.js';
+import { filter } from '../index.js';
+
+const test = [
   {
     a: 'a',
     b: 'b',

@@ -1,6 +1,9 @@
-import { filter, OptionsType } from '..';
+import { expect, test } from 'vitest';
 
-let data = [
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
+
+const data = [
   {
     h: [{ e: 1 }, { e: 2 }, { f: 3 }],
     i: ['jkl'],

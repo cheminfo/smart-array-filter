@@ -1,8 +1,11 @@
 /* eslint-disable prefer-named-capture-group */
 
-import { filter, OptionsType } from '..';
+import { expect, test } from 'vitest';
 
-let data = [
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
+
+const data = [
   {
     h: [{ e: 1 }, { e: 2 }, { f: 3 }, { g: { a: 1, b: 2 } }],
     i: ['jkl'],
