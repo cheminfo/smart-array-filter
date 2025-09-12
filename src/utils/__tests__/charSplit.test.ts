@@ -38,10 +38,10 @@ test('charSplit on space', () => {
 });
 
 test('charSplit wth regexp', () => {
-  //  expect(charSplit(`Roche "Ciba geigy"`, /[\t\r\n ]+/)).toStrictEqual([
-  //   'Roche',
-  //  'Ciba geigy',
-  // ]);
+  expect(charSplit(`Roche "Ciba geigy"`, /[\t\r\n ]+/)).toStrictEqual([
+    'Roche',
+    'Ciba geigy',
+  ]);
   expect(charSplit(`Roche    \r\n   "Ciba geigy"`, /[\t\r\n ]+/)).toStrictEqual(
     ['Roche', 'Ciba geigy'],
   );
