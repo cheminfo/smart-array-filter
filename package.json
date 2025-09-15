@@ -41,7 +41,7 @@
     "prepack": "npm run tsc",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
-    "test": "npm run test-only && npm run check-types && npm run eslint",
+    "test": "npm run test-only && npm run check-types && npm run eslint && npm run prettier",
     "test-only": "vitest run --coverage",
     "tsc-build": "tsc --project tsconfig.build.json",
     "tsc": "npm run clean && npm run tsc-build"
