@@ -5,4 +5,8 @@ export type Json =
   | null
   | undefined
   | Json[]
-  | { [key: string]: Json };
+  | JSONObject;
+
+export interface JSONObject {
+  [key: string]: Json;
+}

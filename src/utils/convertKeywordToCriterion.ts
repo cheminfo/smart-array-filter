@@ -2,6 +2,7 @@ import escapeRegExp from 'lodash.escaperegexp';
 
 import getCheckNumber from './getCheckNumber.ts';
 import getCheckString from './getCheckString.ts';
+import type { JSONObject } from './types.js';
 
 /**
  * A criterion which checks the existence of a key
@@ -37,6 +38,7 @@ export interface ValueCriterion {
   negate: boolean;
   checkString: (arg: string) => boolean;
   checkNumber: (arg: number) => boolean;
+  checkObject?: (arg: JSONObject | null) => boolean;
 }
 
 export type Criterion = KeyCriterion | ValueCriterion;

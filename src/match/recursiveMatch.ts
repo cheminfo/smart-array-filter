@@ -3,6 +3,11 @@ import type { Json } from '../utils/types.ts';
 
 import nativeMatch from './nativeMatch.ts';
 
+interface PathOptions {
+  ignorePaths: RegExp[];
+  includePaths?: RegExp[];
+}
+
 /**
  * RecursiveMatch.
  * @param element - String | number | Record<string, string>.
@@ -17,10 +22,7 @@ export default function recursiveMatch(
   element: Json,
   criterion: Criterion,
   keys: string[],
-  options: {
-    ignorePaths: RegExp[];
-    includePaths?: RegExp[];
-  },
+  options: PathOptions,
 ): boolean {
   if (typeof element === 'object') {
     if (Array.isArray(element)) {
@@ -30,6 +32,16 @@ export default function recursiveMatch(
         }
       }
     } else {
+      const joinedKeys = keys.join('.');
+      if (
+        criterion.type === 'matches' &&
+        criterion.checkObject &&
+        !shouldIgnorePath(joinedKeys, options)
+      ) {
+        if (criterion.checkObject(element)) {
+          return true;
+        }
+      }
       for (const i in element) {
         keys.push(i);
         const didMatch = recursiveMatch(element[i], criterion, keys, options);
@@ -47,24 +59,30 @@ export default function recursiveMatch(
   } else if (criterion.type === 'matches') {
     // need to check if keys match
     const joinedKeys = keys.join('.');
-    for (const ignorePath of options.ignorePaths) {
-      if (ignorePath.test(joinedKeys)) return false;
+    if (shouldIgnorePath(joinedKeys, options)) {
+      return false;
     }
-    if (options.includePaths) {
-      let included = false;
-      for (const includePath of options.includePaths) {
-        if (includePath.test(joinedKeys)) {
-          included = true;
-          break;
-        }
-      }
-      if (!included) return false;
-    }
-
     if (criterion.key && !criterion.key.test(joinedKeys)) return false;
     return nativeMatch(element, criterion);
   } else {
     throw new Error('Unreachable. Invalid criterion type');
+  }
+  return false;
+}
+
+function shouldIgnorePath(joinedKeys: string, options: PathOptions): boolean {
+  for (const ignorePath of options.ignorePaths) {
+    if (ignorePath.test(joinedKeys)) return true;
+  }
+  if (options.includePaths) {
+    let included = false;
+    for (const includePath of options.includePaths) {
+      if (includePath.test(joinedKeys)) {
+        included = true;
+        break;
+      }
+    }
+    if (!included) return true;
   }
   return false;
 }
