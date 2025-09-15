@@ -1,6 +1,6 @@
 {
   "name": "smart-array-filter",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "type": "module",
   "exports": {
     ".": "./lib/index.js"
