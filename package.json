@@ -1,6 +1,6 @@
 {
   "name": "smart-array-filter",
-  "version": "4.0.2",
+  "version": "4.1.1",
   "type": "module",
   "exports": {
     ".": "./lib/index.js"
@@ -14,9 +14,7 @@
   ],
   "files": [
     "lib",
-    "src",
-    "!**/*.test.js",
-    "!**/*.test.ts"
+    "src"
   ],
   "author": "Michaël Zasso",
   "repository": "cheminfo/smart-array-filter",
