@@ -1,10 +1,10 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import match from './match/match';
-import charSplit from './utils/charSplit';
-import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion';
-import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps';
-import type { Json } from './utils/types';
+import match from './match/match.ts';
+import charSplit from './utils/charSplit.ts';
+import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion.ts';
+import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps.ts';
+import type { Json } from './utils/types.ts';
 
 interface OptionsTypeBase {
   keywords?: string[] | string | null;

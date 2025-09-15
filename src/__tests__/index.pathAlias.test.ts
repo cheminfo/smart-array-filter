@@ -1,8 +1,9 @@
-import { test, expect } from 'vitest';
 /* eslint-disable prefer-named-capture-group */
 
-import type { OptionsType } from '..';
-import { filter } from '..';
+import { expect, test } from 'vitest';
+
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
 
 const data = [
   {
@@ -37,6 +38,7 @@ test('pathAlias', () => {
 
 /**
  * Assert.
+ *
  * @param options - Object.
  * @param options.keywords - String[].
  * @param options.pathAlias - Object.

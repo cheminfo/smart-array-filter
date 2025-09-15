@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import type { OptionsType } from '..';
-import { filter } from '..';
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
 
 const test = [
   {

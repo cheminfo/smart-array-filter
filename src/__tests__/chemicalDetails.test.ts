@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { filter } from '..';
+import { filter } from '../index.ts';
 
-import chemicals from './chemicalDetails.json';
+import chemicals from './chemicalDetails.json' with { type: 'json' };
 
 describe('chemicalDetails tests', () => {
   it('string matching', () => {

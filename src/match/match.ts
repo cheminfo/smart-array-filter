@@ -1,8 +1,8 @@
-import type { Predicate } from '../index';
-import type { Criterion } from '../utils/convertKeywordToCriterion';
-import type { Json } from '../utils/types';
+import type { Predicate } from '../index.ts';
+import type { Criterion } from '../utils/convertKeywordToCriterion.ts';
+import type { Json } from '../utils/types.ts';
 
-import recursiveMatch from './recursiveMatch';
+import recursiveMatch from './recursiveMatch.ts';
 
 /**
  * Match.

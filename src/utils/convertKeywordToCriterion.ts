@@ -1,7 +1,7 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import getCheckNumber from './getCheckNumber';
-import getCheckString from './getCheckString';
+import getCheckNumber from './getCheckNumber.ts';
+import getCheckString from './getCheckString.ts';
 
 /**
  * A criterion which checks the existence of a key

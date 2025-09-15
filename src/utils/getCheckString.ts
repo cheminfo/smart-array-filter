@@ -1,6 +1,6 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import charSplit from './charSplit';
+import charSplit from './charSplit.ts';
 
 const operators: Record<
   string,

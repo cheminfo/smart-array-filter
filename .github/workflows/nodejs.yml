@@ -9,3 +9,5 @@ on:
 jobs:
   nodejs:
     uses: zakodium/workflows/.github/workflows/nodejs.yml@nodejs-v1
+    with:
+      lint-check-types: true

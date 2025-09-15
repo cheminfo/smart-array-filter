@@ -1,7 +1,7 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
-import type { OptionsType } from '..';
-import { filter } from '..';
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
 
 const data = [
   {

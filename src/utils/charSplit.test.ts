@@ -1,6 +1,6 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
-import charSplit from '../charSplit';
+import charSplit from './charSplit.ts';
 
 test('charSplit on comma', () => {
   expect(charSplit(`Roche,"Ciba geigy",Lonza`, ',')).toStrictEqual([
@@ -40,10 +40,10 @@ test('charSplit on space', () => {
 });
 
 test('charSplit wth regexp', () => {
-  //  expect(charSplit(`Roche "Ciba geigy"`, /[\t\r\n ]+/)).toStrictEqual([
-  //   'Roche',
-  //  'Ciba geigy',
-  // ]);
+  expect(charSplit(`Roche "Ciba geigy"`, /[\t\r\n ]+/)).toStrictEqual([
+    'Roche',
+    'Ciba geigy',
+  ]);
   expect(charSplit(`Roche    \r\n   "Ciba geigy"`, /[\t\n\r ]+/)).toStrictEqual(
     ['Roche', 'Ciba geigy'],
   );

@@ -1,4 +1,4 @@
-import type { ValueCriterion } from '../utils/convertKeywordToCriterion';
+import type { ValueCriterion } from '../utils/convertKeywordToCriterion.ts';
 
 /**
  * NativeMatch.
