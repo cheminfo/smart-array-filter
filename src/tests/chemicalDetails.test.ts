@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import chemicals from '../../fixtures/chemicalDetails.json' with { type: 'json' };
-import { filter } from '../index.js';
+import { filter } from '../index.ts';
 
 describe('chemicalDetails tests', () => {
   it('string matching', () => {
@@ -35,7 +35,6 @@ describe('chemicalDetails tests', () => {
 
 /**
  * Assert.
- *
  * @param keywords - String.
  * @param length - Number.
  */

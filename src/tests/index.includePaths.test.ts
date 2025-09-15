@@ -27,7 +27,6 @@ test('includePaths', () => {
 
 /**
  * Assert.
- *
  * @param options - Object.
  * @param options.keywords - RegExp[].
  * @param options.includePaths - RegExp[].

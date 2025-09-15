@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { OptionsType } from '../index.js';
-import { filter } from '../index.js';
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
 
 const test = [
   {
@@ -14,6 +14,8 @@ const test = [
 describe('string filter', () => {
   it('string range', () => {
     assert({ keywords: ['i:j..k'] }, 1);
+    assert({ keywords: ['i:k..j'] }, 1);
+    assert({ keywords: ['i:kk..j'] }, 1);
     assert({ keywords: ['i:a..b'] }, 0);
   });
 
@@ -47,7 +49,6 @@ describe('string filter', () => {
 
 /**
  * Assert.
- *
  * @param options - OptionsType.
  * @param options.keywords - String[].
  * @param length - Number.

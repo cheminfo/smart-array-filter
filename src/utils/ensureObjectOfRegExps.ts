@@ -2,7 +2,6 @@ import escapeRegExp from 'lodash.escaperegexp';
 
 /**
  * EnsureObjectOfRegExps.
- *
  * @param object  - { [index: string]: string|RegExp }.
  * @param options - Object.
  * @param options.insensitive - String.

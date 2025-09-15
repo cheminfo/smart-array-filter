@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
-import type { OptionsType } from '../index.js';
-import { filter } from '../index.js';
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
 
 const data = [
   {
@@ -31,7 +31,6 @@ test('ignorePaths', () => {
 
 /**
  * Assert.
- *
  * @param options - Object.
  * @param options.keywords - RegExp[].
  * @param options.ignorePaths - RegExp[].

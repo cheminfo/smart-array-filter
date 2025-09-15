@@ -13,10 +13,7 @@ const operators: Record<string, (arg1: string[]) => (arg: number) => boolean> =
       };
     },
     '=': function equal(values) {
-      const possibleNumbers = values[0]
-        .split(',')
-        .filter((item: string) => item)
-        .map(Number);
+      const possibleNumbers = values[0].split(',').filter(Boolean).map(Number);
       return (number) => {
         for (const possibleNumber of possibleNumbers) {
           if (number === possibleNumber) {
@@ -66,6 +63,7 @@ export default function getCheckNumber(
 export function splitNumberOperator(keyword: string): {
   values: string[];
   operator: string;
+
   /**
    * Is null when has the dot operator with a second value
    */
@@ -102,7 +100,11 @@ export function splitNumberOperator(keyword: string): {
   }
 
   if (secondValue) {
-    values.push(secondValue);
+    if (Number(secondValue) < Number(firstValue)) {
+      values.unshift(secondValue);
+    } else {
+      values.push(secondValue);
+    }
   }
   return {
     values,

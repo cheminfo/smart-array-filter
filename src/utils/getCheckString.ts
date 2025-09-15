@@ -19,7 +19,7 @@ const operators: Record<
   '=': function equal(query, insensitive) {
     const possibilities = charSplit(query[0], ',')
       .filter(Boolean)
-      .map((str) => new RegExp(`^${escapeRegExp(str)}$`, insensitive));
+      .map((string) => new RegExp(`^${escapeRegExp(string)}$`, insensitive));
     return (string) => {
       for (const possibility of possibilities) {
         if (possibility.test(string)) {
@@ -31,7 +31,7 @@ const operators: Record<
   },
   '~': function fuzzy(query, insensitive) {
     const possibilities = charSplit(query[0], ',')
-      .filter((item) => item)
+      .filter(Boolean)
       .map((string) => new RegExp(escapeRegExp(string), insensitive));
     return (string) => {
       for (const possibility of possibilities) {
@@ -61,7 +61,6 @@ const operators: Record<
 
 /**
  * GetCheckString.
- *
  * @param keyword - String.
  * @param insensitive - String.
  * @returns CheckString. (string)=>boolean.
@@ -103,8 +102,8 @@ export function splitStringOperator(keyword: string): {
     throw new Error('unreachable');
   }
 
-  let operator = match.groups.operator;
-  const value = match.groups.value;
+  const { value } = match.groups;
+  let { operator } = match.groups;
   const secondQuery: string | undefined = parts[1]?.trim();
   let values: string[] = [value];
   if (parts.length > 1) {
@@ -114,8 +113,10 @@ export function splitStringOperator(keyword: string): {
     } else if (!value) {
       values = [secondQuery];
       operator = '<=';
-    } else {
+    } else if (value < secondQuery) {
       values.push(secondQuery);
+    } else {
+      values.unshift(secondQuery);
     }
   }
   return {

@@ -2,7 +2,6 @@ import type { ValueCriterion } from '../utils/convertKeywordToCriterion.ts';
 
 /**
  * NativeMatch.
- *
  * @param element - String|number.
  * @param keyword - Criterion.
  * @returns Boolean.

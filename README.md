@@ -57,15 +57,8 @@ const filteredData = filter(array, {
 | `limit`         | `number`               | `Infinity` | The maximum number of results to return.                  |
 | `caseSensitive` | `boolean`              | `false`    | Whether the search should be case sensitive.              |
 | `predicate`     | `"AND"` or `"OR"`      | `"AND"`    | The predicate to use to combine matches between keywords. |
-| `depth`         | `number`               | `Infinity` | The depth to which the objects are inspected.             |
 | `includePaths`  | `string[]`             | `[]`       | The paths to include when searching for matches.          |
 | `ignorePaths`   | `string[]`             | `[]`       | The paths to ignore when searching for matches.           |
-
-### Recursivity
-
-By default, objects are inspected recursively. This means that if your data has circular references, it might throw a `RangeError: Maximum call stack size exceeded` error.
-
-To limit recursivity at a certain depth, you can set the `depth` option.
 
 ### Search within specific fields
 
@@ -99,6 +92,7 @@ If `keywords` is an array of strings, each string will be considered as a keywor
   - `..` to define a range. Example: `lifeExpectancy:10..40`
   - The range operators also work with strings, using the ascii code.
 - Negation: `-name:Gorilla` will match all entries except the ones which match `name:Gorilla`. This operator can be combined with other operators: `-name:=Gorilla`.
+- Presence of a property: `is:phylum` will match all entries that has a property called `phylum`. This operator can also be negated `-is:phylum`
 
 ### Search within arrays
 
@@ -124,7 +118,7 @@ filter(animals, {
 
 [npm-image]: https://img.shields.io/npm/v/smart-array-filter.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/smart-array-filter
-[travis-image]: https://img.shields.io/travis/cheminfo/smart-array-filter/master.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/cheminfo/smart-array-filter/main.svg?style=flat-square
 [travis-url]: https://travis-ci.org/cheminfo/smart-array-filter
 [coveralls-image]: https://img.shields.io/coveralls/cheminfo/smart-array-filter.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/cheminfo/smart-array-filter

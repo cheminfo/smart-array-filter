@@ -29,7 +29,6 @@ describe('simple filter', () => {
 
 /**
  * Assert.
- *
  * @param options - OptionsType.
  * @param length - Number.
  */

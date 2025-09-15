@@ -8,10 +8,12 @@ import getCheckString from './getCheckString.ts';
  */
 export interface KeyCriterion {
   type: 'exists';
+
   /**
    * The regexp that should match the key. If the key does not meet the regexp,
    */
   key: RegExp;
+
   /**
    * Match non-existing keys instead of existing keys
    */
@@ -23,10 +25,12 @@ export interface KeyCriterion {
  */
 export interface ValueCriterion {
   type: 'matches';
+
   /**
    * The regexp that should match the key. Non matching keys are not checked
    */
   key?: RegExp;
+
   /**
    * Use to match anything that does not match the value
    */
@@ -44,24 +48,22 @@ export function convertKeywordToCriterion(
   keyword: string,
   options: {
     caseSensitive?: boolean;
-    pathAlias: Record<string, RegExp>;
-  } = {
-    pathAlias: {},
-  },
+    pathAlias?: Record<string, RegExp>;
+  } = {},
 ): Criterion {
-  const { caseSensitive, pathAlias } = options;
+  const { caseSensitive, pathAlias = {} } = options;
   const regexpFlags = caseSensitive ? '' : 'i';
 
   let negate = false;
   if (keyword.startsWith('-')) {
     negate = true;
-    keyword = keyword.substring(1);
+    keyword = keyword.slice(1);
   }
   const colon = keyword.indexOf(':');
-  if (colon > -1) {
-    const value = keyword.substring(colon + 1);
+  if (colon !== -1) {
+    const value = keyword.slice(Math.max(0, colon + 1));
     if (colon > 0) {
-      const key = keyword.substring(0, colon);
+      const key = keyword.slice(0, Math.max(0, colon));
       if (key === 'is') {
         // a property path exists
         return {
@@ -73,9 +75,9 @@ export function convertKeywordToCriterion(
         return {
           type: 'matches',
           negate,
-          key: pathAlias[key]
-            ? pathAlias[key]
-            : new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, regexpFlags),
+          key:
+            pathAlias[key] ||
+            new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, regexpFlags),
           checkNumber: getCheckNumber(value),
           checkString: getCheckString(value, regexpFlags),
         };
@@ -90,14 +92,19 @@ export function convertKeywordToCriterion(
   };
 }
 
+/**
+ *
+ * @param keywords
+ * @param options
+ * @param options.caseSensitive
+ * @param options.pathAlias
+ */
 export function convertKeywordsToCriteria(
   keywords: string[],
   options: {
     caseSensitive?: boolean;
-    pathAlias: Record<string, RegExp>;
-  } = {
-    pathAlias: {},
-  },
+    pathAlias?: Record<string, RegExp>;
+  } = {},
 ): Criterion[] {
   return keywords.map((keyword) => {
     return convertKeywordToCriterion(keyword, options);

@@ -1,8 +1,10 @@
-import { assert, expect, it } from 'vitest';
+import assert from 'node:assert';
+
+import { expect, test } from 'vitest';
 
 import { convertKeywordToCriterion } from './convertKeywordToCriterion.ts';
 
-it('value keyword with field', () => {
+test('value keyword with field', () => {
   const criterium = convertKeywordToCriterion('a:a');
   expect(criterium.type).toBe('matches');
   assert(criterium.type === 'matches');
@@ -12,7 +14,7 @@ it('value keyword with field', () => {
   expect(criterium.checkString).toBeDefined();
 });
 
-it('value keyword with operator', () => {
+test('value keyword with operator', () => {
   const criterium = convertKeywordToCriterion('abc:>10');
   expect(criterium.type).toBe('matches');
   assert(criterium.type === 'matches');
@@ -24,7 +26,7 @@ it('value keyword with operator', () => {
   expect(criterium.checkNumber(8)).toBe(false);
 });
 
-it('key keyword with the "is:" syntax', () => {
+test('key keyword with the "is:" syntax', () => {
   const criterium = convertKeywordToCriterion('is:abc');
   expect(criterium.type).toBe('exists');
   assert(criterium.type === 'exists');

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { OptionsType } from '../index.js';
-import { filter } from '../index.js';
+import type { OptionsType } from '../index.ts';
+import { filter } from '../index.ts';
 
 const test = [
   {
@@ -32,7 +32,6 @@ describe('simple2 filter', () => {
 
 /**
  * Assert.
- *
  * @param options - Object.
  * @param options.keywords - String.
  * @param length - Number.

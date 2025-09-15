@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
 import chemicals from '../../fixtures/chemicals.json' with { type: 'json' };
-import type { OptionsTypeWithoutIndex } from '../index.js';
-import { filter } from '../index.js';
+import type { OptionsTypeWithoutIndex } from '../index.ts';
+import { filter } from '../index.ts';
 
 describe('chemicals tests', () => {
   it('string matching', () => {
@@ -38,13 +38,13 @@ describe('chemicals tests', () => {
     });
     assert('mp:230..230', 3);
     assert('mw:30..31', 7);
+    assert('mw:31..30', 7);
     assert('idontexist:', 0);
   });
 });
 
 /**
  * Assert.
- *
  * @param keywords - String.
  * @param length - Number.
  * @param options - Object.

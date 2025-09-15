@@ -1,6 +1,7 @@
 /**
  * We split a string into an array of strings except if it in single or double quotes.
  */
+
 export default function charSplit(
   string: string,
   delimiter: string | RegExp,
