@@ -32,11 +32,10 @@ export default function recursiveMatch(
         }
       }
     } else {
-      const joinedKeys = keys.join('.');
       if (
         criterion.type === 'matches' &&
         criterion.checkObject &&
-        !shouldIgnorePath(joinedKeys, options)
+        !shouldIgnorePath(criterion, keys, options)
       ) {
         if (criterion.checkObject(element)) {
           return true;
@@ -56,21 +55,21 @@ export default function recursiveMatch(
     } else {
       return false;
     }
-  } else if (criterion.type === 'matches') {
-    // need to check if keys match
-    const joinedKeys = keys.join('.');
-    if (shouldIgnorePath(joinedKeys, options)) {
+  } else {
+    if (shouldIgnorePath(criterion, keys, options)) {
       return false;
     }
-    if (criterion.key && !criterion.key.test(joinedKeys)) return false;
     return nativeMatch(element, criterion);
-  } else {
-    throw new Error('Unreachable. Invalid criterion type');
   }
   return false;
 }
 
-function shouldIgnorePath(joinedKeys: string, options: PathOptions): boolean {
+function shouldIgnorePath(
+  criterion: Criterion,
+  keys: string[],
+  options: PathOptions,
+): boolean {
+  const joinedKeys = keys.join('.');
   for (const ignorePath of options.ignorePaths) {
     if (ignorePath.test(joinedKeys)) return true;
   }
@@ -84,5 +83,5 @@ function shouldIgnorePath(joinedKeys: string, options: PathOptions): boolean {
     }
     if (!included) return true;
   }
-  return false;
+  return !!(criterion.key && !criterion.key.test(joinedKeys));
 }

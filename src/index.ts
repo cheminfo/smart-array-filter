@@ -3,6 +3,7 @@ import escapeRegExp from 'lodash.escaperegexp';
 import match from './match/match.ts';
 import charSplit from './utils/charSplit.ts';
 import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion.ts';
+import type { CustomOperator } from './utils/customOperators.ts';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps.ts';
 import type { Json } from './utils/types.ts';
 
@@ -14,6 +15,7 @@ interface OptionsTypeBase {
   ignorePaths?: Array<RegExp | string>;
   includePaths?: Array<RegExp | string>;
   pathAlias?: Record<string, string | RegExp>;
+  customOperators?: CustomOperator[];
 }
 
 export type OptionsTypeWithIndex = OptionsTypeBase & {
@@ -59,6 +61,7 @@ export function filter(
     pathAlias: pathAliasOption = {},
   } = options;
 
+  const { customOperators = [] } = options;
   const limit = options.limit || Infinity;
   const insensitive = options.caseSensitive ? '' : 'i';
   let keywords = options.keywords || [];
@@ -82,6 +85,7 @@ export function filter(
   const criteria = convertKeywordsToCriteria(keywords, {
     caseSensitive: options.caseSensitive,
     pathAlias,
+    customOperators,
   });
   let matched = 0;
   if (index) {

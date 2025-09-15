@@ -1,11 +1,14 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 import charSplit from './charSplit.ts';
+import type { CustomOperator } from './customOperators.js';
 
-const operators: Record<
-  string,
-  (arg1: string[], arg2?: string) => (arg: string) => boolean
-> = {
+export type StringOperator = (
+  arg1: string[],
+  arg2?: string,
+) => (arg: string) => boolean;
+
+const operators: Record<string, StringOperator> = {
   '<': function lt(query) {
     return (string) => {
       return string < query[0];
@@ -60,15 +63,21 @@ const operators: Record<
 };
 
 /**
- * GetCheckString.
- * @param keyword - String.
- * @param insensitive - String.
- * @returns CheckString. (string)=>boolean.
+ * Builds the function which of a criterion which checks a leaf string value against the keyword.
  */
 export default function getCheckString(
   keyword: string,
   insensitive: string,
+  customOperators: CustomOperator[],
 ): (arg: string) => boolean {
+  for (const operator of customOperators) {
+    if (operator.applyString) {
+      const parseOutput = operator.parse(keyword);
+      if (parseOutput !== null) {
+        return operator.applyString(parseOutput);
+      }
+    }
+  }
   const { values, operator } = splitStringOperator(keyword);
 
   const operatorCheck = operators[operator];

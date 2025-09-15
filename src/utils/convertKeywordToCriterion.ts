@@ -1,8 +1,10 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
+import type { CustomOperator } from './customOperators.js';
 import getCheckNumber from './getCheckNumber.ts';
+import getCheckObject from './getCheckObject.ts';
 import getCheckString from './getCheckString.ts';
-import type { JSONObject } from './types.js';
+import type { JSONObject } from './types.ts';
 
 /**
  * A criterion which checks the existence of a key
@@ -51,8 +53,10 @@ export function convertKeywordToCriterion(
   options: {
     caseSensitive?: boolean;
     pathAlias?: Record<string, RegExp>;
-  } = {},
+    customOperators: CustomOperator[];
+  } = { customOperators: [] },
 ): Criterion {
+  const hasObjectCheck = options.customOperators?.some((op) => op.applyObject);
   const { caseSensitive, pathAlias = {} } = options;
   const regexpFlags = caseSensitive ? '' : 'i';
 
@@ -80,8 +84,15 @@ export function convertKeywordToCriterion(
           key:
             pathAlias[key] ||
             new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, regexpFlags),
-          checkNumber: getCheckNumber(value),
-          checkString: getCheckString(value, regexpFlags),
+          checkNumber: getCheckNumber(value, options.customOperators),
+          checkString: getCheckString(
+            value,
+            regexpFlags,
+            options.customOperators,
+          ),
+          checkObject: hasObjectCheck
+            ? getCheckObject(value, options.customOperators)
+            : undefined,
         };
       }
     }
@@ -89,24 +100,21 @@ export function convertKeywordToCriterion(
   return {
     type: 'matches',
     negate,
-    checkNumber: getCheckNumber(keyword),
-    checkString: getCheckString(keyword, regexpFlags),
+    checkNumber: getCheckNumber(keyword, options.customOperators),
+    checkString: getCheckString(keyword, regexpFlags, options.customOperators),
+    checkObject: hasObjectCheck
+      ? getCheckObject(keyword, options.customOperators)
+      : undefined,
   };
 }
 
-/**
- *
- * @param keywords
- * @param options
- * @param options.caseSensitive
- * @param options.pathAlias
- */
 export function convertKeywordsToCriteria(
   keywords: string[],
   options: {
     caseSensitive?: boolean;
     pathAlias?: Record<string, RegExp>;
-  } = {},
+    customOperators: CustomOperator[];
+  },
 ): Criterion[] {
   return keywords.map((keyword) => {
     return convertKeywordToCriterion(keyword, options);

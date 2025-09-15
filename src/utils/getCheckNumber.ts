@@ -1,53 +1,65 @@
-const operators: Record<string, (arg1: string[]) => (arg: number) => boolean> =
-  {
-    '<': function lt(values) {
-      const value = Number(values[0]);
-      return (number) => {
-        return number < value;
-      };
-    },
-    '<=': function lte(values) {
-      const value = Number(values[0]);
-      return (number) => {
-        return number <= value;
-      };
-    },
-    '=': function equal(values) {
-      const possibleNumbers = values[0].split(',').filter(Boolean).map(Number);
-      return (number) => {
-        for (const possibleNumber of possibleNumbers) {
-          if (number === possibleNumber) {
-            return true;
-          }
+import type { CustomOperator } from './customOperators.js';
+
+export type NumberOperator = (arg1: string[]) => (arg: number) => boolean;
+
+const operators: Record<string, NumberOperator> = {
+  '<': function lt(values) {
+    const value = Number(values[0]);
+    return (number) => {
+      return number < value;
+    };
+  },
+  '<=': function lte(values) {
+    const value = Number(values[0]);
+    return (number) => {
+      return number <= value;
+    };
+  },
+  '=': function equal(values) {
+    const possibleNumbers = values[0].split(',').filter(Boolean).map(Number);
+    return (number) => {
+      for (const possibleNumber of possibleNumbers) {
+        if (number === possibleNumber) {
+          return true;
         }
-        return false;
-      };
-    },
-    '>=': function gte(values) {
-      const value = Number(values[0]);
-      return (number) => {
-        return number >= value;
-      };
-    },
-    '>': function gt(values) {
-      const value = Number(values[0]);
-      return (number) => {
-        return number > value;
-      };
-    },
-    '..': function range(values) {
-      const valueLow = Number(values[0]);
-      const valueHigh = Number(values[1]);
-      return (number) => number >= valueLow && number <= valueHigh;
-    },
-  };
+      }
+      return false;
+    };
+  },
+  '>=': function gte(values) {
+    const value = Number(values[0]);
+    return (number) => {
+      return number >= value;
+    };
+  },
+  '>': function gt(values) {
+    const value = Number(values[0]);
+    return (number) => {
+      return number > value;
+    };
+  },
+  '..': function range(values) {
+    const valueLow = Number(values[0]);
+    const valueHigh = Number(values[1]);
+    return (number) => number >= valueLow && number <= valueHigh;
+  },
+};
 
 /**
- * @internal
+ * Builds the function which of a criterion which checks a leaf number value against the keyword.
  */
 export default function getCheckNumber(
   keyword: string,
+  customOperators: CustomOperator[],
 ): (arg: number) => boolean {
+  for (const operator of customOperators) {
+    if (operator.applyNumber) {
+      const parseOutput = operator.parse(keyword);
+      if (parseOutput !== null) {
+        return operator.applyNumber(parseOutput);
+      }
+    }
+  }
   const { values, operator } = splitNumberOperator(keyword);
 
   const checkOperator = operators[operator];
