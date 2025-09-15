@@ -44,7 +44,7 @@ export default function recursiveMatch(
     } else {
       return false;
     }
-  } else {
+  } else if (criterion.type === 'matches') {
     // need to check if keys match
     const joinedKeys = keys.join('.');
     for (const ignorePath of options.ignorePaths) {
@@ -63,6 +63,8 @@ export default function recursiveMatch(
 
     if (criterion.key && !criterion.key.test(joinedKeys)) return false;
     return nativeMatch(element, criterion);
+  } else {
+    throw new Error('Unreachable. Invalid criterion type');
   }
   return false;
 }
