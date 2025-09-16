@@ -156,8 +156,6 @@ function getRangeOperator(
   };
 }
 
-// Testing that multiple instances of the same operator work correctly
-
 const levenshtein: CustomMatcher<{ target: string; minScore: number }> = {
   name: 'Levenshtein',
   parse: (input: string) => {
