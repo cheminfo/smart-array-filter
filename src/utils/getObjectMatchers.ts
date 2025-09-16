@@ -6,7 +6,7 @@ export type ObjectMatcher = (
   path: string[],
 ) => boolean | null;
 
-export default function getCheckObject(
+export default function getObjectMatchers(
   keyword: string,
   customOperators: CustomOperator[],
 ): ObjectMatcher[] {
@@ -17,7 +17,7 @@ export default function getCheckObject(
       matchers.push(
         customOperator.createObjectMatcher
           ? customOperator.createObjectMatcher(parsedValues)
-          : () => null, // Unreachable, getCheckObject is never called if no object matcher exists
+          : () => null, // Unreachable, getObjectMatchers is never called if no object matcher exists
       );
     }
   }

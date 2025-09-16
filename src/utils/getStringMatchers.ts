@@ -67,7 +67,7 @@ export type StringMatcher = (value: string, path: string[]) => boolean | null;
 /**
  * Builds the function which of a criterion which checks a leaf string value against the keyword.
  */
-export default function getCheckString(
+export default function getStringMatchers(
   keyword: string,
   insensitive: string,
   customOperators: CustomOperator[],

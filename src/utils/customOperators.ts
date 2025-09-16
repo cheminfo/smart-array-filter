@@ -1,6 +1,6 @@
-import type { NumberMatcher } from './getCheckNumber.js';
-import type { ObjectMatcher } from './getCheckObject.js';
-import type { StringMatcher } from './getCheckString.js';
+import type { NumberMatcher } from './getNumberMatchers.js';
+import type { ObjectMatcher } from './getObjectMatchers.js';
+import type { StringMatcher } from './getStringMatchers.js';
 
 export type ObjectMatcherCreator<T> = (
   parsedSearchExpression: T,

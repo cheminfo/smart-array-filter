@@ -50,7 +50,7 @@ export type NumberMatcher = (value: number, path: string[]) => boolean | null;
 /**
  * Builds the function which of a criterion which checks a leaf number value against the keyword.
  */
-export default function getCheckNumber(
+export default function getNumberMatchers(
   keyword: string,
   customOperators: CustomOperator[],
 ): NumberMatcher[] {
