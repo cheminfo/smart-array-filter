@@ -62,6 +62,8 @@ const operators: Record<string, StringOperator> = {
   },
 };
 
+export type StringMatcher = (value: string, path: string[]) => boolean | null;
+
 /**
  * Builds the function which of a criterion which checks a leaf string value against the keyword.
  */
@@ -69,22 +71,28 @@ export default function getCheckString(
   keyword: string,
   insensitive: string,
   customOperators: CustomOperator[],
-): (arg: string, path: string[]) => boolean {
+): StringMatcher[] {
+  const matchers: StringMatcher[] = [];
   for (const operator of customOperators) {
     const parseOutput = operator.parse(keyword);
     if (parseOutput !== null) {
-      return operator.createStringMatcher
-        ? operator.createStringMatcher(parseOutput)
-        : () => false;
+      matchers.push(
+        operator.createStringMatcher
+          ? operator.createStringMatcher(parseOutput)
+          : () => null,
+      );
     }
   }
   const { values, operator } = splitStringOperator(keyword);
 
   const operatorCheck = operators[operator];
+  /* v8 ignore start */
   if (!operatorCheck) {
-    throw new Error(`unreachable unknown operator ${operator}`);
+    throw new Error(`Unreachable. Unknown operator ${operator}`);
   }
-  return operatorCheck(values, insensitive);
+  /* v8 ignore end */
+  matchers.push(operatorCheck(values, insensitive));
+  return matchers;
 }
 
 /**
@@ -100,16 +108,17 @@ export function splitStringOperator(keyword: string): {
     parts[0],
   );
   if (!match) {
-    // Should never happen
     return {
       operator: '~',
       values: [keyword],
     };
   }
 
+  /* v8 ignore start */
   if (!match.groups) {
-    throw new Error('unreachable');
+    throw new Error('Unreachable');
   }
+  /* v8 ignore end */
 
   const { value } = match.groups;
   let { operator } = match.groups;

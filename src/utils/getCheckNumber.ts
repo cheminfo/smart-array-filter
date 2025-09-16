@@ -45,28 +45,36 @@ const operators: Record<string, NumberOperator> = {
   },
 };
 
+export type NumberMatcher = (value: number, path: string[]) => boolean | null;
+
 /**
  * Builds the function which of a criterion which checks a leaf number value against the keyword.
  */
 export default function getCheckNumber(
   keyword: string,
   customOperators: CustomOperator[],
-): (arg: number) => boolean {
+): NumberMatcher[] {
+  const matchers: NumberMatcher[] = [];
   for (const operator of customOperators) {
     const parseOutput = operator.parse(keyword);
     if (parseOutput !== null) {
-      return operator.createNumberMatcher
-        ? operator.createNumberMatcher(parseOutput)
-        : () => false;
+      matchers.push(
+        operator.createNumberMatcher
+          ? operator.createNumberMatcher(parseOutput)
+          : () => null,
+      );
     }
   }
   const { values, operator } = splitNumberOperator(keyword);
 
   const checkOperator = operators[operator];
+  /* v8 ignore start */
   if (!checkOperator) {
-    throw new Error(`unknown operator ${operator}`);
+    throw new Error(`Unreachable. Unknown operator ${operator}`);
   }
-  return checkOperator(values);
+  /* v8 ignore end */
+  matchers.push(checkOperator(values));
+  return matchers;
 }
 
 /**

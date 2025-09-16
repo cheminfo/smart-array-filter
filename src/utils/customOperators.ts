@@ -1,30 +1,29 @@
-import type { JSONObject } from './types.js';
+import type { NumberMatcher } from './getCheckNumber.js';
+import type { ObjectMatcher } from './getCheckObject.js';
+import type { StringMatcher } from './getCheckString.js';
 
 export type ObjectMatcherCreator<T> = (
   parsedSearchExpression: T,
-) => (arg: JSONObject | null) => boolean;
+) => ObjectMatcher;
 
-export type StringMatcherCreator<T> = (parsedSearchExpression: T) => (
-  /**
-   * The leaf string value to match against the search expression.
-   * @return `true` if the value matches, `false` otherwise.
-   */
-  value: string,
-  path: string[],
-) => boolean;
+export type StringMatcherCreator<T> = (
+  parsedSearchExpression: T,
+) => StringMatcher;
+
 export type NumberMatcherCreator<T> = (
   parsedSearchExpression: T,
-) => (value: number) => boolean;
+) => NumberMatcher;
 
 interface CustomOperatorBase<ParsedSearchExpression> {
   name: string;
   /**
    * Parse the search expression of a criterion of the query string.
-   * Return `null` if the input does not match the expected format.
-   * Search expressions are parsed by all custom operators until one returns
-   * a non-null value. If none matches, the default search operators are used.
+   * Return `null` if the input does not match the expected format, which will
+   * effectively ignore the operator for the given criterion.
+   * Search expressions are parsed by all custom operators and those which
+   * return non-null values are kept to be executed during search.
    *
-   * Example: We want a custom `+-` operator which allow to find a value plus or minus some tolerance.
+   * Example: We implement a custom `+-` operator for finding a value plus or minus some tolerance.
    * The query string passed to smart-array-filter is `molecularMass:30+-5`.
    * The parse function will receive `10+-5` as input, which could be parsed to `{value: 10, tolerance: 5}`, or return `null` if the `+-` pattern is not found.
    */
@@ -55,10 +54,7 @@ interface CustomOperatorBase<ParsedSearchExpression> {
   createObjectMatcher?: ObjectMatcherCreator<ParsedSearchExpression>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface CustomOperator<T = any> extends CustomOperatorBase<T> {
   createObjectMatcher?: ObjectMatcherCreator<T>;
-}
-
-export interface CustomObjectOperator<T = any> extends CustomOperatorBase<T> {
-  createObjectMatcher: ObjectMatcherCreator<T>;
 }

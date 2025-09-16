@@ -1,4 +1,5 @@
 import { distance } from 'fastest-levenshtein';
+import escapeRegExp from 'lodash.escaperegexp';
 import { describe, expect, test } from 'vitest';
 
 import { filter } from '../index.ts';
@@ -23,6 +24,12 @@ const data = [
       other: 'other',
     },
   },
+  {
+    prop1: {
+      value: 7,
+      tolerance: 2,
+    },
+  },
 ];
 
 describe('Custom operators', () => {
@@ -36,40 +43,120 @@ describe('Custom operators', () => {
   });
 
   test('Range operator on objects', () => {
+    const range = getRangeOperator('value', 'error');
     // All
     assertData('~5', [range], 1);
     assertData('~6', [range], 2);
     // Negation
-    assertData('-~5', [range], 1);
-    assertData('-~6', [range], 0);
+    assertData('-~5', [range], 2);
+    assertData('-~6', [range], 1);
     // Scoped
     assertData('prop1.nested1:~5', [range], 0);
     assertData('prop1.nested1:~6', [range], 1);
     // Regular keywords should still work even with the custom operator enabled
     assertData('ther', [range], 1);
   });
+
+  test('Combine number and string handlers', () => {
+    assertChemicals('1255.4 C62', [handleMw, handleMf], 2);
+    assertChemicals('1255.4 C62', [handleMf, handleMw], 2);
+    assertChemicals('1255.4', [handleMw, handleMf], 2);
+    assertChemicals('1255.4', [handleMf, handleMw], 2);
+    assertChemicals('C62', [handleMw, handleMf], 2);
+    assertChemicals('C62', [handleMf, handleMw], 2);
+    assertChemicals('1255.4 C63', [handleMw, handleMf], 0);
+    assertChemicals('1255.5 C62', [handleMw, handleMf], 0);
+  });
+
+  test('Combine multiple number handlers', () => {
+    assertChemicals('142.2 330.1', [handleMw, handleBp], 1);
+    assertChemicals('142.2 330.1', [handleBp, handleMw], 1);
+  });
+
+  test('Combine multiple range operators', () => {
+    const range1 = getRangeOperator('value', 'error');
+    const range2 = getRangeOperator('value', 'tolerance');
+    // All
+    assertData('~6', [range1, range2], 3);
+    assertData('~5', [range1, range2], 2);
+  });
 });
 
-const range: CustomOperator<number> = {
-  name: 'Range',
-  parse: (input: string) => {
-    const match = /^~(?<target>\d*\.?\d*)$/.exec(input);
-
-    if (match?.groups?.target) {
-      return Number(match.groups.target);
+const handleMw: CustomOperator<number> = {
+  name: 'Handle MW',
+  parse: (input) => {
+    if (/^\d*\.?\d*$/.test(input)) {
+      return Number(input);
     }
     return null;
   },
-  createObjectMatcher: (target) => (value) => {
-    if (value === null) return false;
-    if (typeof value?.value === 'number' && typeof value?.error === 'number') {
-      const low = target - Math.abs(value.error);
-      const high = target + Math.abs(value.error);
-      return value.value >= low && value.value <= high;
+  createNumberMatcher: (target) => (value, path) => {
+    if (path.at(-1) === 'mw') {
+      return value - 0.05 <= target && value + 0.05 >= target;
     }
-    return false;
+    // Ignores this operator and runs the next ones
+    return null;
   },
 };
+
+const handleBp: CustomOperator<number> = {
+  name: 'Handle melting point',
+  parse: (input) => {
+    if (/^\d*\.?\d*$/.test(input)) {
+      return Number(input);
+    }
+    return null;
+  },
+  createNumberMatcher: (target) => (value, path) => {
+    if (path.at(-1) === 'mp') {
+      return value - 0.5 <= target && value + 0.5 >= target;
+    }
+    // Ignores this operator and runs the next ones
+    return null;
+  },
+};
+
+const handleMf: CustomOperator<string> = {
+  name: 'Catch MF with regular expression',
+  parse: (input) => escapeRegExp(input),
+  createStringMatcher: (target) => (value, path) => {
+    if (path.at(-1) === 'mf') {
+      return new RegExp(target).test(value);
+    }
+    // Ignores this operator and runs the next ones
+    return null;
+  },
+};
+
+function getRangeOperator(
+  valueProp: string,
+  toleranceProp: string,
+): CustomOperator<number> {
+  return {
+    name: 'Range',
+    parse: (input: string) => {
+      const match = /^~(?<target>\d*\.?\d*)$/.exec(input);
+
+      if (match?.groups?.target) {
+        return Number(match.groups.target);
+      }
+      return null;
+    },
+    createObjectMatcher: (target) => (obj) => {
+      if (obj === null) return false;
+      const value = obj?.[valueProp];
+      const tolerance = obj?.[toleranceProp];
+      if (typeof value === 'number' && typeof tolerance === 'number') {
+        const low = target - Math.abs(tolerance);
+        const high = target + Math.abs(tolerance);
+        return value >= low && value <= high;
+      }
+      return null;
+    },
+  };
+}
+
+// Testing that multiple instances of the same operator work correctly
 
 const levenshtein: CustomOperator<{ target: string; minScore: number }> = {
   name: 'Levenshtein',

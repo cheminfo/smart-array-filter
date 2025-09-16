@@ -1,10 +1,12 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 import type { CustomOperator } from './customOperators.js';
+import type { NumberMatcher } from './getCheckNumber.ts';
 import getCheckNumber from './getCheckNumber.ts';
+import type { ObjectMatcher } from './getCheckObject.ts';
 import getCheckObject from './getCheckObject.ts';
+import type { StringMatcher } from './getCheckString.ts';
 import getCheckString from './getCheckString.ts';
-import type { JSONObject } from './types.ts';
 
 /**
  * A criterion which checks the existence of a key
@@ -38,9 +40,9 @@ export interface ValueCriterion {
    * Use to match anything that does not match the value
    */
   negate: boolean;
-  checkString: (arg: string, path: string[]) => boolean;
-  checkNumber: (arg: number, path: string[]) => boolean;
-  checkObject?: (arg: JSONObject | null, path: string[]) => boolean;
+  stringMatchers: StringMatcher[];
+  numberMatchers: NumberMatcher[];
+  objectMatchers?: ObjectMatcher[];
 }
 
 export type Criterion = KeyCriterion | ValueCriterion;
@@ -86,13 +88,13 @@ export function convertKeywordToCriterion(
           key:
             pathAlias[key] ||
             new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, regexpFlags),
-          checkNumber: getCheckNumber(value, options.customOperators),
-          checkString: getCheckString(
+          numberMatchers: getCheckNumber(value, options.customOperators),
+          stringMatchers: getCheckString(
             value,
             regexpFlags,
             options.customOperators,
           ),
-          checkObject: hasObjectCheck
+          objectMatchers: hasObjectCheck
             ? getCheckObject(value, options.customOperators)
             : undefined,
         };
@@ -102,9 +104,13 @@ export function convertKeywordToCriterion(
   return {
     type: 'matches',
     negate,
-    checkNumber: getCheckNumber(keyword, options.customOperators),
-    checkString: getCheckString(keyword, regexpFlags, options.customOperators),
-    checkObject: hasObjectCheck
+    numberMatchers: getCheckNumber(keyword, options.customOperators),
+    stringMatchers: getCheckString(
+      keyword,
+      regexpFlags,
+      options.customOperators,
+    ),
+    objectMatchers: hasObjectCheck
       ? getCheckObject(keyword, options.customOperators)
       : undefined,
   };

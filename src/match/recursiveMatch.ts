@@ -2,6 +2,7 @@ import type { Criterion } from '../utils/convertKeywordToCriterion.ts';
 import type { Json } from '../utils/types.ts';
 
 import nativeMatch from './nativeMatch.ts';
+import objectMatch from './objectMatch.js';
 
 interface PathOptions {
   /**
@@ -31,7 +32,7 @@ export default function recursiveMatch(
    */
   path: string[],
   /**
-   * General options such as included and
+   * General options.
    */
   options: PathOptions,
 ): boolean {
@@ -45,10 +46,10 @@ export default function recursiveMatch(
     } else {
       if (
         criterion.type === 'matches' &&
-        criterion.checkObject &&
+        criterion.objectMatchers &&
         !shouldIgnorePath(criterion, path, options)
       ) {
-        if (criterion.checkObject(element, path)) {
+        if (objectMatch(element, criterion, path)) {
           return true;
         }
       }
