@@ -7,21 +7,23 @@ import type { JSONObject } from './types.js';
 export default function getCheckObject(
   keyword: string,
   customOperators: CustomOperator[],
-): (arg: JSONObject | null) => boolean {
-  const operator = splitObjectOperator(keyword, customOperators);
-  if (!operator) {
-    // None of the custom operators can parse the keyword
-    return () => false;
+): (arg: JSONObject | null, path: string[]) => boolean {
+  for (const customOperator of customOperators) {
+    const parsedValues = customOperator.parse(keyword);
+    if (parsedValues !== null) {
+      return customOperator.createObjectMatcher
+        ? customOperator.createObjectMatcher(parsedValues)
+        : () => false;
+    }
   }
-
-  return operator.operator.applyObject(operator.values);
+  return () => false;
 }
 export function splitObjectOperator(
   keyword: string,
   customOperators: CustomOperator[],
 ): { operator: CustomObjectOperator; values: unknown } | null {
   for (const customOperator of customOperators) {
-    if (!customOperator.applyObject) {
+    if (!customOperator.createObjectMatcher) {
       continue;
     }
     const parsedValues = customOperator.parse(keyword);

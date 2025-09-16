@@ -4,30 +4,41 @@ import type { Json } from '../utils/types.ts';
 import nativeMatch from './nativeMatch.ts';
 
 interface PathOptions {
+  /**
+   * List of paths to ignore
+   */
   ignorePaths: RegExp[];
+  /**
+   * List of paths to include. `ignorePaths` has precedence.
+   */
   includePaths?: RegExp[];
 }
 
 /**
- * RecursiveMatch.
- * @param element - String | number | Record<string, string>.
- * @param criterion - Criterion.
- * @param keys - String[].
- * @param options - Object.
- * @param options.ignorePaths - RegExp[].
- * @param options.includePaths
- * @returns Boolean.
+ * Recursively traverse an item to match it against a query criterion.
  */
 export default function recursiveMatch(
+  /**
+   * The element to match the query with
+   */
   element: Json,
+  /**
+   * A query criterion
+   */
   criterion: Criterion,
-  keys: string[],
+  /**
+   * The path of the passed element in the original data item
+   */
+  path: string[],
+  /**
+   * General options such as included and
+   */
   options: PathOptions,
 ): boolean {
   if (typeof element === 'object') {
     if (Array.isArray(element)) {
       for (const elm of element) {
-        if (recursiveMatch(elm, criterion, keys, options)) {
+        if (recursiveMatch(elm, criterion, path, options)) {
           return true;
         }
       }
@@ -35,31 +46,31 @@ export default function recursiveMatch(
       if (
         criterion.type === 'matches' &&
         criterion.checkObject &&
-        !shouldIgnorePath(criterion, keys, options)
+        !shouldIgnorePath(criterion, path, options)
       ) {
-        if (criterion.checkObject(element)) {
+        if (criterion.checkObject(element, path)) {
           return true;
         }
       }
       for (const i in element) {
-        keys.push(i);
-        const didMatch = recursiveMatch(element[i], criterion, keys, options);
-        keys.pop();
+        path.push(i);
+        const didMatch = recursiveMatch(element[i], criterion, path, options);
+        path.pop();
         if (didMatch) return true;
       }
     }
   } else if (criterion.type === 'exists') {
     // we check for the presence of a key (jpath)
-    if (criterion.key.test(keys.join('.'))) {
+    if (criterion.key.test(path.join('.'))) {
       return !!element;
     } else {
       return false;
     }
   } else {
-    if (shouldIgnorePath(criterion, keys, options)) {
+    if (shouldIgnorePath(criterion, path, options)) {
       return false;
     }
-    return nativeMatch(element, criterion);
+    return nativeMatch(element, criterion, path);
   }
   return false;
 }

@@ -38,9 +38,9 @@ export interface ValueCriterion {
    * Use to match anything that does not match the value
    */
   negate: boolean;
-  checkString: (arg: string) => boolean;
-  checkNumber: (arg: number) => boolean;
-  checkObject?: (arg: JSONObject | null) => boolean;
+  checkString: (arg: string, path: string[]) => boolean;
+  checkNumber: (arg: number, path: string[]) => boolean;
+  checkObject?: (arg: JSONObject | null, path: string[]) => boolean;
 }
 
 export type Criterion = KeyCriterion | ValueCriterion;
@@ -56,7 +56,9 @@ export function convertKeywordToCriterion(
     customOperators: CustomOperator[];
   } = { customOperators: [] },
 ): Criterion {
-  const hasObjectCheck = options.customOperators?.some((op) => op.applyObject);
+  const hasObjectCheck = options.customOperators?.some(
+    (op) => op.createObjectMatcher,
+  );
   const { caseSensitive, pathAlias = {} } = options;
   const regexpFlags = caseSensitive ? '' : 'i';
 

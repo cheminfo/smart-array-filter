@@ -9,11 +9,12 @@ import type { ValueCriterion } from '../utils/convertKeywordToCriterion.ts';
 export default function nativeMatch(
   element: string | number | boolean | undefined,
   keyword: ValueCriterion,
+  path: string[],
 ): boolean {
   if (typeof element === 'string') {
-    return keyword.checkString(element);
+    return keyword.checkString(element, path);
   } else if (typeof element === 'number') {
-    return keyword.checkNumber(element);
+    return keyword.checkNumber(element, path);
   } else {
     return false;
   }

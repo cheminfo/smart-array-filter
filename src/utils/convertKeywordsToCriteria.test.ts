@@ -22,8 +22,8 @@ test('value keyword with operator', () => {
   expect(criterium.negate).toBe(false);
   expect(criterium.checkNumber).toBeDefined();
   expect(criterium.checkString).toBeDefined();
-  expect(criterium.checkNumber(12)).toBe(true);
-  expect(criterium.checkNumber(8)).toBe(false);
+  expect(criterium.checkNumber(12, [])).toBe(true);
+  expect(criterium.checkNumber(8, [])).toBe(false);
 });
 
 test('key keyword with the "is:" syntax', () => {

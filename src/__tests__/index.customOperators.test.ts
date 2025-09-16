@@ -36,8 +36,17 @@ describe('Custom operators', () => {
   });
 
   test('Range operator on objects', () => {
+    // All
     assertData('~5', [range], 1);
     assertData('~6', [range], 2);
+    // Negation
+    assertData('-~5', [range], 1);
+    assertData('-~6', [range], 0);
+    // Scoped
+    assertData('prop1.nested1:~5', [range], 0);
+    assertData('prop1.nested1:~6', [range], 1);
+    // Regular keywords should still work even with the custom operator enabled
+    assertData('ther', [range], 1);
   });
 });
 
@@ -51,7 +60,7 @@ const range: CustomOperator<number> = {
     }
     return null;
   },
-  applyObject: (target) => (value) => {
+  createObjectMatcher: (target) => (value) => {
     if (value === null) return false;
     if (typeof value?.value === 'number' && typeof value?.error === 'number') {
       const low = target - Math.abs(value.error);
@@ -75,7 +84,7 @@ const levenshtein: CustomOperator<{ target: string; minScore: number }> = {
     }
     return null;
   },
-  applyString: (parsed) => (value: string) => {
+  createStringMatcher: (parsed) => (value) => {
     const dist = distance(parsed.target, value);
     const maxLen = Math.max(parsed.target.length, value.length);
     const score = ((maxLen - dist) / maxLen) * 100;
@@ -98,7 +107,10 @@ const plusMinus: CustomOperator<{ target: number; tolerance: number }> = {
     }
     return null;
   },
-  applyNumber: (parsed) => (value: number) => {
+
+  // We don't want the regular string matching to apply when this operator is detected
+  createStringMatcher: () => () => false,
+  createNumberMatcher: (parsed) => (value: number) => {
     return (
       value <= parsed.target + parsed.tolerance &&
       value >= parsed.target - parsed.tolerance

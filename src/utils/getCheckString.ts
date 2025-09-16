@@ -69,13 +69,13 @@ export default function getCheckString(
   keyword: string,
   insensitive: string,
   customOperators: CustomOperator[],
-): (arg: string) => boolean {
+): (arg: string, path: string[]) => boolean {
   for (const operator of customOperators) {
-    if (operator.applyString) {
-      const parseOutput = operator.parse(keyword);
-      if (parseOutput !== null) {
-        return operator.applyString(parseOutput);
-      }
+    const parseOutput = operator.parse(keyword);
+    if (parseOutput !== null) {
+      return operator.createStringMatcher
+        ? operator.createStringMatcher(parseOutput)
+        : () => false;
     }
   }
   const { values, operator } = splitStringOperator(keyword);

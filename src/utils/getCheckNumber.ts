@@ -53,11 +53,11 @@ export default function getCheckNumber(
   customOperators: CustomOperator[],
 ): (arg: number) => boolean {
   for (const operator of customOperators) {
-    if (operator.applyNumber) {
-      const parseOutput = operator.parse(keyword);
-      if (parseOutput !== null) {
-        return operator.applyNumber(parseOutput);
-      }
+    const parseOutput = operator.parse(keyword);
+    if (parseOutput !== null) {
+      return operator.createNumberMatcher
+        ? operator.createNumberMatcher(parseOutput)
+        : () => false;
     }
   }
   const { values, operator } = splitNumberOperator(keyword);
