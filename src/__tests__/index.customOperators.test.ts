@@ -210,7 +210,9 @@ function assertChemicals(
   customOperators: CustomMatcher[],
   length: number,
 ) {
-  expect(filter(chemicals, { keywords, customOperators })).toHaveLength(length);
+  expect(
+    filter(chemicals, { keywords, customMatchers: customOperators }),
+  ).toHaveLength(length);
 }
 
 function assertData(
@@ -218,5 +220,7 @@ function assertData(
   customOperators: CustomMatcher[],
   length: number,
 ) {
-  expect(filter(data, { keywords, customOperators })).toHaveLength(length);
+  expect(
+    filter(data, { keywords, customMatchers: customOperators }),
+  ).toHaveLength(length);
 }
