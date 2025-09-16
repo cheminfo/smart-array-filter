@@ -14,7 +14,7 @@ export type NumberMatcherCreator<T> = (
   parsedSearchExpression: T,
 ) => NumberMatcher;
 
-interface CustomOperatorBase<ParsedSearchExpression> {
+interface CustomMatchersBase<ParsedSearchExpression> {
   name: string;
   /**
    * Parse the search expression of a criterion of the query string.
@@ -55,6 +55,6 @@ interface CustomOperatorBase<ParsedSearchExpression> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface CustomOperator<T = any> extends CustomOperatorBase<T> {
+export interface CustomMatcher<T = any> extends CustomMatchersBase<T> {
   createObjectMatcher?: ObjectMatcherCreator<T>;
 }

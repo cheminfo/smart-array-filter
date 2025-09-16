@@ -1,4 +1,4 @@
-import type { CustomOperator } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.js';
 
 export type NumberOperator = (arg1: string[]) => (arg: number) => boolean;
 
@@ -52,7 +52,7 @@ export type NumberMatcher = (value: number, path: string[]) => boolean | null;
  */
 export default function getNumberMatchers(
   keyword: string,
-  customOperators: CustomOperator[],
+  customOperators: CustomMatcher[],
 ): NumberMatcher[] {
   const matchers: NumberMatcher[] = [];
   for (const operator of customOperators) {

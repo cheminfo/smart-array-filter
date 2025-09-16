@@ -3,7 +3,7 @@ import escapeRegExp from 'lodash.escaperegexp';
 import match from './match/match.ts';
 import charSplit from './utils/charSplit.ts';
 import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion.ts';
-import type { CustomOperator } from './utils/customOperators.ts';
+import type { CustomMatcher } from './utils/customOperators.ts';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps.ts';
 import type { Json } from './utils/types.ts';
 
@@ -15,7 +15,7 @@ interface OptionsTypeBase {
   ignorePaths?: Array<RegExp | string>;
   includePaths?: Array<RegExp | string>;
   pathAlias?: Record<string, string | RegExp>;
-  customOperators?: CustomOperator[];
+  customOperators?: CustomMatcher[];
 }
 
 export type OptionsTypeWithIndex = OptionsTypeBase & {

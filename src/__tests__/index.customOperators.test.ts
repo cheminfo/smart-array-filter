@@ -3,7 +3,7 @@ import escapeRegExp from 'lodash.escaperegexp';
 import { describe, expect, test } from 'vitest';
 
 import { filter } from '../index.ts';
-import type { CustomOperator } from '../utils/customOperators.js';
+import type { CustomMatcher } from '../utils/customOperators.js';
 
 import chemicals from './chemicals.json' with { type: 'json' };
 
@@ -82,7 +82,7 @@ describe('Custom operators', () => {
   });
 });
 
-const handleMw: CustomOperator<number> = {
+const handleMw: CustomMatcher<number> = {
   name: 'Handle MW',
   parse: (input) => {
     if (/^\d*\.?\d*$/.test(input)) {
@@ -99,7 +99,7 @@ const handleMw: CustomOperator<number> = {
   },
 };
 
-const handleBp: CustomOperator<number> = {
+const handleBp: CustomMatcher<number> = {
   name: 'Handle melting point',
   parse: (input) => {
     if (/^\d*\.?\d*$/.test(input)) {
@@ -116,7 +116,7 @@ const handleBp: CustomOperator<number> = {
   },
 };
 
-const handleMf: CustomOperator<string> = {
+const handleMf: CustomMatcher<string> = {
   name: 'Catch MF with regular expression',
   parse: (input) => escapeRegExp(input),
   createStringMatcher: (target) => (value, path) => {
@@ -131,7 +131,7 @@ const handleMf: CustomOperator<string> = {
 function getRangeOperator(
   valueProp: string,
   toleranceProp: string,
-): CustomOperator<number> {
+): CustomMatcher<number> {
   return {
     name: 'Range',
     parse: (input: string) => {
@@ -158,7 +158,7 @@ function getRangeOperator(
 
 // Testing that multiple instances of the same operator work correctly
 
-const levenshtein: CustomOperator<{ target: string; minScore: number }> = {
+const levenshtein: CustomMatcher<{ target: string; minScore: number }> = {
   name: 'Levenshtein',
   parse: (input: string) => {
     const match = /^(?<target>.+)~(?<minScore>\d*\.?\d*)$/.exec(input);
@@ -179,7 +179,7 @@ const levenshtein: CustomOperator<{ target: string; minScore: number }> = {
   },
 };
 
-const plusMinus: CustomOperator<{ target: number; tolerance: number }> = {
+const plusMinus: CustomMatcher<{ target: number; tolerance: number }> = {
   name: 'Plus/Minus',
   parse: (input: string) => {
     const match = /^(?<target>\d*\.?\d*)\+-(?<tolerance>\d*\.?\d*)$/.exec(
@@ -207,7 +207,7 @@ const plusMinus: CustomOperator<{ target: number; tolerance: number }> = {
 
 function assertChemicals(
   keywords: string,
-  customOperators: CustomOperator[],
+  customOperators: CustomMatcher[],
   length: number,
 ) {
   expect(filter(chemicals, { keywords, customOperators })).toHaveLength(length);
@@ -215,7 +215,7 @@ function assertChemicals(
 
 function assertData(
   keywords: string,
-  customOperators: CustomOperator[],
+  customOperators: CustomMatcher[],
   length: number,
 ) {
   expect(filter(data, { keywords, customOperators })).toHaveLength(length);

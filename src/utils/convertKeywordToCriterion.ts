@@ -1,6 +1,6 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import type { CustomOperator } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.js';
 import type { NumberMatcher } from './getNumberMatchers.ts';
 import getNumberMatchers from './getNumberMatchers.ts';
 import type { ObjectMatcher } from './getObjectMatchers.ts';
@@ -55,7 +55,7 @@ export function convertKeywordToCriterion(
   options: {
     caseSensitive?: boolean;
     pathAlias?: Record<string, RegExp>;
-    customOperators: CustomOperator[];
+    customOperators: CustomMatcher[];
   } = { customOperators: [] },
 ): Criterion {
   const hasObjectCheck = options.customOperators?.some(
@@ -121,7 +121,7 @@ export function convertKeywordsToCriteria(
   options: {
     caseSensitive?: boolean;
     pathAlias?: Record<string, RegExp>;
-    customOperators: CustomOperator[];
+    customOperators: CustomMatcher[];
   },
 ): Criterion[] {
   return keywords.map((keyword) => {

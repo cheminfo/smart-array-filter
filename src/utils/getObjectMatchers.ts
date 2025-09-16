@@ -1,4 +1,4 @@
-import type { CustomOperator } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.js';
 import type { JSONObject } from './types.js';
 
 export type ObjectMatcher = (
@@ -8,7 +8,7 @@ export type ObjectMatcher = (
 
 export default function getObjectMatchers(
   keyword: string,
-  customOperators: CustomOperator[],
+  customOperators: CustomMatcher[],
 ): ObjectMatcher[] {
   const matchers: ObjectMatcher[] = [];
   for (const customOperator of customOperators) {

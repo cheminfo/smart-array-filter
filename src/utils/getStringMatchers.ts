@@ -1,7 +1,7 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 import charSplit from './charSplit.ts';
-import type { CustomOperator } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.js';
 
 export type StringOperator = (
   arg1: string[],
@@ -70,7 +70,7 @@ export type StringMatcher = (value: string, path: string[]) => boolean | null;
 export default function getStringMatchers(
   keyword: string,
   insensitive: string,
-  customOperators: CustomOperator[],
+  customOperators: CustomMatcher[],
 ): StringMatcher[] {
   const matchers: StringMatcher[] = [];
   for (const operator of customOperators) {
