@@ -1,6 +1,6 @@
 import { extractAll } from 'check-cas-number';
 import { MF } from 'mf-parser';
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
 import { filter } from '../index.js';
 import type { CustomMatcher } from '../utils/customOperators.js';
@@ -25,23 +25,31 @@ test('searching for MF that could be anywhere', () => {
   expect(results).toHaveLength(4);
 });
 
-test.only('could be MF or CAS anywhere', () => {
+test('could be MF or CAS anywhere', () => {
   const query = 'EtCHO3 "[50-14-6],50-24-8"';
   const results = filter(chemicals, {
     customMatchers: [handleMFAnywhere, handleCASAnywhere],
     keywords: query,
     predicate: 'OR',
   });
-  expect(results).toHaveLength(4);
+  expect(results).toHaveLength(6);
 });
 
 const handleMF: CustomMatcher<string> = {
   name: 'Check canonic MF in mf path',
-  parse: (input) => new MF(input).toMF(),
+  parse: (input) => {
+    try {
+      return new MF(input).toMF();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      return null;
+    }
+  },
   createStringMatcher: (target) => (value, path) => {
     if (path.at(-1) === 'mf') {
       try {
         return new MF(value).toMF() === target;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         // do nothing the MF is not valid
       }
@@ -54,9 +62,13 @@ const handleMF: CustomMatcher<string> = {
 const handleMFAnywhere: CustomMatcher<string> = {
   name: 'Check canonic MF anywhere',
   parse: (input) => new MF(input).toMF(),
-  createStringMatcher: (target) => (value, path) => {
+  createStringMatcher: (target) => (value) => {
     try {
-      return new MF(value).toMF() === target;
+      // if we return false the other operators will not be used !!!!
+      if (new MF(value).toMF() === target) {
+        return true;
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       // do nothing the MF is not valid
     }
@@ -71,7 +83,7 @@ const handleCASAnywhere: CustomMatcher<string[]> = {
     const allCAS = extractAll(input);
     return allCAS.length > 0 ? allCAS : null;
   },
-  createStringMatcher: (targets) => (value, path) => {
+  createStringMatcher: (targets) => (value) => {
     const casNumbers = extractAll(value);
     for (const target of targets) {
       if (casNumbers.includes(target)) {
