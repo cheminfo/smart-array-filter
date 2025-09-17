@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.0.0](https://github.com/cheminfo/smart-array-filter/compare/v4.1.1...v5.0.0) (2025-09-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* package becomes ESM only
+
+### Features
+
+* extend filter with custom matchers ([#48](https://github.com/cheminfo/smart-array-filter/issues/48)) ([4d02049](https://github.com/cheminfo/smart-array-filter/commit/4d0204983450c540e886f747045c3e7bab10c9a9))
+
+
+### Miscellaneous Chores
+
+* update deps and make ESM only ([#46](https://github.com/cheminfo/smart-array-filter/issues/46)) ([ac908c9](https://github.com/cheminfo/smart-array-filter/commit/ac908c9a2251b2df54d49c60fcff76fdb9f5e454))
+
 ### [4.1.1](https://www.github.com/cheminfo/smart-array-filter/compare/v4.1.0...v4.1.1) (2025-03-11)
 
 
