@@ -63,6 +63,7 @@ const operators: Record<string, StringOperator> = {
 };
 
 export type StringMatcher = (value: string, path: string[]) => boolean | null;
+export type DefaultStringMatcher = (value: string) => boolean;
 
 /**
  * Builds the function which of a criterion which checks a leaf string value against the keyword.
@@ -83,6 +84,11 @@ export default function getStringMatchers(
       );
     }
   }
+
+  return matchers;
+}
+
+export function getDefaultStringMatcher(keyword: string, insensitive: string) {
   const { values, operator } = splitStringOperator(keyword);
 
   const operatorCheck = operators[operator];
@@ -91,8 +97,7 @@ export default function getStringMatchers(
     throw new Error(`Unreachable. Unknown operator ${operator}`);
   }
   /* v8 ignore end */
-  matchers.push(operatorCheck(values, insensitive));
-  return matchers;
+  return operatorCheck(values, insensitive);
 }
 
 /**

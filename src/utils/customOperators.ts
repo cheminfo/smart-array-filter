@@ -1,10 +1,10 @@
 import type { NumberMatcher } from './getNumberMatchers.js';
-import type { ObjectMatcher } from './getObjectMatchers.js';
+import type { CustomObjectMatcher } from './getObjectMatchers.js';
 import type { StringMatcher } from './getStringMatchers.js';
 
 export type ObjectMatcherCreator<T> = (
   parsedSearchExpression: T,
-) => ObjectMatcher;
+) => CustomObjectMatcher;
 
 export type StringMatcherCreator<T> = (
   parsedSearchExpression: T,

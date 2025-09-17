@@ -46,7 +46,7 @@ const operators: Record<string, NumberOperator> = {
 };
 
 export type NumberMatcher = (value: number, path: string[]) => boolean | null;
-
+export type DefaultNumberMatcher = (value: number) => boolean;
 /**
  * Builds the function which of a criterion which checks a leaf number value against the keyword.
  */
@@ -65,16 +65,18 @@ export default function getNumberMatchers(
       );
     }
   }
-  const { values, operator } = splitNumberOperator(keyword);
+  return matchers;
+}
 
+export function getDefaultNumberMatcher(keyword: string) {
+  const { values, operator } = splitNumberOperator(keyword);
   const checkOperator = operators[operator];
   /* v8 ignore start */
   if (!checkOperator) {
     throw new Error(`Unreachable. Unknown operator ${operator}`);
   }
   /* v8 ignore end */
-  matchers.push(checkOperator(values));
-  return matchers;
+  return checkOperator(values);
 }
 
 /**

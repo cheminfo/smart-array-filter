@@ -1,4 +1,4 @@
-import type { ValueCriterion } from '../utils/convertKeywordToCriterion.ts';
+import type { CustomObjectMatcher } from '../utils/getObjectMatchers.js';
 import type { JSONObject } from '../utils/types.js';
 
 /**
@@ -6,12 +6,10 @@ import type { JSONObject } from '../utils/types.js';
  */
 export default function objectMatch(
   element: JSONObject | null,
-  criterion: ValueCriterion,
+  customObjectMatchers: CustomObjectMatcher[],
   path: string[],
 ): boolean {
-  const matchers = criterion.objectMatchers || [];
-
-  for (const matcher of matchers) {
+  for (const matcher of customObjectMatchers) {
     const match = matcher(element, path);
     if (match === null) {
       continue;

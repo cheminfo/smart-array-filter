@@ -46,10 +46,10 @@ export default function recursiveMatch(
     } else {
       if (
         criterion.type === 'matches' &&
-        criterion.objectMatchers &&
+        criterion.customObjectMatchers &&
         !shouldIgnorePath(criterion, path, options)
       ) {
-        if (objectMatch(element, criterion, path)) {
+        if (objectMatch(element, criterion.customObjectMatchers, path)) {
           return true;
         }
       }

@@ -1,7 +1,7 @@
 import type { CustomMatcher } from './customOperators.js';
 import type { JSONObject } from './types.js';
 
-export type ObjectMatcher = (
+export type CustomObjectMatcher = (
   arg: JSONObject | null,
   path: string[],
 ) => boolean | null;
@@ -9,16 +9,15 @@ export type ObjectMatcher = (
 export default function getObjectMatchers(
   keyword: string,
   customOperators: CustomMatcher[],
-): ObjectMatcher[] {
-  const matchers: ObjectMatcher[] = [];
+): CustomObjectMatcher[] {
+  const matchers: CustomObjectMatcher[] = [];
   for (const customOperator of customOperators) {
+    if (!customOperator.createObjectMatcher) {
+      continue;
+    }
     const parsedValues = customOperator.parse(keyword);
     if (parsedValues !== null) {
-      matchers.push(
-        customOperator.createObjectMatcher
-          ? customOperator.createObjectMatcher(parsedValues)
-          : () => null, // Unreachable, getObjectMatchers is never called if no object matcher exists
-      );
+      matchers.push(customOperator.createObjectMatcher(parsedValues));
     }
   }
   return matchers;

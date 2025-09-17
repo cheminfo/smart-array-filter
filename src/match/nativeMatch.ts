@@ -9,27 +9,25 @@ export default function nativeMatch(
   path: string[],
 ): boolean {
   if (typeof element === 'string') {
-    for (const matcher of criterion.stringMatchers) {
+    for (const matcher of criterion.customStringMatchers) {
       const match = matcher(element, path);
       if (match === null) {
         continue;
       }
       return match;
     }
+    return criterion.defaultStringMatcher(element);
   } else if (typeof element === 'number') {
-    for (const matcher of criterion.numberMatchers) {
+    for (const matcher of criterion.customNumberMatchers) {
       const match = matcher(element, path);
       if (match === null) {
         continue;
       }
       return match;
     }
+    return criterion.defaultNumberMatcher(element);
   } else {
     // Booleans never match
     return false;
   }
-  /* v8 ignore start */
-  // Unreachable. The last matcher is the default one which should never return null.
-  return false;
-  /* v8 ignore end */
 }
