@@ -12,12 +12,11 @@ export default function getObjectMatchers(
 ): CustomObjectMatcher[] {
   const matchers: CustomObjectMatcher[] = [];
   for (const customOperator of customOperators) {
-    if (!customOperator.createObjectMatcher) {
-      continue;
-    }
-    const parsedValues = customOperator.parse(keyword);
-    if (parsedValues !== null) {
-      matchers.push(customOperator.createObjectMatcher(parsedValues));
+    if (customOperator.createObjectMatcher) {
+      const parsedValues = customOperator.parse(keyword);
+      if (parsedValues !== null) {
+        matchers.push(customOperator.createObjectMatcher(parsedValues));
+      }
     }
   }
   return matchers;

@@ -11,19 +11,17 @@ export default function nativeMatch(
   if (typeof element === 'string') {
     for (const matcher of criterion.customStringMatchers) {
       const match = matcher(element, path);
-      if (match === null) {
-        continue;
+      if (match !== null) {
+        return match;
       }
-      return match;
     }
     return criterion.defaultStringMatcher(element);
   } else if (typeof element === 'number') {
     for (const matcher of criterion.customNumberMatchers) {
       const match = matcher(element, path);
-      if (match === null) {
-        continue;
+      if (match !== null) {
+        return match;
       }
-      return match;
     }
     return criterion.defaultNumberMatcher(element);
   } else {

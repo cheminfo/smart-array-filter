@@ -11,10 +11,9 @@ export default function objectMatch(
 ): boolean {
   for (const matcher of customObjectMatchers) {
     const match = matcher(element, path);
-    if (match === null) {
-      continue;
+    if (match !== null) {
+      return match;
     }
-    return match;
   }
   return false;
 }
