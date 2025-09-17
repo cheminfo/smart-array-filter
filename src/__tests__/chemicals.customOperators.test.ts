@@ -26,14 +26,12 @@ test('searching for MF that could be anywhere', () => {
 });
 
 test.only('could be MF or CAS anywhere', () => {
-  console.log('start');
   const query = 'EtCHO3 "[50-14-6],50-24-8"';
-  console.log(chemicals.slice(0, 1));
-  const results = filter(chemicals.slice(0, 1), {
-    customMatchers: [handleCASAnywhere],
+  const results = filter(chemicals, {
+    customMatchers: [handleMFAnywhere, handleCASAnywhere],
     keywords: query,
+    predicate: 'OR',
   });
-  console.log('end');
   expect(results).toHaveLength(4);
 });
 
@@ -71,16 +69,12 @@ const handleCASAnywhere: CustomMatcher<string[]> = {
   name: 'Check CAS number anywhere',
   parse: (input) => {
     const allCAS = extractAll(input);
-    console.log({ allCAS });
-    console.log(allCAS.length);
     return allCAS.length > 0 ? allCAS : null;
   },
   createStringMatcher: (targets) => (value, path) => {
     const casNumbers = extractAll(value);
-    console.log(targets);
     for (const target of targets) {
       if (casNumbers.includes(target)) {
-        console.log('yes');
         return true;
       }
     }
