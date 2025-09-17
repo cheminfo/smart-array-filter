@@ -1,11 +1,14 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 import charSplit from './charSplit.ts';
+import type { CustomMatcher } from './customOperators.js';
 
-const operators: Record<
-  string,
-  (arg1: string[], arg2?: string) => (arg: string) => boolean
-> = {
+export type StringOperator = (
+  arg1: string[],
+  arg2?: string,
+) => (arg: string) => boolean;
+
+const operators: Record<string, StringOperator> = {
   '<': function lt(query) {
     return (string) => {
       return string < query[0];
@@ -59,22 +62,41 @@ const operators: Record<
   },
 };
 
+export type StringMatcher = (value: string, path: string[]) => boolean | null;
+export type DefaultStringMatcher = (value: string) => boolean;
+
 /**
- * GetCheckString.
- * @param keyword - String.
- * @param insensitive - String.
- * @returns CheckString. (string)=>boolean.
+ * Builds the function which of a criterion which checks a leaf string value against the keyword.
  */
-export default function getCheckString(
+export default function getStringMatchers(
   keyword: string,
   insensitive: string,
-): (arg: string) => boolean {
+  customOperators: CustomMatcher[],
+): StringMatcher[] {
+  const matchers: StringMatcher[] = [];
+  for (const operator of customOperators) {
+    const parseOutput = operator.parse(keyword);
+    if (parseOutput !== null) {
+      matchers.push(
+        operator.createStringMatcher
+          ? operator.createStringMatcher(parseOutput)
+          : () => null,
+      );
+    }
+  }
+
+  return matchers;
+}
+
+export function getDefaultStringMatcher(keyword: string, insensitive: string) {
   const { values, operator } = splitStringOperator(keyword);
 
   const operatorCheck = operators[operator];
+  /* v8 ignore start */
   if (!operatorCheck) {
-    throw new Error(`unreachable unknown operator ${operator}`);
+    throw new Error(`Unreachable. Unknown operator ${operator}`);
   }
+  /* v8 ignore end */
   return operatorCheck(values, insensitive);
 }
 
@@ -91,16 +113,17 @@ export function splitStringOperator(keyword: string): {
     parts[0],
   );
   if (!match) {
-    // Should never happen
     return {
       operator: '~',
       values: [keyword],
     };
   }
 
+  /* v8 ignore start */
   if (!match.groups) {
-    throw new Error('unreachable');
+    throw new Error('Unreachable');
   }
+  /* v8 ignore end */
 
   const { value } = match.groups;
   let { operator } = match.groups;

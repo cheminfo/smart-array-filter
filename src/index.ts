@@ -3,20 +3,50 @@ import escapeRegExp from 'lodash.escaperegexp';
 import match from './match/match.ts';
 import charSplit from './utils/charSplit.ts';
 import { convertKeywordsToCriteria } from './utils/convertKeywordToCriterion.ts';
+import type { CustomMatcher } from './utils/customOperators.ts';
 import ensureObjectOfRegExps from './utils/ensureObjectOfRegExps.ts';
 import type { Json } from './utils/types.ts';
 
 interface OptionsTypeBase {
+  /**
+   * List of keywords used to filter the array.
+   */
   keywords?: string[] | string | null;
+  /**
+   * Maximum number of results.
+   */
   limit?: number;
+  /**
+   *  Search mode for string comparisons. Case insensitive by default.
+   */
   caseSensitive?: boolean;
+  /**
+   *  How results from different keywords are combined into the final result.
+   */
   predicate?: Predicate;
+  /**
+   * A list of jpath to ignore. `ignorePaths` has precedence over `includePaths`.
+   */
   ignorePaths?: Array<RegExp | string>;
+  /**
+   * A list of jpath to limit the search to. By default the entire data object is searched recursively.
+   */
   includePaths?: Array<RegExp | string>;
+  /**
+   * List of aliases to certain object paths.
+   * The key is the alias and the value is the object path, which can be a regular expression.
+   */
   pathAlias?: Record<string, string | RegExp>;
+  /**
+   * List of custom matchers which converts search expressions into matchers.
+   */
+  customMatchers?: CustomMatcher[];
 }
 
 export type OptionsTypeWithIndex = OptionsTypeBase & {
+  /**
+   * Returns the indices in the array that match, instead of the elements themselves.
+   */
   index: true;
 };
 
@@ -33,22 +63,16 @@ export function filter<T>(array: T[], options?: OptionsTypeWithoutIndex): T[];
 export function filter<T>(array: T[], options?: OptionsType): T[] | number[];
 
 /**
- *
- *Filter.
- * @param data - Array to filter.
- * @param [options] - Object.
- * @param [options.limit] - Maximum number of results.
- * @param [options.caseSensitive] - By default we ignore case.
- * @param [options.ignorePaths] - Array of jpath to ignore.
- * @param [options.includePaths] - Array of jpath to allow, default everything.
- * @param [options.pathAlias] - Key (string), value (string of regexp).
- * @param [options.keywords] - List of keywords used to filter the array.
- * @param [options.index] - Returns the indices in the array that match.
- * @param [options.predicate] - Could be either AND or OR.
- * @returns String[] | number[].
+ * Filter an data list.
  */
 export function filter(
+  /**
+   *  Input array to filter.
+   */
   data: Json[],
+  /**
+   * Filter options.
+   */
   options: OptionsType = {},
 ): Json[] | number[] {
   const {
@@ -59,6 +83,7 @@ export function filter(
     pathAlias: pathAliasOption = {},
   } = options;
 
+  const { customMatchers = [] } = options;
   const limit = options.limit || Infinity;
   const insensitive = options.caseSensitive ? '' : 'i';
   let keywords = options.keywords || [];
@@ -82,6 +107,7 @@ export function filter(
   const criteria = convertKeywordsToCriteria(keywords, {
     caseSensitive: options.caseSensitive,
     pathAlias,
+    customOperators: customMatchers,
   });
   let matched = 0;
   if (index) {

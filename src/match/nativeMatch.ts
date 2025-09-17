@@ -1,20 +1,31 @@
 import type { ValueCriterion } from '../utils/convertKeywordToCriterion.ts';
 
 /**
- * NativeMatch.
- * @param element - String|number.
- * @param keyword - Criterion.
- * @returns Boolean.
+ * Matcher for leaf native values of the queried object.
  */
 export default function nativeMatch(
   element: string | number | boolean | undefined,
-  keyword: ValueCriterion,
+  criterion: ValueCriterion,
+  path: string[],
 ): boolean {
   if (typeof element === 'string') {
-    return keyword.checkString(element);
+    for (const matcher of criterion.customStringMatchers) {
+      const match = matcher(element, path);
+      if (match !== null) {
+        return match;
+      }
+    }
+    return criterion.defaultStringMatcher(element);
   } else if (typeof element === 'number') {
-    return keyword.checkNumber(element);
+    for (const matcher of criterion.customNumberMatchers) {
+      const match = matcher(element, path);
+      if (match !== null) {
+        return match;
+      }
+    }
+    return criterion.defaultNumberMatcher(element);
   } else {
+    // Booleans never match
     return false;
   }
 }

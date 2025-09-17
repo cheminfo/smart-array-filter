@@ -1,7 +1,22 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import getCheckNumber from './getCheckNumber.ts';
-import getCheckString from './getCheckString.ts';
+import type { CustomMatcher } from './customOperators.js';
+import type {
+  DefaultNumberMatcher,
+  NumberMatcher,
+} from './getNumberMatchers.ts';
+import getNumberMatchers, {
+  getDefaultNumberMatcher,
+} from './getNumberMatchers.ts';
+import type { CustomObjectMatcher } from './getObjectMatchers.ts';
+import getObjectMatchers from './getObjectMatchers.ts';
+import type {
+  DefaultStringMatcher,
+  StringMatcher,
+} from './getStringMatchers.ts';
+import getStringMatchers, {
+  getDefaultStringMatcher,
+} from './getStringMatchers.ts';
 
 /**
  * A criterion which checks the existence of a key
@@ -35,21 +50,27 @@ export interface ValueCriterion {
    * Use to match anything that does not match the value
    */
   negate: boolean;
-  checkString: (arg: string) => boolean;
-  checkNumber: (arg: number) => boolean;
+  defaultStringMatcher: DefaultStringMatcher;
+  defaultNumberMatcher: DefaultNumberMatcher;
+  customStringMatchers: StringMatcher[];
+  customNumberMatchers: NumberMatcher[];
+  customObjectMatchers?: CustomObjectMatcher[];
 }
 
 export type Criterion = KeyCriterion | ValueCriterion;
+
+interface KeywordToCriterionOptions {
+  caseSensitive?: boolean;
+  pathAlias?: Record<string, RegExp>;
+  customOperators: CustomMatcher[];
+}
 
 /**
  * @internal
  */
 export function convertKeywordToCriterion(
   keyword: string,
-  options: {
-    caseSensitive?: boolean;
-    pathAlias?: Record<string, RegExp>;
-  } = {},
+  options: KeywordToCriterionOptions = { customOperators: [] },
 ): Criterion {
   const { caseSensitive, pathAlias = {} } = options;
   const regexpFlags = caseSensitive ? '' : 'i';
@@ -78,8 +99,7 @@ export function convertKeywordToCriterion(
           key:
             pathAlias[key] ||
             new RegExp(`(^|\\.)${escapeRegExp(key)}(\\.|$)`, regexpFlags),
-          checkNumber: getCheckNumber(value),
-          checkString: getCheckString(value, regexpFlags),
+          ...createMatchers(value, regexpFlags, options),
         };
       }
     }
@@ -87,26 +107,37 @@ export function convertKeywordToCriterion(
   return {
     type: 'matches',
     negate,
-    checkNumber: getCheckNumber(keyword),
-    checkString: getCheckString(keyword, regexpFlags),
+    ...createMatchers(keyword, regexpFlags, options),
   };
 }
 
-/**
- *
- * @param keywords
- * @param options
- * @param options.caseSensitive
- * @param options.pathAlias
- */
 export function convertKeywordsToCriteria(
   keywords: string[],
   options: {
     caseSensitive?: boolean;
     pathAlias?: Record<string, RegExp>;
-  } = {},
+    customOperators: CustomMatcher[];
+  },
 ): Criterion[] {
   return keywords.map((keyword) => {
     return convertKeywordToCriterion(keyword, options);
   });
+}
+
+function createMatchers(
+  value: string,
+  regexpFlags: string,
+  options: KeywordToCriterionOptions,
+) {
+  return {
+    customNumberMatchers: getNumberMatchers(value, options.customOperators),
+    defaultNumberMatcher: getDefaultNumberMatcher(value),
+    customStringMatchers: getStringMatchers(
+      value,
+      regexpFlags,
+      options.customOperators,
+    ),
+    defaultStringMatcher: getDefaultStringMatcher(value, regexpFlags),
+    customObjectMatchers: getObjectMatchers(value, options.customOperators),
+  };
 }
