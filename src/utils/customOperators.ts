@@ -1,6 +1,6 @@
-import type { NumberMatcher } from './getNumberMatchers.js';
-import type { CustomObjectMatcher } from './getObjectMatchers.js';
-import type { StringMatcher } from './getStringMatchers.js';
+import type { NumberMatcher } from './getNumberMatchers.ts';
+import type { CustomObjectMatcher } from './getObjectMatchers.ts';
+import type { StringMatcher } from './getStringMatchers.ts';
 
 export type ObjectMatcherCreator<T> = (
   parsedSearchExpression: T,

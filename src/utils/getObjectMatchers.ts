@@ -1,5 +1,5 @@
-import type { CustomMatcher } from './customOperators.js';
-import type { JSONObject } from './types.js';
+import type { CustomMatcher } from './customOperators.ts';
+import type { JSONObject } from './types.ts';
 
 export type CustomObjectMatcher = (
   arg: JSONObject | null,

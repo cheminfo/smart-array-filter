@@ -1,6 +1,6 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
-import type { CustomMatcher } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.ts';
 import type {
   DefaultNumberMatcher,
   NumberMatcher,

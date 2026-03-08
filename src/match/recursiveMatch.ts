@@ -2,7 +2,7 @@ import type { Criterion } from '../utils/convertKeywordToCriterion.ts';
 import type { Json } from '../utils/types.ts';
 
 import nativeMatch from './nativeMatch.ts';
-import objectMatch from './objectMatch.js';
+import objectMatch from './objectMatch.ts';
 
 interface PathOptions {
   /**

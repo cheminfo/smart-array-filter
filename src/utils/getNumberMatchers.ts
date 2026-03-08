@@ -1,4 +1,4 @@
-import type { CustomMatcher } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.ts';
 
 export type NumberOperator = (arg1: string[]) => (arg: number) => boolean;
 

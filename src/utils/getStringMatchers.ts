@@ -1,7 +1,7 @@
 import escapeRegExp from 'lodash.escaperegexp';
 
 import charSplit from './charSplit.ts';
-import type { CustomMatcher } from './customOperators.js';
+import type { CustomMatcher } from './customOperators.ts';
 
 export type StringOperator = (
   arg1: string[],
